@@ -18,10 +18,10 @@ export interface Product {
   description?: string;
   features?: string[];
   altDescription?: string;
-  source?: 'dsers' | 'manual';
+  source?: 'aliexpress' | 'manual';
   isArchived?: boolean;
   isPublished?: boolean;
-  dsersRemovedFromSync?: boolean;
+  aliexpressRemovedFromSync?: boolean;
 }
 
 export interface User {
@@ -48,6 +48,7 @@ export type ActiveView =
   | 'checkout-cancel'
   | 'user-dashboard'
   | 'admin-dashboard'
+  | 'wishlist'
   | 'auth';
 
 export interface Order {
@@ -58,4 +59,6 @@ export interface Order {
   total: number;
   status: 'Shipped' | 'Processing' | 'Delivered' | 'Pending';
   trackingStep?: number;
+  cjOrderId?: string;
+  trackingNumber?: string;
 }

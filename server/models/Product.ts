@@ -83,7 +83,7 @@ const productSchema = new Schema(
     },
     source: {
       type: String,
-      enum: ['dsers', 'manual'],
+      enum: ['aliexpress', 'cj', 'manual'],
       default: 'manual',
     },
     isArchived: {
@@ -94,9 +94,17 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    dsersRemovedFromSync: {
+    aliexpressRemovedFromSync: {
       type: Boolean,
       default: false,
+    },
+    aliexpressProductId: {
+      type: String,
+      trim: true,
+    },
+    aliexpressUrl: {
+      type: String,
+      trim: true,
     },
   },
   {

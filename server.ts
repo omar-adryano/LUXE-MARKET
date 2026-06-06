@@ -4,14 +4,16 @@ import dotenv from 'dotenv';
 import { connectDB, lastConnectionError, getDBCleanErrorMessage } from './server/config/db';
 import { seedDB } from './server/config/seed';
 import apiRouter from './server/routes/api';
+import aliexpressRoutes from './server/routes/aliexpressRoutes';
 import { errorHandler } from './server/middleware/errorHandler';
+import { startTrackingCron } from './server/cron/trackingSync';
 
 // Load ecosystem variables
 dotenv.config();
 
 async function startServer() {
   const app = express();
-  const PORT = Number(process.env.PORT) || 3000;
+  const PORT = 3000;
 
   // 1. Core Database Initialization with Retries (Await before registering routes)
   console.log('🔄 [Server] Initializing database subsystem...');
@@ -23,7 +25,11 @@ async function startServer() {
   app.use(express.urlencoded({ extended: true }));
 
   // Mount API Endpoints
+  app.use('/api/aliexpress', aliexpressRoutes);
   app.use('/api', apiRouter);
+
+  // Start Background Cron
+  startTrackingCron();
 
   // Health endpoint checks
   app.get('/api/health', async (req, res) => {

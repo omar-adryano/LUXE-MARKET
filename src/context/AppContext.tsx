@@ -15,13 +15,15 @@ interface AppContextType {
   activeView: ActiveView;
   selectedProduct: Product;
   searchQuery: string;
-  isDarkMode: boolean;
   couponApplied: boolean;
   discountAmount: number;
   promoCode: string;
   user: User | null;
   token: string | null;
   wishlist: Product[];
+  
+  toastMessage: string | null;
+  showToast: (msg: string) => void;
   
   // Actions
   setActiveView: (view: ActiveView) => void;
@@ -30,7 +32,6 @@ interface AppContextType {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   setSearchQuery: (query: string) => void;
-  toggleDarkMode: () => void;
   applyCoupon: (code: string) => boolean;
   clearCart: () => void;
   login: (userData: User, token: string) => void;
@@ -74,7 +75,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     },
     {
       id: 'headphones',
-      name: 'Aural Luxe Wireless Headphones',
+      name: 'Aural MORVEX Wireless Headphones',
       category: 'Electronics',
       price: 299.00,
       originalPrice: 375.00,
@@ -264,7 +265,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [cart, setCart] = useState<CartItem[]>(initialCartItems);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [couponApplied, setCouponApplied] = useState<boolean>(false);
   const [discountAmount, setDiscountAmount] = useState<number>(0);
   const [promoCode, setPromoCode] = useState<string>('');
@@ -272,7 +272,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Authentication State
   const [user, setUser] = useState<User | null>(() => {
     try {
-      const saved = localStorage.getItem('luxe_user');
+      const saved = localStorage.getItem('morvex_user');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
@@ -280,21 +280,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [token, setToken] = useState<string | null>(() => {
-    return localStorage.getItem('luxe_token') || null;
+    return localStorage.getItem('morvex_token') || null;
   });
+
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 2500);
+  };
 
   const login = (userData: User, userToken: string) => {
     setUser(userData);
     setToken(userToken);
-    localStorage.setItem('luxe_user', JSON.stringify(userData));
-    localStorage.setItem('luxe_token', userToken);
+    localStorage.setItem('morvex_user', JSON.stringify(userData));
+    localStorage.setItem('morvex_token', userToken);
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('luxe_user');
-    localStorage.removeItem('luxe_token');
+    localStorage.removeItem('morvex_user');
+    localStorage.removeItem('morvex_token');
     setActiveView('home');
   };
 
@@ -302,22 +311,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setUser(prev => {
       if (!prev) return null;
       const updated = { ...prev, ...fields };
-      localStorage.setItem('luxe_user', JSON.stringify(updated));
+      localStorage.setItem('morvex_user', JSON.stringify(updated));
       return updated;
     });
-  };
-
-  // Handle HTML document dark class toggle
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev);
   };
 
   const addToCart = (product: Product, quantity = 1, color = 'Default', material = 'Default') => {
@@ -332,8 +328,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
       return [...prev, { product, quantity, selectedColor: color, selectedMaterial: material }];
     });
-    // Visual feedback or switch to cart view
-    setActiveView('cart');
+    showToast('✓ Product added to cart');
   };
 
   const removeFromCart = (productId: string) => {
@@ -354,7 +349,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const applyCoupon = (code: string): boolean => {
     const formattedCode = code.toUpperCase().trim();
-    if (formattedCode === 'LUXE25' || formattedCode === 'WELCOME25' || formattedCode === 'SAVE25') {
+    if (formattedCode === 'MORVEX25' || formattedCode === 'WELCOME25' || formattedCode === 'SAVE25') {
       setCouponApplied(true);
       setPromoCode(formattedCode);
       // Let's offer a flat 25% discount on checkout or cart subtotal
@@ -393,8 +388,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             total: o.total || 0,
             status: o.status || 'Pending',
             trackingStep: o.trackingStep || 0,
-            stripePaymentIntentId: o.stripePaymentIntentId,
-            stripeTransactionId: o.stripeTransactionId
           }));
           setOrders(mapped);
         }
@@ -442,14 +435,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             features: p.features
           }));
           setWishlist(mapped);
-          localStorage.setItem('luxe_wishlist', JSON.stringify(mapped));
+          localStorage.setItem('morvex_wishlist', JSON.stringify(mapped));
         }
       } else {
-        const saved = localStorage.getItem('luxe_wishlist');
+        const saved = localStorage.getItem('morvex_wishlist');
         if (saved) setWishlist(JSON.parse(saved));
       }
     } catch {
-      const saved = localStorage.getItem('luxe_wishlist');
+      const saved = localStorage.getItem('morvex_wishlist');
       if (saved) setWishlist(JSON.parse(saved));
     }
   };
@@ -460,7 +453,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [token, user]);
 
   const toggleWishlist = async (product: Product): Promise<boolean> => {
-    const localSaved = localStorage.getItem('luxe_wishlist');
+    const localSaved = localStorage.getItem('morvex_wishlist');
     let currentWishlistList: Product[] = localSaved ? JSON.parse(localSaved) : [];
     
     const exists = currentWishlistList.some(item => item.id === product.id);
@@ -501,7 +494,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               };
             });
             setWishlist(mapped);
-            localStorage.setItem('luxe_wishlist', JSON.stringify(mapped));
+            localStorage.setItem('morvex_wishlist', JSON.stringify(mapped));
             return data.isAdded;
           }
         }
@@ -511,7 +504,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     setWishlist(updated);
-    localStorage.setItem('luxe_wishlist', JSON.stringify(updated));
+    localStorage.setItem('morvex_wishlist', JSON.stringify(updated));
     return isAddedNow;
   };
 
@@ -530,20 +523,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         activeView,
         selectedProduct,
         searchQuery,
-        isDarkMode,
         couponApplied,
         discountAmount,
         promoCode,
         user,
         token,
         wishlist,
+        toastMessage,
+        showToast,
         setActiveView,
         setSelectedProduct,
         addToCart,
         removeFromCart,
         updateQuantity,
         setSearchQuery,
-        toggleDarkMode,
         applyCoupon,
         clearCart,
         login,

@@ -22,9 +22,17 @@ export async function registerUser(
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  const { name, email, password } = req.body;
+  const { name, email, password, role, adminSecretCode } = req.body;
 
   try {
+    if (role === 'admin') {
+      const requiredSecret = process.env.ADMIN_SECRET;
+      if (!requiredSecret || adminSecretCode !== requiredSecret) {
+        next(new APIError('Invalid admin code', 403));
+        return;
+      }
+    }
+
     const cleanEmail = String(email).toLowerCase().trim();
     const userExists = await User.findOne({ email: cleanEmail });
     if (userExists) {
@@ -33,7 +41,7 @@ export async function registerUser(
     }
 
     // Create user
-    const user = new User({ name, email: cleanEmail, password });
+    const user = new User({ name, email: cleanEmail, password, role: role === 'admin' ? 'admin' : 'user' });
     
     // Generate email verification PIN (6 digits)
     const verificationPin = (user as any).getEmailVerificationToken();
@@ -44,11 +52,11 @@ export async function registerUser(
     await Wishlist.create({ user: user._id, products: [] });
 
     // Send verification email
-    const subject = 'Verifying your Luxe Market account';
-    const message = `Welcome to Luxe Market, ${name}!\n\nTo verify your email address, please write down or enter the following 6-digit confirmation code in our application:\n\n👉 ${verificationPin}\n\nThis verification code expires in 24 hours.`;
+    const subject = 'Verifying your MORVEX account';
+    const message = `Welcome to MORVEX, ${name}!\n\nTo verify your email address, please write down or enter the following 6-digit confirmation code in our application:\n\n👉 ${verificationPin}\n\nThis verification code expires in 24 hours.`;
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
-        <h2 style="color: #111; text-align: center;">Welcome to Luxe Market</h2>
+        <h2 style="color: #111; text-align: center;">Welcome to MORVEX</h2>
         <p>Hello ${name},</p>
         <p>Thank you for registering. You are just one step away from completing your registration.</p>
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; text-align: center; margin: 20px 0;">
@@ -57,7 +65,7 @@ export async function registerUser(
         </div>
         <p>Please enter this code on the verification screen to activate your account. This code expires in 24 hours.</p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;"/>
-        <p style="font-size: 12px; color: #999; text-align: center;">Luxe Market Inc. • Architectural Designs & Curated Lifestyle Products</p>
+        <p style="font-size: 12px; color: #999; text-align: center;">MORVEX Inc. • Architectural Designs & Curated Lifestyle Products</p>
       </div>
     `;
 
@@ -67,7 +75,6 @@ export async function registerUser(
       success: true,
       message: 'Account created successfully! Please verify your email with the 6-digit code.',
       token: generateToken(user._id.toString()),
-      _debugOnlyToken: process.env.NODE_ENV !== 'production' ? verificationPin : undefined,
       user: {
         id: user._id,
         name: user.name,
@@ -238,20 +245,20 @@ export async function resendVerificationCode(
     const verificationPin = (user as any).getEmailVerificationToken();
     await user.save();
 
-    const subject = 'Your Luxe Market email verification pin';
+    const subject = 'Your MORVEX email verification pin';
     const message = `Hello ${user.name},\n\nPlease use the following 6-digit confirmation code to verify your email address:\n\n👉 ${verificationPin}\n\nThis verification code expires in 24 hours.`;
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
         <h2 style="color: #111; text-align: center;">Confirm Email Address</h2>
         <p>Hello ${user.name},</p>
-        <p>You requested a new verification pin for your Luxe Market account.</p>
+        <p>You requested a new verification pin for your MORVEX account.</p>
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 6px; text-align: center; margin: 20px 0;">
           <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Verification Code</small>
           <h1 style="margin: 5px 0 0 0; color: #000; letter-spacing: 5px; font-size: 32px;">${verificationPin}</h1>
         </div>
         <p>Enter this code on the verification screen to activate your account. This code expires in 24 hours.</p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;"/>
-        <p style="font-size: 12px; color: #999; text-align: center;">Luxe Market Inc. • Architectural Designs & Curated Lifestyle Products</p>
+        <p style="font-size: 12px; color: #999; text-align: center;">MORVEX Inc. • Architectural Designs & Curated Lifestyle Products</p>
       </div>
     `;
 
@@ -260,7 +267,6 @@ export async function resendVerificationCode(
     res.json({
       success: true,
       message: 'New verification PIN code sent, please check your mailbox.',
-      _debugOnlyToken: process.env.NODE_ENV !== 'production' ? verificationPin : undefined,
     });
   } catch (error) {
     next(error);
@@ -292,13 +298,13 @@ export async function forgotPassword(
     const resetPin = (user as any).getResetPasswordToken();
     await user.save();
 
-    const subject = 'Your Luxe Market password reset pin';
+    const subject = 'Your MORVEX password reset pin';
     const message = `Hello ${user.name},\n\nYou requested a password reset. Please enter the following 6-digit reset code inside the application to verify and set a new password:\n\n👉 ${resetPin}\n\nThis reset code expires in 10 minutes. If you did not request this, please ignore this email.`;
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
         <h2 style="color: #111; text-align: center;">Password Reset Request</h2>
         <p>Hello ${user.name},</p>
-        <p>We received a request to reset your Luxe Market login password. Use the following security code to perform the recovery action:</p>
+        <p>We received a request to reset your MORVEX login password. Use the following security code to perform the recovery action:</p>
         <div style="background-color: #fce8e6; padding: 15px; border-radius: 6px; text-align: center; margin: 20px 0;">
           <small style="color: #b71c1c; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">Password Reset Security Code</small>
           <h1 style="margin: 5px 0 0 0; color: #b71c1c; letter-spacing: 5px; font-size: 32px;">${resetPin}</h1>
@@ -306,7 +312,7 @@ export async function forgotPassword(
         <p>Please enter this code on the reset password screen to update your password. This security pin expires in 10 minutes.</p>
         <p style="color: #cd0000; font-size: 13px;">If you did not initiate this request, you can safely ignore this email. Your pass is protected.</p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;"/>
-        <p style="font-size: 12px; color: #999; text-align: center;">Luxe Market Inc. • Architectural Designs & Curated Lifestyle Products</p>
+        <p style="font-size: 12px; color: #999; text-align: center;">MORVEX Inc. • Architectural Designs & Curated Lifestyle Products</p>
       </div>
     `;
 
@@ -315,7 +321,6 @@ export async function forgotPassword(
     res.json({
       success: true,
       message: 'Password reset instructions have been emailed.',
-      _debugOnlyToken: process.env.NODE_ENV !== 'production' ? resetPin : undefined,
     });
   } catch (error) {
     next(error);
@@ -433,3 +438,177 @@ export async function updateUserRole(
     next(error);
   }
 }
+
+// @desc    Get Google OAuth URL
+// @route   GET /api/users/google/url
+// @access  Public
+export function getGoogleAuthUrl(req: Request, res: Response) {
+  const origin = req.query.origin as string;
+  const appUrl = origin || process.env.APP_URL || `https://${req.get('host')}`;
+  const redirectUri = `${appUrl}/api/users/google/callback`;
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  
+  if (!clientId) {
+    res.status(500).json({ message: 'Google Client ID is not configured on the server.' });
+    return;
+  }
+
+  const params = new URLSearchParams({
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    response_type: 'code',
+    scope: 'email profile openid',
+    access_type: 'offline',
+    prompt: 'consent',
+    state: appUrl // Pass appUrl in state to know where to redirect back
+  });
+
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
+  res.json({ url: authUrl });
+}
+
+// @desc    Handle Google OAuth callback
+// @route   GET /api/users/google/callback
+// @access  Public
+export async function googleAuthCallback(req: Request, res: Response): Promise<void> {
+  const { code, state } = req.query;
+
+  if (!code) {
+    res.send(`<html><body><script>window.close();</script></body></html>`);
+    return;
+  }
+
+  try {
+    const appUrl = (state as string) || process.env.APP_URL || `https://${req.get('host')}`;
+    const redirectUri = `${appUrl}/api/users/google/callback`;
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+      throw new Error('Google OAuth credentials not configured on the server.');
+    }
+
+    // Exchange code for tokens
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code: code as string,
+        client_id: clientId,
+        client_secret: clientSecret,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code'
+      })
+    });
+
+    if (!tokenRes.ok) {
+      const errTxt = await tokenRes.text();
+      console.error('Google token exchange error:', errTxt);
+      throw new Error('Failed to exchange code for Google token');
+    }
+
+    const tokens = await tokenRes.json();
+
+    // Get user info
+    const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+      headers: { Authorization: `Bearer ${tokens.access_token}` }
+    });
+
+    if (!userRes.ok) {
+      throw new Error('Failed to fetch user info from Google');
+    }
+
+    const profile = await userRes.json();
+    const { id: googleId, email, name, picture: avatar, verified_email } = profile;
+
+    const emailStr = email.toLowerCase().trim();
+
+    // Handle user login / creation
+    let user = await User.findOne({ 
+      $or: [
+        { googleId },
+        { email: emailStr }
+      ]
+    });
+
+    if (!user) {
+      // Create new user
+      user = new User({
+        name,
+        email: emailStr,
+        googleId,
+        avatar,
+        isVerified: verified_email || true,
+        // Using a random long password since it's an OAuth account,
+        // model password shouldn't be strictly required but just in case
+        password: Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10),
+      });
+      await user.save();
+      await Wishlist.create({ user: user._id, products: [] });
+    } else {
+      // Update Google ID and Avatar if missing
+      let updated = false;
+      if (!user.googleId) {
+        user.googleId = googleId;
+        user.isVerified = verified_email || true;
+        updated = true;
+      }
+      if (!user.avatar && avatar) {
+        user.avatar = avatar;
+        updated = true;
+      }
+      if (updated) {
+        await user.save();
+      }
+    }
+
+    const token = generateToken(user._id.toString());
+    const userData = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      avatar: user.avatar,
+      isVerified: user.isVerified,
+    };
+
+    // Send success message to parent window and close popup
+    res.send(`
+      <html>
+        <body>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage({ 
+                type: 'OAUTH_AUTH_SUCCESS', 
+                payload: { user: ${JSON.stringify(userData)}, token: '${token}' } 
+              }, '*');
+              window.close();
+            } else {
+              window.location.href = '/';
+            }
+          </script>
+          <p>Authentication successful. This window should close automatically.</p>
+        </body>
+      </html>
+    `);
+
+  } catch (error: any) {
+    console.error('Google OAuth error:', error);
+    res.send(`
+      <html>
+        <body>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage({ type: 'OAUTH_AUTH_ERROR', payload: '${error.message || 'OAuth failure'}' }, '*');
+              window.close();
+            } else {
+              window.location.href = '/';
+            }
+          </script>
+          <p>Failed to authenticate with Google. This window will close shortly.</p>
+        </body>
+      </html>
+    `);
+  }
+}
+

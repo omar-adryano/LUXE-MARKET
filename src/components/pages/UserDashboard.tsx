@@ -44,13 +44,29 @@ export const UserDashboard: React.FC = () => {
     orders.find(o => o.status === 'Shipped' || o.status === 'Processing') || orders[0]
   );
 
-  const [activeSubTab, setActiveSubTab] = useState<'orders' | 'profile' | 'wishlist'>('orders');
+  const [activeSubTab, setActiveSubTab] = useState<'orders' | 'profile'>(
+    window.location.hash === '#profile' ? 'profile' : 'orders'
+  );
+
+  React.useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#profile') {
+        setActiveSubTab('profile');
+      } else {
+        setActiveSubTab('orders');
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    // Initial check
+    handleHash();
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   // Profile Form States
   const [profileName, setProfileName] = useState(user.name);
   const [profileEmail, setProfileEmail] = useState(user.email);
-  const [profilePhone, setProfilePhone] = useState(localStorage.getItem('luxe_phone') || '+1 (555) 019-2834');
-  const [profileAddress, setProfileAddress] = useState(localStorage.getItem('luxe_address') || ' at Luxe Atelier Loft, High-Street Flat 4D');
+  const [profilePhone, setProfilePhone] = useState(localStorage.getItem('morvex_phone') || '+1 (555) 019-2834');
+  const [profileAddress, setProfileAddress] = useState(localStorage.getItem('morvex_address') || ' at 123 Main St, Apt 4D');
   const [profileSavedFeedback, setProfileSavedFeedback] = useState(false);
 
   // Verification state helper
@@ -59,8 +75,8 @@ export const UserDashboard: React.FC = () => {
   const handleProfileSave = (e: React.FormEvent) => {
     e.preventDefault();
     updateUserField({ name: profileName, email: profileEmail });
-    localStorage.setItem('luxe_phone', profilePhone);
-    localStorage.setItem('luxe_address', profileAddress);
+    localStorage.setItem('morvex_phone', profilePhone);
+    localStorage.setItem('morvex_address', profileAddress);
     setProfileSavedFeedback(true);
     setTimeout(() => setProfileSavedFeedback(false), 3000);
   };
@@ -73,10 +89,10 @@ export const UserDashboard: React.FC = () => {
 
   // Tracking steps descriptions
   const trackingMilestones = [
-    { title: 'Registered Atelier', desc: 'Secure packaging validated by luxury logistics' },
-    { title: 'In-Transit Hub', desc: 'Package cleared customized carriage checking protocols' },
+    { title: 'Order Registered', desc: 'Secure packaging validated by fulfillment network' },
+    { title: 'In Transit', desc: 'Package cleared shipping facility' },
     { title: 'Out For Delivery', desc: 'Entrusted to local priority concierge couriers' },
-    { title: 'Safely Delivered', desc: 'Successfully signed at carriage destination' }
+    { title: 'Delivered', desc: 'Successfully signed at delivery destination' }
   ];
 
   // Tracking step resolution
@@ -96,8 +112,8 @@ export const UserDashboard: React.FC = () => {
       {/* Visual Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Authorized Session Directory</span>
-          <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Customer Operations Cabin</h2>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Account Dashboard</span>
+          <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">My Account</h2>
         </div>
 
         {/* Verification Status Banner / Callout */}
@@ -105,7 +121,7 @@ export const UserDashboard: React.FC = () => {
           {isVerified ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-500 font-mono">
               <ShieldCheck className="h-4 w-4" />
-              ATELIER VERIFIED
+              VERIFIED ACCOUNT
             </span>
           ) : (
             <div className="flex items-center gap-2">
@@ -136,7 +152,7 @@ export const UserDashboard: React.FC = () => {
               </div>
               
               {user.role === 'admin' ? (
-                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md outline outline-2 outline-white dark:outline-zinc-950" title="System Administrator Crest">
+                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-white shadow-md outline outline-2 outline-white dark:outline-zinc-950" title="System Administrator Crest">
                   <UserCheck className="h-3 w-3" />
                 </span>
               ) : (
@@ -150,7 +166,7 @@ export const UserDashboard: React.FC = () => {
             <div className="mt-4 text-center">
               <h3 className="font-serif text-base text-gray-950 dark:text-white truncate">{user.name}</h3>
               <p className="font-mono text-[9px] text-amber-500 uppercase font-semibold tracking-wider mt-1">
-                {user.role === 'admin' ? '🛡️ SYSTEM ADMINISTRATOR' : 'GOLD MEMBER PRIV PRIVÉ'}
+                {user.role === 'admin' ? '🛡️ SYSTEM ADMINISTRATOR' : 'GOLD MEMBER'}
               </p>
               <p className="mt-1 text-[10px] text-gray-400 dark:text-zinc-500 font-mono truncate">{user.email}</p>
             </div>
@@ -158,7 +174,10 @@ export const UserDashboard: React.FC = () => {
             {/* Sidebar nav selections */}
             <div className="border-t border-gray-100 mt-6 pt-6 space-y-2 text-left dark:border-zinc-900/65">
               <button
-                onClick={() => setActiveSubTab('orders')}
+                onClick={() => {
+                  setActiveSubTab('orders');
+                  window.location.hash = 'orders';
+                }}
                 className={`flex w-full items-center space-x-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeSubTab === 'orders' 
                     ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
@@ -166,28 +185,14 @@ export const UserDashboard: React.FC = () => {
                 }`}
               >
                 <Package className="h-4 w-4" />
-                <span>Shipping & History</span>
-              </button>
-
-              <button
-                onClick={() => setActiveSubTab('wishlist')}
-                className={`flex w-full items-center space-x-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
-                  activeSubTab === 'wishlist' 
-                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-900'
-                }`}
-              >
-                <Heart className="h-4 w-4" />
-                <span>Atelier Wishlist</span>
-                {wishlist.length > 0 && (
-                  <span className="ml-auto inline-flex h-4 min-w-4 items-center justify-center rounded-3xl bg-[#ff4747] text-white text-[9px] font-black px-1.5">
-                    {wishlist.length}
-                  </span>
-                )}
+                <span>Orders</span>
               </button>
               
               <button
-                onClick={() => setActiveSubTab('profile')}
+                onClick={() => {
+                  setActiveSubTab('profile');
+                  window.location.hash = 'profile';
+                }}
                 className={`flex w-full items-center space-x-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeSubTab === 'profile' 
                     ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
@@ -201,7 +206,7 @@ export const UserDashboard: React.FC = () => {
               {/* Real logout button */}
               <button
                 onClick={() => logout()}
-                className="flex w-full items-center space-x-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors mt-4 cursor-pointer"
+                className="flex w-full items-center space-x-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-red-500 hover:bg-blue-50 dark:hover:bg-red-950/20 transition-colors mt-4 cursor-pointer"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Log Out</span>
@@ -221,10 +226,15 @@ export const UserDashboard: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-100 pb-3 dark:border-zinc-900">
                   <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
                     <Truck className="h-4.5 w-4.5 text-zinc-650 dark:text-zinc-400" />
-                    <h3 className="font-serif text-sm font-semibold">Live Carriage Trackings</h3>
+                    <h3 className="font-serif text-sm font-semibold">Live Order Tracking</h3>
                   </div>
                   {selectedOrderTracking && (
-                    <span className="font-mono text-[10px] text-gray-400 mt-1 sm:mt-0">Currently tracking: <span className="font-bold text-gray-700 dark:text-zinc-300">{selectedOrderTracking.id}</span></span>
+                    <div className="flex flex-col sm:items-end mt-1 sm:mt-0">
+                      <span className="font-mono text-[10px] text-gray-400">Currently tracking: <span className="font-bold text-gray-700 dark:text-zinc-300">{selectedOrderTracking.id}</span></span>
+                      {selectedOrderTracking.trackingNumber && (
+                        <span className="font-mono text-[10px] text-zinc-500 mt-0.5">Tracking code: <span className="text-blue-500 dark:text-blue-400">{selectedOrderTracking.trackingNumber}</span></span>
+                      )}
+                    </div>
                   )}
                 </div>
 
@@ -281,12 +291,12 @@ export const UserDashboard: React.FC = () => {
                 )}
               </div>
 
-              {/* General carriage log directory (Mockup 5 Bottom historical logs table) */}
+              {/* General order history (Mockup 5 Bottom historical logs table) */}
               <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-md dark:border-zinc-900 dark:bg-zinc-950/20">
                 <div className="border-b border-gray-100 pb-3 mb-4 dark:border-zinc-900 flex justify-between items-center">
                   <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
                     <Clock className="h-4.5 w-4.5 text-zinc-650 dark:text-zinc-400" />
-                    <h3 className="font-serif text-sm font-semibold">Carriage Order Histories</h3>
+                    <h3 className="font-serif text-sm font-semibold">Order History</h3>
                   </div>
                   <span className="font-mono text-[9px] text-gray-400">Total registers ({orders.length})</span>
                 </div>
@@ -299,7 +309,7 @@ export const UserDashboard: React.FC = () => {
                         <th className="pb-3 pr-2">Submission Date</th>
                         <th className="pb-3 pr-2">Curated Contents summary</th>
                         <th className="pb-3 pr-2">Amount Summary</th>
-                        <th className="pb-3 text-right">Carriage Statuses</th>
+                        <th className="pb-3 text-right">Order Status</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-zinc-900">
@@ -349,91 +359,13 @@ export const UserDashboard: React.FC = () => {
                 </div>
               </div>
             </>
-          ) : activeSubTab === 'wishlist' ? (
-            <div className="space-y-6">
-              <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-md dark:border-zinc-900 dark:bg-zinc-950/20">
-                <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900 flex justify-between items-center">
-                  <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Customer Atelier Wishlist</h3>
-                  <span className="font-mono text-[9px] text-[#ff4747] font-bold">TOTAL REGISTERED ITEMS ({wishlist.length})</span>
-                </div>
-
-                {wishlist.length > 0 ? (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {wishlist.map(product => (
-                      <div 
-                        key={product.id}
-                        onClick={() => {
-                          setSelectedProduct(product);
-                          setActiveView('product');
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                        className="group cursor-pointer rounded-xl border border-slate-200 bg-white p-3 shadow-none transition-all duration-150 hover:border-[#ff4747] dark:border-zinc-850 dark:bg-zinc-900/40 flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="relative aspect-square w-full overflow-hidden rounded bg-slate-105 dark:bg-zinc-950">
-                            <img 
-                              src={product.image} 
-                              alt={product.name} 
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              referrerPolicy="no-referrer"
-                            />
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleWishlist(product);
-                              }}
-                              className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-3xl bg-[#ff4747] text-white shadow-sm hover:bg-zinc-900 transition-colors cursor-pointer"
-                              title="Remove from Wishlist"
-                            >
-                              <Heart className="h-3.5 w-3.5 fill-current text-white" />
-                            </button>
-                          </div>
-
-                          <div className="mt-3">
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-slate-400 dark:text-zinc-550">{product.category}</span>
-                            <h4 className="mt-0.5 font-sans text-xs font-black uppercase text-slate-900 dark:text-zinc-50 line-clamp-1 tracking-tight">{product.name}</h4>
-                            <p className="mt-1 font-mono text-xs font-bold text-slate-900 dark:text-white">${product.price.toFixed(2)}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t border-slate-55 dark:border-zinc-900">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              addToCart(product, 1);
-                            }}
-                            className="w-full flex items-center justify-center space-x-1.5 rounded bg-[#ff4747] py-2 text-[10px] font-bold uppercase text-white hover:bg-slate-900 transition-colors cursor-pointer"
-                          >
-                            <ShoppingBag className="h-3.5 w-3.5" />
-                            <span>Add to Cart</span>
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="py-12 text-center text-gray-400 font-mono text-xs">
-                    <p>Atelier Wishlist is currently empty.</p>
-                    <button
-                      onClick={() => {
-                        setActiveView('home');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="mt-4 rounded-xl border border-dashed border-gray-300 hover:border-gray-500 px-4 py-2 text-[10px] uppercase font-bold text-slate-700 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer"
-                    >
-                      Explore Premium Catalog →
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
           ) : (
             /* Profile configs updates panel (Mockup 5 alternative selector) */
             <div className="space-y-6">
               <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-md dark:border-zinc-900 dark:bg-zinc-950/20">
                 <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900 flex justify-between items-center">
                   <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Profile Configuration Settings</h3>
-                  <span className="font-mono text-[9px] text-[#ff4747] font-bold">ATELIER CORE DIRECTORY</span>
+                  <span className="font-mono text-[9px] text-[#2563eb] font-bold">ACCOUNT SETTINGS</span>
                 </div>
 
                 <form onSubmit={handleProfileSave} className="space-y-4 max-w-xl">
@@ -480,7 +412,7 @@ export const UserDashboard: React.FC = () => {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-gray-400">Preferred Carriage Destination Address</label>
+                    <label className="text-[10px] font-mono uppercase text-gray-400">Preferred Delivery Destination Address</label>
                     <div className="relative">
                       <input
                         type="text"
@@ -523,7 +455,7 @@ export const UserDashboard: React.FC = () => {
                       onClick={handleToggleDevRole}
                       className="rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 px-4 py-2 text-xs font-black uppercase tracking-wide cursor-pointer transition-colors"
                     >
-                      Set as {user.role === 'admin' ? 'USER' : 'ADMIN (🛡️ OPERATIONS)'}
+                      Set as {user.role === 'admin' ? 'USER' : 'ADMIN'}
                     </button>
                     {user.role === 'admin' && (
                       <button

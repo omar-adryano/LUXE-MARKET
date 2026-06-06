@@ -16,7 +16,7 @@ async function findProductByAnyId(id: string) {
 
   const slugToNameMap: Record<string, string> = {
     'lounge-chair': 'Minimalist Lounge Chair',
-    'headphones': 'Aural Luxe Wireless Headphones',
+    'headphones': 'Aural MORVEX Wireless Headphones',
     'smartwatch': 'Chrono Minimalist Smartwatch',
     'desk-lamp': 'Lumina Architect Desk Lamp',
     'leather-tote': 'Artisan Cognac Leather Tote',

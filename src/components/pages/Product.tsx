@@ -17,11 +17,14 @@ import {
   ArrowRight,
   ChevronRight,
   Check,
-  Heart
+  Heart,
+  Clock,
+  CreditCard,
+  Lock
 } from 'lucide-react';
 
 export const ProductDetail: React.FC = () => {
-  const { selectedProduct, addToCart, recommendedProducts, setSelectedProduct, setActiveView, toggleWishlist, isInWishlist } = useApp();
+  const { selectedProduct, addToCart, products, setSelectedProduct, setActiveView, toggleWishlist, isInWishlist } = useApp();
   
   // State variables for dynamic configurations
   const [activeThumbnail, setActiveThumbnail] = useState<string>(selectedProduct.image);
@@ -66,7 +69,7 @@ export const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div id="product-detail-page" className="space-y-12">
+    <div id="product-detail-page" className="space-y-8 lg:space-y-12 pb-24 lg:pb-8">
       
       {/* Editorial Breadcrumbs */}
       <nav className="flex items-center space-x-2 font-mono text-[10px] text-gray-400 dark:text-zinc-550 uppercase tracking-widest">
@@ -78,10 +81,10 @@ export const ProductDetail: React.FC = () => {
       </nav>
 
       {/* Main Core Showcase Columns */}
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 font-sans">
+      <div className="grid grid-cols-1 gap-6 lg:gap-10 lg:grid-cols-12 font-sans">
         
-        {/* Gallery / Interactive Left Panels - 7 columns */}
-        <div className="space-y-4 lg:col-span-7">
+        {/* Gallery / Interactive Left Panels - 6 columns */}
+        <div className="space-y-4 lg:col-span-6">
           {/* Main Visual Screen */}
           <div className="relative aspect-square w-full overflow-hidden rounded border border-slate-200 bg-slate-50 dark:border-zinc-800 dark:bg-zinc-950">
             <img 
@@ -92,11 +95,13 @@ export const ProductDetail: React.FC = () => {
             />
             
             {/* Discount Percentage Floating badge */}
-            {selectedProduct.discount && (
-              <span className="absolute left-6 top-6 rounded bg-[#ff4747] px-3 py-1 text-xs font-black text-white uppercase tracking-wider">
-                SAVE {selectedProduct.discount}%
+            {((selectedProduct.originalPrice && selectedProduct.originalPrice > selectedProduct.price) || selectedProduct.discount) ? (
+              <span className="absolute left-6 top-6 rounded bg-[#2563eb] px-3 py-1 text-xs font-black text-white uppercase tracking-wider">
+                SAVE {selectedProduct.originalPrice && selectedProduct.originalPrice > selectedProduct.price
+                  ? Math.round(((selectedProduct.originalPrice - selectedProduct.price) / selectedProduct.originalPrice) * 100)
+                  : selectedProduct.discount}%
               </span>
-            )}
+            ) : null}
           </div>
 
           {/* Photo Deck / Thumbnail Strips */}
@@ -107,7 +112,7 @@ export const ProductDetail: React.FC = () => {
                 onClick={() => setActiveThumbnail(thumbUrl)}
                 className={`relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded border transition-all ${
                   activeThumbnail === thumbUrl 
-                    ? 'border-[#ff4747]' 
+                    ? 'border-[#2563eb]' 
                     : 'border-slate-200 bg-slate-50/50 hover:border-slate-400 dark:border-zinc-800 dark:bg-zinc-900/35'
                 }`}
               >
@@ -122,45 +127,33 @@ export const ProductDetail: React.FC = () => {
           </div>
         </div>
 
-        {/* Configurations & Spec Panel Right - 5 columns */}
-        <div className="space-y-6 lg:col-span-5">
+        {/* Configurations & Spec Panel Right - 6 columns */}
+        <div className="space-y-6 lg:col-span-6 sticky top-24 self-start pb-10">
           <div>
-            <span className="font-mono text-[9px] uppercase tracking-widest text-[#ff4747] font-black">{selectedProduct.category} Selection</span>
-            <h1 className="mt-1 font-sans text-3xl font-black uppercase leading-tight tracking-tight text-slate-900 dark:text-white">{selectedProduct.name}</h1>
-            
-            {/* Rating Stars Mock */}
-            <div className="mt-3 flex items-center space-x-2">
-              <div className="flex space-x-0.5 text-yellow-500">
-                {[1, 2, 3, 4, 5].map(star => (
-                  <svg key={star} className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="font-mono text-[10px] text-slate-400 dark:text-zinc-500 font-bold uppercase">4.9 • 86 certified reviews</span>
-            </div>
+            <span className="font-mono text-[9px] uppercase tracking-widest text-[#2563eb] font-black">{selectedProduct.category} Selection</span>
+            <h1 className="mt-1 font-sans text-3xl font-bold uppercase leading-tight tracking-tight text-slate-900 dark:text-white">{selectedProduct.name}</h1>
           </div>
 
           {/* Pricing structures */}
           <div className="rounded border border-slate-200 bg-slate-50 p-5 dark:bg-zinc-900/40 dark:border-zinc-800">
             <div className="flex items-baseline space-x-3">
               <span className="text-2xl font-black text-slate-900 dark:text-white">${selectedProduct.price.toFixed(2)}</span>
-              {selectedProduct.originalPrice && (
+              {selectedProduct.originalPrice && selectedProduct.originalPrice > selectedProduct.price && (
                 <>
                   <span className="text-sm text-slate-400 line-through font-mono dark:text-zinc-600">${selectedProduct.originalPrice.toFixed(2)}</span>
-                  <span className="font-mono text-xs text-[#ff4747] font-black">
+                  <span className="font-mono text-xs text-[#2563eb] font-black">
                     (Save ${(selectedProduct.originalPrice - selectedProduct.price).toFixed(2)})
                   </span>
                 </>
               )}
             </div>
-            <p className="mt-2 text-[10px] text-slate-400 dark:text-zinc-550 leading-relaxed font-mono uppercase font-bold">Duty-free and ready for fast delivery package tracking privileges.</p>
+            <p className="mt-2 text-[10px] text-slate-400 dark:text-zinc-550 leading-relaxed font-mono uppercase font-bold">Prices include applicable taxes. Shipping calculated at checkout.</p>
           </div>
 
           {/* Color configs */}
           {selectedProduct.colors && (
             <div className="space-y-3">
-              <h4 className="font-mono text-[9px] uppercase tracking-wider text-slate-400 dark:text-zinc-500 font-bold">FRAME METAL ACCENT: <span className="text-[#ff4747] font-black">{selectedColor}</span></h4>
+              <h4 className="font-mono text-[9px] uppercase tracking-wider text-slate-400 dark:text-zinc-500 font-bold">FRAME METAL ACCENT: <span className="text-[#2563eb] font-black">{selectedColor}</span></h4>
               <div className="flex space-x-3">
                 {selectedProduct.colors.map((colHex, i) => {
                   const names = ['Arctic Silk', 'Matte Carbon', 'Muted Brass'];
@@ -170,7 +163,7 @@ export const ProductDetail: React.FC = () => {
                       key={i}
                       onClick={() => setSelectedColor(name)}
                       className={`h-7 w-7 rounded-sm border-2 transition-all ${
-                        selectedColor === name ? 'border-[#ff4747] scale-110' : 'border-slate-300 hover:border-[#ff4747]'
+                        selectedColor === name ? 'border-[#2563eb] scale-110' : 'border-slate-300 hover:border-[#2563eb]'
                       }`}
                       style={{ backgroundColor: colHex }}
                       title={name}
@@ -192,7 +185,7 @@ export const ProductDetail: React.FC = () => {
                     onClick={() => setSelectedMaterial(mat)}
                     className={`flex items-center justify-between rounded border p-3 text-left text-xs font-black uppercase tracking-wider transition-all ${
                       selectedMaterial === mat
-                        ? 'border-[#ff4747] bg-[#ff4747] text-white'
+                        ? 'border-[#2563eb] bg-[#2563eb] text-white'
                         : 'border-slate-200 text-slate-600 hover:border-slate-400 dark:border-zinc-800 dark:text-zinc-400'
                     }`}
                   >
@@ -205,8 +198,8 @@ export const ProductDetail: React.FC = () => {
           )}
 
           {/* Quantity selector & CTA buttons */}
-          <div className="space-y-4 pt-2">
-            <div className="flex items-center space-x-4">
+          <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 pt-3 pb-6 px-4 shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.1)] lg:shadow-none lg:px-0 backdrop-blur-md border-t border-slate-100 dark:bg-zinc-950/95 dark:border-zinc-900 lg:static lg:border-t-0 lg:bg-transparent lg:p-0 lg:-mx-0 lg:backdrop-blur-none space-y-3 lg:space-y-4 lg:pt-2">
+            <div className="flex items-center space-x-3 lg:space-x-4">
               <div className="flex items-center rounded border border-slate-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-900">
                 <button
                   onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
@@ -226,10 +219,10 @@ export const ProductDetail: React.FC = () => {
               {/* Add to Cart button */}
               <button
                 onClick={handleAddToCart}
-                className="flex flex-1 items-center justify-center space-x-2 rounded bg-[#ff4747] hover:bg-slate-900 py-3.5 text-xs font-bold uppercase text-white shadow-none transition-colors dark:text-white"
+                className="flex flex-1 items-center justify-center space-x-2 rounded bg-[#2563eb] hover:bg-slate-900 py-3.5 text-xs font-bold uppercase text-white shadow-none transition-colors dark:text-white"
               >
                 <ShoppingBag className="h-4 w-4" />
-                <span>Add To Boutique Cart</span>
+                <span>Add To Cart</span>
               </button>
 
               {/* Wishlist toggle button */}
@@ -237,7 +230,7 @@ export const ProductDetail: React.FC = () => {
                 onClick={() => toggleWishlist(selectedProduct)}
                 className={`flex h-11 w-11 shrink-0 items-center justify-center rounded border transition-colors ${
                   isInWishlist(selectedProduct.id)
-                    ? 'border-red-500 bg-red-50 text-red-500 dark:bg-rose-955/20 dark:text-rose-450'
+                    ? 'border-red-500 bg-blue-50 text-red-500 dark:bg-rose-955/20 dark:text-rose-450'
                     : 'border-slate-200 bg-white text-gray-400 hover:border-slate-400 dark:border-zinc-850 dark:bg-zinc-900/40 dark:text-zinc-500 dark:hover:text-zinc-400'
                 }`}
                 title={isInWishlist(selectedProduct.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
@@ -249,10 +242,33 @@ export const ProductDetail: React.FC = () => {
             {/* Buy now direct path button */}
             <button
               onClick={handleBuyNow}
-              className="w-full rounded border-2 border-[#ff4747] bg-white py-3.5 text-xs font-bold uppercase tracking-wider text-slate-900 hover:bg-[#ff4747] hover:text-white transition-colors dark:bg-zinc-950 dark:text-white"
+              className="w-full mt-2 flex items-center justify-center gap-1.5 rounded border-2 border-[#2563eb] bg-white py-3.5 text-xs font-bold uppercase tracking-wider text-slate-900 hover:bg-[#2563eb] hover:text-white transition-colors dark:bg-zinc-950 dark:text-white"
             >
-              Direct Secure Checkout
+              <Lock className="h-3.5 w-3.5" />
+              Secure Checkout
             </button>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-6 border-t border-slate-100 pt-6 dark:border-zinc-900">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-2">
+                <Truck className="h-5 w-5 text-slate-400" />
+                <span className="text-xs font-medium text-slate-600 dark:text-zinc-400">Fast Shipping</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-5 w-5 text-slate-400" />
+                <span className="text-xs font-medium text-slate-600 dark:text-zinc-400">Buyer Protection</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-slate-400" />
+                <span className="text-xs font-medium text-slate-600 dark:text-zinc-400">Customer Support</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-slate-400" />
+                <span className="text-xs font-medium text-slate-600 dark:text-zinc-400">Secure Payment</span>
+              </div>
+            </div>
           </div>
 
           {/* Accordion Specification sheets */}
@@ -278,7 +294,7 @@ export const ProductDetail: React.FC = () => {
 
             {activeTab === 'details' ? (
               <p className="text-xs text-gray-400 dark:text-zinc-500 leading-relaxed">
-                {selectedProduct.description || 'Premium material composition engineered by the Luxe design group. This item combines pure material structures with optimal user configuration.'}
+                {selectedProduct.description || 'Premium material composition engineered by the MORVEX design group. This item combines pure material structures with optimal user configuration.'}
               </p>
             ) : (
               <ul className="space-y-2 text-xs text-gray-400 dark:text-zinc-500 font-sans">
@@ -293,36 +309,20 @@ export const ProductDetail: React.FC = () => {
                   <>
                     <li className="flex items-center space-x-2">
                       <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                      <span>Certified GreenGuard Gold Air Quality Standards</span>
+                      <span>Category: {selectedProduct.category}</span>
                     </li>
                     <li className="flex items-center space-x-2">
                       <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                      <span>Architectural grade steel and components</span>
+                      <span>Status: In Stock</span>
                     </li>
                     <li className="flex items-center space-x-2">
                       <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                      <span>30-Day home validation assurance guarantee</span>
+                      <span>100% Secure Checkout</span>
                     </li>
                   </>
                 )}
               </ul>
             )}
-          </div>
-
-          {/* Trust indicators */}
-          <div className="grid grid-cols-3 gap-3 border-t border-gray-100 pt-4 dark:border-zinc-900 text-center">
-            <div className="flex flex-col items-center p-2 rounded-xl bg-gray-50/50 dark:bg-zinc-900/10">
-              <Truck className="h-4 w-4 text-zinc-500" />
-              <span className="mt-1 text-[8px] font-mono uppercase text-gray-400">Free Courier</span>
-            </div>
-            <div className="flex flex-col items-center p-2 rounded-xl bg-gray-50/50 dark:bg-zinc-900/10">
-              <ShieldCheck className="h-4 w-4 text-zinc-500" />
-              <span className="mt-1 text-[8px] font-mono uppercase text-gray-400">5-Year Warranty</span>
-            </div>
-            <div className="flex flex-col items-center p-2 rounded-xl bg-gray-50/50 dark:bg-zinc-900/10">
-              <Award className="h-4 w-4 text-zinc-500" />
-              <span className="mt-1 text-[8px] font-mono uppercase text-gray-400">Original Design</span>
-            </div>
           </div>
         </div>
 
@@ -332,16 +332,20 @@ export const ProductDetail: React.FC = () => {
       <section className="border-t border-gray-100 pt-10 dark:border-zinc-900">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Styling recommendations</span>
-            <h3 className="mt-1 font-serif text-xl font-normal text-gray-950 dark:text-white">Complete the Atelier Look</h3>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Related from {selectedProduct.category}</span>
+            <h3 className="mt-1 font-serif text-xl font-normal text-gray-950 dark:text-white">Frequently Bought Together</h3>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {recommendedProducts.map((p) => (
-            <div 
-              key={p.id}
-              onClick={() => handleRecommendClick(p)}
+          {(() => {
+            const related = products.filter(p => p.category === selectedProduct.category && p.id !== selectedProduct.id);
+            const others = products.filter(p => p.category !== selectedProduct.category && p.id !== selectedProduct.id);
+            const combined = [...related, ...others].slice(0, 4);
+            return combined.map((p) => (
+              <div 
+                key={p.id}
+                onClick={() => handleRecommendClick(p)}
               className="group cursor-pointer rounded-2xl border border-gray-100 bg-white p-3 hover:border-zinc-300 dark:border-zinc-900 dark:bg-zinc-900/20 dark:hover:border-zinc-700"
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-gray-50 dark:bg-zinc-950">
@@ -354,11 +358,12 @@ export const ProductDetail: React.FC = () => {
               </div>
               <h4 className="mt-3 font-serif text-sm text-gray-800 dark:text-zinc-100 line-clamp-1">{p.name}</h4>
               <div className="mt-1 flex items-center justify-between">
-                <span className="text-xs font-semibold text-gray-900 dark:text-white">${p.price}</span>
+                <span className="text-xs font-semibold text-gray-900 dark:text-white">${p.price.toFixed(2)}</span>
                 <span className="font-mono text-[9px] text-gray-400 select-none group-hover:text-zinc-900 dark:group-hover:text-white">Inspect →</span>
               </div>
             </div>
-          ))}
+            ));
+          })()}
         </div>
       </section>
 

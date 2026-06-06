@@ -1,0 +1,3 @@
+◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+== FILL REST ==
+Need 2 more for Baby & Kids

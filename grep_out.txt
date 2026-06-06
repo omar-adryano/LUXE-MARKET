@@ -1,0 +1,219 @@
+src/components/pages/Cart.tsx:        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Boutique Shopping Cart</h2>
+src/components/pages/Cart.tsx:            className="mt-6 inline-flex items-center space-x-2 rounded-full bg-zinc-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
+src/components/pages/Cart.tsx:                        className="font-serif text-sm text-gray-900 hover:text-zinc-650 cursor-pointer dark:text-white dark:hover:text-zinc-300"
+src/components/pages/Cart.tsx:                      <span className="w-8 text-center font-mono text-xs text-gray-900 dark:text-white">{item.quantity}</span>
+src/components/pages/Cart.tsx:                    <span className="font-serif text-sm font-semibold text-gray-950 dark:text-white">
+src/components/pages/Cart.tsx:              className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-500 hover:text-gray-950 dark:text-zinc-400 dark:hover:text-white"
+src/components/pages/Cart.tsx:              <h3 className="font-serif text-base text-gray-900 dark:text-white">Order Summary</h3>
+src/components/pages/Cart.tsx:                  <span className="font-mono text-gray-950 dark:text-white">${subtotal.toFixed(2)}</span>
+src/components/pages/Cart.tsx:                  <span className="font-mono text-gray-950 dark:text-white">
+src/components/pages/Cart.tsx:                <div className="border-t border-gray-100 pt-3.5 dark:border-zinc-900 flex justify-between font-serif text-sm font-semibold text-gray-950 dark:text-white">
+src/components/pages/Cart.tsx:                      className="w-full rounded-xl border border-gray-200 bg-white py-2 pl-3 pr-10 text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Cart.tsx:                      className="absolute right-1 top-1 rounded-lg bg-zinc-900 px-3 py-1 text-[10px] font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
+src/components/pages/Cart.tsx:                  className="w-full flex items-center justify-between rounded-xl bg-zinc-900 px-5 py-4 text-xs font-semibold text-white shadow-md hover:bg-zinc-855 transition-all dark:bg-white dark:text-zinc-950"
+src/components/pages/Cart.tsx:          <h3 className="mt-1 font-serif text-xl font-normal text-gray-900 dark:text-white">Recently Viewed Selection</h3>
+src/components/pages/Cart.tsx:                <span className="text-xs font-semibold text-gray-900 dark:text-white">${prod.price}</span>
+src/components/pages/Cart.tsx:                <span className="font-mono text-[9px] text-gray-400 select-none group-hover:text-zinc-950 dark:group-hover:text-white">Inspect →</span>
+src/components/pages/Home.tsx:      <section className="relative overflow-hidden rounded-xl bg-gradient-to-r from-[#ff8c00] to-[#ff4747] text-white border border-slate-200 dark:border-zinc-800 shadow-sm">
+src/components/pages/Home.tsx:            <div className="inline-flex items-center space-x-1.5 rounded bg-slate-900 px-3 py-1 text-white w-fit">
+src/components/pages/Home.tsx:            <p className="mt-4 max-w-lg text-sm text-white/90 leading-relaxed font-sans font-medium">
+src/components/pages/Home.tsx:                  className="group flex items-center space-x-2 rounded bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-150 hover:bg-slate-850"
+src/components/pages/Home.tsx:                className="rounded border border-white bg-transparent px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/10 transition-all font-sans"
+src/components/pages/Home.tsx:                <p className="text-[10px] font-mono tracking-wider text-white/80 uppercase mt-1">Available Products</p>
+src/components/pages/Home.tsx:                <p className="text-[10px] font-mono tracking-wider text-white/80 uppercase mt-1">Average Rating</p>
+src/components/pages/Home.tsx:                <p className="text-[10px] font-mono tracking-wider text-white/80 uppercase mt-1">Quality Assurance</p>
+src/components/pages/Home.tsx:            <h2 className="mt-1 font-sans text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">BENTO CONSOLE HIGHLIGHTS</h2>
+src/components/pages/Home.tsx:                <h3 className="mt-4 font-sans text-xl sm:text-2xl font-black uppercase text-gray-900 dark:text-white leading-tight line-clamp-2">{mainHighlight.name}</h3>
+src/components/pages/Home.tsx:                  className="mt-4 group inline-flex items-center space-x-2 rounded bg-slate-900 px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
+src/components/pages/Home.tsx:                <h4 className="mt-3 font-sans text-sm font-black uppercase text-gray-900 dark:text-white leading-tight line-clamp-1">{footwearHighlight.name}</h4>
+src/components/pages/Home.tsx:                  className="absolute bottom-2 right-2 rounded bg-slate-900/90 p-2 text-white hover:bg-[#ff4747] dark:bg-zinc-950/90"
+src/components/pages/Home.tsx:                <h4 className="mt-2 font-sans text-sm font-black uppercase text-gray-900 dark:text-white leading-tight line-clamp-1">{serumHighlight.name}</h4>
+src/components/pages/Home.tsx:                  className="absolute bottom-2 right-2 rounded bg-slate-900/90 p-2 text-white hover:bg-[#ff4747] dark:bg-zinc-950/90"
+src/components/pages/Home.tsx:            <h2 className="mt-1 font-sans text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">The Active Operations Catalog</h2>
+src/components/pages/Home.tsx:                    ? 'bg-[#ff4747] text-white'
+src/components/pages/Home.tsx:                  <span className="absolute left-2 top-2 rounded bg-[#ff4747] px-2 py-0.5 text-[9px] font-black text-white uppercase tracking-wider">
+src/components/pages/Home.tsx:                      ? 'bg-red-500 border-red-500 text-white hover:bg-red-650'
+src/components/pages/Home.tsx:                  className="absolute bottom-2.5 right-2.5 flex h-8 w-8 items-center justify-center rounded bg-slate-900/95 text-white opacity-0 shadow-lg transition-all duration-200 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-[#ff4747] dark:bg-white/95 dark:text-zinc-950 dark:hover:bg-[#ff4747] dark:hover:text-white"
+src/components/pages/Home.tsx:                    <span className="text-sm font-black text-slate-900 dark:text-white">${product.price.toFixed(2)}</span>
+src/components/pages/UserDashboard.tsx:          <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Customer Operations Cabin</h2>
+src/components/pages/UserDashboard.tsx:              <div className="flex h-full w-full items-center justify-center rounded-full bg-zinc-950 text-white font-serif text-2xl uppercase">
+src/components/pages/UserDashboard.tsx:                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md outline outline-2 outline-white dark:outline-zinc-950" title="System Administrator Crest">
+src/components/pages/UserDashboard.tsx:              <h3 className="font-serif text-base text-gray-950 dark:text-white truncate">{user.name}</h3>
+src/components/pages/UserDashboard.tsx:                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
+src/components/pages/UserDashboard.tsx:                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
+src/components/pages/UserDashboard.tsx:                  <span className="ml-auto inline-flex h-4 min-w-4 items-center justify-center rounded-3xl bg-[#ff4747] text-white text-[9px] font-black px-1.5">
+src/components/pages/UserDashboard.tsx:                    ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
+src/components/pages/UserDashboard.tsx:                  <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
+src/components/pages/UserDashboard.tsx:                                  ? 'border-zinc-900 bg-zinc-900 text-white dark:border-white dark:bg-white dark:text-zinc-950 font-bold' 
+src/components/pages/UserDashboard.tsx:                                  <CheckCircle className="h-4.5 w-4.5 text-white dark:text-zinc-950 fill-current" />
+src/components/pages/UserDashboard.tsx:                                <h4 className={`text-xs font-semibold ${isCompleted ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-zinc-650'}`}>{milestone.title}</h4>
+src/components/pages/UserDashboard.tsx:                  <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
+src/components/pages/UserDashboard.tsx:                              <td className="py-4 font-mono font-bold text-gray-950 dark:text-white pr-2">
+src/components/pages/UserDashboard.tsx:                              <td className="py-4 font-mono text-gray-900 dark:text-white pr-2">${ord.total.toFixed(2)}</td>
+src/components/pages/UserDashboard.tsx:                  <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Customer Atelier Wishlist</h3>
+src/components/pages/UserDashboard.tsx:                              className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-3xl bg-[#ff4747] text-white shadow-sm hover:bg-zinc-900 transition-colors cursor-pointer"
+src/components/pages/UserDashboard.tsx:                              <Heart className="h-3.5 w-3.5 fill-current text-white" />
+src/components/pages/UserDashboard.tsx:                            <p className="mt-1 font-mono text-xs font-bold text-slate-900 dark:text-white">${product.price.toFixed(2)}</p>
+src/components/pages/UserDashboard.tsx:                            className="w-full flex items-center justify-center space-x-1.5 rounded bg-[#ff4747] py-2 text-[10px] font-bold uppercase text-white hover:bg-slate-900 transition-colors cursor-pointer"
+src/components/pages/UserDashboard.tsx:                      className="mt-4 rounded-xl border border-dashed border-gray-300 hover:border-gray-500 px-4 py-2 text-[10px] uppercase font-bold text-slate-700 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer"
+src/components/pages/UserDashboard.tsx:                  <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Profile Configuration Settings</h3>
+src/components/pages/UserDashboard.tsx:                        className="w-full rounded-xl border border-gray-200 bg-white pl-9 pr-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-white"
+src/components/pages/UserDashboard.tsx:                        className="w-full rounded-xl border border-gray-200 bg-white pl-9 pr-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-white"
+src/components/pages/UserDashboard.tsx:                        className="w-full rounded-xl border border-gray-200 bg-white pl-9 pr-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-white"
+src/components/pages/UserDashboard.tsx:                        className="w-full rounded-xl border border-gray-200 bg-white pl-9 pr-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-white"
+src/components/pages/UserDashboard.tsx:                    className="rounded-xl bg-zinc-950 px-6 py-2.5 text-xs font-bold text-white hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 cursor-pointer"
+src/components/pages/Auth.tsx:          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#ff4747] to-[#ff7a7a] text-white shadow-md">
+src/components/pages/Auth.tsx:          <h2 className="mt-4 font-serif text-xl font-bold tracking-tight text-slate-900 dark:text-white uppercase">
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:              className="mt-2 w-full cursor-pointer justify-center rounded-2xl bg-zinc-950 py-3 text-xs font-bold text-white transition-all transform hover:scale-[1.01] hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 uppercase tracking-widest"
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                    className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                    className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 px-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white appearance-none"
+src/components/pages/Auth.tsx:                    className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:              className="mt-2 w-full cursor-pointer justify-center rounded-2xl bg-zinc-950 py-3 text-xs font-bold text-white transition-all transform hover:scale-[1.01] hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 uppercase tracking-widest"
+src/components/pages/Auth.tsx:                className="w-full rounded-2xl border border-gray-200 bg-gray-50/75 py-2.5 px-4 text-xs outline-none dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                className="w-full text-center rounded-2xl border-2 border-dashed border-red-200 bg-white py-3 font-mono text-2xl font-black tracking-[10px] outline-none focus:border-red-500 focus:border-solid dark:border-zinc-800 dark:bg-zinc-900/40 dark:text-white"
+src/components/pages/Auth.tsx:              className="mt-2 w-full cursor-pointer justify-center rounded-2xl bg-zinc-950 py-3 text-xs font-bold text-white transition-all transform hover:scale-[1.01] hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 uppercase tracking-widest"
+src/components/pages/Auth.tsx:                className="inline-flex items-center space-x-1.5 text-xs text-gray-400 hover:text-gray-950 dark:text-zinc-500 dark:hover:text-white"
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs tracking-tight outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:              className="mt-2 w-full cursor-pointer justify-center rounded-2xl bg-[#ff4747] py-3 text-xs font-bold text-white transition-all transform hover:scale-[1.01] hover:bg-[#ff3030] uppercase tracking-widest"
+src/components/pages/Auth.tsx:                className="inline-flex items-center space-x-1.5 text-xs text-gray-400 hover:text-gray-950 dark:text-zinc-500 dark:hover:text-white"
+src/components/pages/Auth.tsx:                  className="mt-2 inline-flex items-center space-x-1 rounded bg-red-600 px-2.5 py-1 text-[10px] font-black uppercase text-white hover:bg-red-500"
+src/components/pages/Auth.tsx:                className="w-full rounded-2xl border border-gray-200 bg-gray-55/70 py-2.5 px-4 text-xs outline-none dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:                className="w-full text-center rounded-2xl border border-gray-200 bg-white py-2 text-lg font-mono tracking-widest outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/65 dark:text-white"
+src/components/pages/Auth.tsx:                  className="w-full rounded-2xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-xs outline-none focus:border-red-500 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
+src/components/pages/Auth.tsx:              className="mt-2 w-full cursor-pointer justify-center rounded-2xl bg-zinc-950 py-3 text-xs font-bold text-white transition-all transform hover:scale-[1.01] hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 uppercase tracking-widest"
+src/components/pages/Auth.tsx:                className="inline-flex items-center space-x-1.5 text-xs text-gray-400 hover:text-gray-950 dark:text-zinc-500 dark:hover:text-white"
+src/components/pages/AdminDashboard.tsx:        <RefreshCw className="h-6 w-6 text-zinc-950 animate-spin dark:text-white" />
+src/components/pages/AdminDashboard.tsx:        <h3 className="font-serif text-lg text-gray-950 dark:text-white">Operations Cabin Locked</h3>
+src/components/pages/AdminDashboard.tsx:          className="cursor-pointer font-mono text-[10px] uppercase tracking-wider px-4 py-2 bg-zinc-950 text-white rounded-xl hover:bg-zinc-800 transition-all dark:bg-white dark:text-zinc-950"
+src/components/pages/AdminDashboard.tsx:        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Retailer Administration Console</h2>
+src/components/pages/AdminDashboard.tsx:          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">{stats.totalUsers}</p>
+src/components/pages/AdminDashboard.tsx:          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">{stats.totalProducts} Products</p>
+src/components/pages/AdminDashboard.tsx:            <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-[10px] font-mono py-1 px-1.5 rounded-md absolute -translate-y-12 shadow-md">
+src/components/pages/AdminDashboard.tsx:            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Replenish Gallery Cabin Stock</h3>
+src/components/pages/AdminDashboard.tsx:                className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                className="w-full rounded-xl border border-gray-205 bg-white px-3 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                  className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                  className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:              className="w-full cursor-pointer flex items-center justify-center space-x-2 rounded-xl bg-zinc-900 py-3 text-xs font-semibold text-white hover:bg-zinc-800 transition-colors dark:bg-white dark:text-zinc-950"
+src/components/pages/AdminDashboard.tsx:            <h3 className="font-serif text-base font-semibold text-gray-950 dark:text-white flex items-center gap-2">
+src/components/pages/AdminDashboard.tsx:            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync AliExpress Inventory</h4>
+src/components/pages/AdminDashboard.tsx:            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync AliExpress Pricing</h4>
+src/components/pages/AdminDashboard.tsx:            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync Order Fulfillment</h4>
+src/components/pages/AdminDashboard.tsx:          <h4 className="text-xs font-serif font-semibold text-gray-950 dark:text-white mb-2 flex items-center gap-1.5">
+src/components/pages/AdminDashboard.tsx:                className="w-full rounded-xl border border-gray-200 bg-white pl-10 pr-3.5 py-2.5 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white font-mono"
+src/components/pages/AdminDashboard.tsx:              className="px-6 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 flex items-center justify-center space-x-2 text-xs font-semibold text-white transition-all cursor-pointer shadow-sm"
+src/components/pages/AdminDashboard.tsx:                    className="mt-3 w-full rounded p-2 text-[10px] font-bold text-white bg-zinc-900 hover:bg-zinc-800 uppercase tracking-widest disabled:opacity-50 transition-colors"
+src/components/pages/AdminDashboard.tsx:            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Recent Operations Orders Ledger</h3>
+src/components/pages/AdminDashboard.tsx:                        <span className="font-mono font-medium text-gray-900 dark:text-white block">
+src/components/pages/AdminDashboard.tsx:                      <td className="py-3 text-right font-mono text-gray-900 dark:text-white font-medium pr-1">
+src/components/pages/AdminDashboard.tsx:            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Registered Customer Ledger</h3>
+src/components/pages/AdminDashboard.tsx:                        <span className="font-medium text-gray-900 dark:text-white block font-sans">
+src/components/pages/AdminDashboard.tsx:            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Storefront Catalogue Inventory</h3>
+src/components/pages/AdminDashboard.tsx:                className="rounded-xl border border-gray-200 bg-white dark:border-zinc-805 dark:bg-zinc-900 dark:text-white pl-8 pr-3 py-1.5 text-xs outline-none focus:border-zinc-500"
+src/components/pages/AdminDashboard.tsx:                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'active' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
+src/components/pages/AdminDashboard.tsx:                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'archived' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
+src/components/pages/AdminDashboard.tsx:                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'aliexpress' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
+src/components/pages/AdminDashboard.tsx:                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'manual' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
+src/components/pages/AdminDashboard.tsx:              <span className="text-xs font-mono font-bold text-gray-950 dark:text-white block">
+src/components/pages/AdminDashboard.tsx:              className="rounded-xl border border-gray-205 bg-white dark:border-zinc-805 dark:bg-zinc-900 dark:text-white px-3.5 py-1.5 text-xs outline-none focus:border-zinc-500 font-mono cursor-pointer"
+src/components/pages/AdminDashboard.tsx:                  ? 'bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 hover:opacity-90 shadow-[0_1px_3px_rgba(0,0,0,0.1)]'
+src/components/pages/AdminDashboard.tsx:                          <span className="font-serif text-xs font-semibold text-gray-950 dark:text-white block">
+src/components/pages/AdminDashboard.tsx:                      <td className="py-3 text-right font-mono text-gray-900 dark:text-white font-medium pl-1">
+src/components/pages/AdminDashboard.tsx:                            className="cursor-pointer p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-all focus:outline-none"
+src/components/pages/AdminDashboard.tsx:                            className="cursor-pointer p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-all focus:outline-none"
+src/components/pages/AdminDashboard.tsx:                  <h4 className="font-serif text-base font-bold text-gray-950 dark:text-white leading-tight mt-1">
+src/components/pages/AdminDashboard.tsx:                  <p className="text-sm font-semibold font-mono text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                  <p className="text-sm font-semibold font-mono text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                  <p className="text-xs font-semibold capitalize font-mono text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                  className="cursor-pointer px-4 py-2 text-xs font-semibold bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl hover:opacity-90 transition-all font-mono"
+src/components/pages/AdminDashboard.tsx:                <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white mt-0.5">
+src/components/pages/AdminDashboard.tsx:                        className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                          className="w-full rounded-xl border border-gray-205 bg-white px-3 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                          className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                        className="w-full rounded-xl border border-gray-250 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                        className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                        className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Published Status</span>
+src/components/pages/AdminDashboard.tsx:                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Archive Catalog Item</span>
+src/components/pages/AdminDashboard.tsx:                          className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                          className="w-full rounded-xl border border-gray-205 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/AdminDashboard.tsx:                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Unpublish From Storefront</span>
+src/components/pages/AdminDashboard.tsx:                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Archive Gallery Catalog Item</span>
+src/components/pages/AdminDashboard.tsx:                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">De-Authorize AliExpress Automation</span>
+src/components/pages/AdminDashboard.tsx:                    className="cursor-pointer px-4 py-2 text-xs font-semibold bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl hover:opacity-90 transition-all font-mono"
+src/components/pages/AdminDashboard.tsx:                <h4 className="font-serif text-sm font-bold text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                  Are you absolutely certain you wish to delete <span className="font-semibold text-gray-950 dark:text-white">"{isConfirmingDelete.name}"</span>? 
+src/components/pages/AdminDashboard.tsx:                className="cursor-pointer px-4 py-2 text-xs font-semibold bg-rose-600 text-white rounded-xl hover:bg-rose-750 font-mono"
+src/components/pages/AdminDashboard.tsx:                <h4 className="font-serif text-sm font-bold text-gray-950 dark:text-white">
+src/components/pages/AdminDashboard.tsx:                className="cursor-pointer px-4 py-2 text-xs font-semibold bg-rose-600 text-white rounded-xl hover:bg-rose-750 font-mono"
+src/components/pages/AdminDashboard.tsx:                <h4 className="font-serif text-sm font-bold text-gray-950 dark:text-white capitalize">
+src/components/pages/AdminDashboard.tsx:                  You are about to execute the <span className="font-semibold text-gray-950 dark:text-white capitalize">"{isConfirmingBulkAction}"</span> action on <span className="font-semibold text-zinc-800 dark:text-zinc-200">{selectedProductIds.length} items</span> in the current directory.
+src/components/pages/AdminDashboard.tsx:                className="cursor-pointer px-4 py-2 text-xs font-semibold bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 rounded-xl hover:opacity-90 font-mono"
+src/components/pages/Product.tsx:        <button onClick={() => setActiveView('home')} className="hover:text-gray-900 dark:hover:text-white">Home</button>
+src/components/pages/Product.tsx:        <span className="text-gray-900 dark:text-white font-semibold">{selectedProduct.name}</span>
+src/components/pages/Product.tsx:              <span className="absolute left-6 top-6 rounded bg-[#ff4747] px-3 py-1 text-xs font-black text-white uppercase tracking-wider">
+src/components/pages/Product.tsx:            <h1 className="mt-1 font-sans text-3xl font-black uppercase leading-tight tracking-tight text-slate-900 dark:text-white">{selectedProduct.name}</h1>
+src/components/pages/Product.tsx:              <span className="text-2xl font-black text-slate-900 dark:text-white">${selectedProduct.price.toFixed(2)}</span>
+src/components/pages/Product.tsx:                        ? 'border-[#ff4747] bg-[#ff4747] text-white'
+src/components/pages/Product.tsx:                <span className="w-10 text-center font-mono text-xs font-black text-slate-900 dark:text-white">{quantity}</span>
+src/components/pages/Product.tsx:                className="flex flex-1 items-center justify-center space-x-2 rounded bg-[#ff4747] hover:bg-slate-900 py-3.5 text-xs font-bold uppercase text-white shadow-none transition-colors dark:text-white"
+src/components/pages/Product.tsx:              className="w-full rounded border-2 border-[#ff4747] bg-white py-3.5 text-xs font-bold uppercase tracking-wider text-slate-900 hover:bg-[#ff4747] hover:text-white transition-colors dark:bg-zinc-950 dark:text-white"
+src/components/pages/Product.tsx:                  activeTab === 'details' ? 'border-b-2 border-zinc-950 text-gray-900 dark:border-white dark:text-white' : 'text-gray-400 dark:text-zinc-550'
+src/components/pages/Product.tsx:                  activeTab === 'features' ? 'border-b-2 border-zinc-950 text-gray-900 dark:border-white dark:text-white' : 'text-gray-400 dark:text-zinc-550'
+src/components/pages/Product.tsx:            <h3 className="mt-1 font-serif text-xl font-normal text-gray-950 dark:text-white">Complete the Atelier Look</h3>
+src/components/pages/Product.tsx:                <span className="text-xs font-semibold text-gray-900 dark:text-white">${p.price}</span>
+src/components/pages/Product.tsx:                <span className="font-mono text-[9px] text-gray-400 select-none group-hover:text-zinc-900 dark:group-hover:text-white">Inspect →</span>
+src/components/pages/Checkout.tsx:        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Secure Order Carriage</h2>
+src/components/pages/Checkout.tsx:              <p className="text-xs font-serif font-semibold text-gray-950 dark:text-white">Guest Checkout Active</p>
+src/components/pages/Checkout.tsx:            className="shrink-0 text-center text-xs font-semibold border border-gray-200 bg-gray-50 hover:bg-white text-zinc-900 hover:text-zinc-950 px-4 py-2 rounded-xl hover:shadow-sm transition-all focus:outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-850 cursor-pointer"
+src/components/pages/Checkout.tsx:            <h3 className="font-serif text-2xl text-gray-950 dark:text-white">Transaction Verified</h3>
+src/components/pages/Checkout.tsx:                className="flex items-center justify-center space-x-2 rounded-xl bg-zinc-900 px-6 py-3 text-xs font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 cursor-pointer"
+src/components/pages/Checkout.tsx:                className="flex items-center justify-center space-x-2 rounded-xl bg-zinc-900 px-6 py-3 text-xs font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 cursor-pointer"
+src/components/pages/Checkout.tsx:              className="flex items-center justify-center space-x-2 rounded-xl border border-gray-200 bg-white px-6 py-3 text-xs font-semibold text-zinc-900 hover:bg-gray-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white cursor-pointer"
+src/components/pages/Checkout.tsx:                <h3 className="font-serif text-sm font-semibold flex items-center space-x-2 border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">
+src/components/pages/Checkout.tsx:                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+src/components/pages/Checkout.tsx:                <h3 className="font-serif text-sm font-semibold flex items-center space-x-2 border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">
+src/components/pages/Checkout.tsx:                      <p className="text-xs font-serif text-gray-950 dark:text-white mt-1">PayPal Wallet Checkout</p>
+src/components/pages/Checkout.tsx:              <h3 className="font-serif text-sm font-semibold border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">Carriage Review Summary</h3>
+src/components/pages/Checkout.tsx:                      <p className="text-xs font-semibold text-gray-950 truncate dark:text-white">{item.product.name}</p>
+src/components/pages/Checkout.tsx:                    <span className="font-serif text-xs font-semibold text-gray-950 dark:text-white">
+src/components/pages/Checkout.tsx:                  <span className="font-mono text-gray-950 dark:text-white">${subtotal.toFixed(2)}</span>
+src/components/pages/Checkout.tsx:                  <span className="font-mono text-gray-950 dark:text-white">
+src/components/pages/Checkout.tsx:                  <span className="font-mono text-gray-950 dark:text-white">${taxAmount.toFixed(2)}</span>
+src/components/pages/Checkout.tsx:                <div className="border-t border-gray-100 pt-3.5 dark:border-zinc-900 flex justify-between font-serif text-sm font-bold text-gray-950 dark:text-white">
+src/components/Navbar.tsx:          className="flex cursor-pointer items-center space-x-2 text-2xl font-black tracking-tighter text-slate-900 duration-150 active:scale-95 dark:text-white uppercase"
+src/components/Navbar.tsx:          <div className="flex h-9 w-9 items-center justify-center rounded bg-[#ff4747] text-white">
+src/components/Navbar.tsx:              className="w-full border-2 border-[#ff4747] bg-white px-4 py-2 pl-10 text-sm font-sans focus:outline-none dark:bg-zinc-900 dark:text-white"
+src/components/Navbar.tsx:                          <p className="text-xs font-bold text-slate-800 dark:text-white">{product.name}</p>
+src/components/Navbar.tsx:                      ? 'bg-[#ff4747] text-white border border-[#ff4747]' 
+src/components/Navbar.tsx:                    <span className="flex h-4 min-w-4 items-center justify-center rounded-3xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 px-1 text-[9px] font-black">
+src/components/Navbar.tsx:                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
+src/components/Navbar.tsx:                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-950' 
+src/components/Navbar.tsx:                    <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
+src/components/Footer.tsx:              <h4 className="text-xs font-bold uppercase tracking-tight text-gray-900 dark:text-white">Free Insured Delivery</h4>
+src/components/Footer.tsx:              <h4 className="text-xs font-bold uppercase tracking-tight text-gray-900 dark:text-white">30-Day Hassle Returns</h4>
+src/components/Footer.tsx:              <h4 className="text-xs font-bold uppercase tracking-tight text-gray-900 dark:text-white">Fully Secured Payments</h4>
+src/components/Footer.tsx:              <h4 className="text-xs font-bold uppercase tracking-tight text-gray-900 dark:text-white">Professional Concierge</h4>
+src/components/Footer.tsx:            <div className="flex items-center space-x-2 text-2xl font-black tracking-tighter text-slate-900 dark:text-white uppercase font-sans">
+src/components/Footer.tsx:              <div className="flex h-8 w-8 items-center justify-center rounded bg-[#ff4747] text-white">
+src/components/Footer.tsx:                  className="w-full border-2 border-[#ff4747] bg-white px-4 py-2.5 text-xs text-zinc-950 outline-none transition-colors dark:bg-zinc-900 dark:text-white font-sans placeholder-slate-400 text-slate-800"
+src/components/Footer.tsx:                  className="absolute right-1 top-1 flex h-[34px] w-[34px] items-center justify-center bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-[#ff4747] dark:hover:text-white rounded"
+src/components/Footer.tsx:                <button onClick={() => setActiveView('home')} className="text-xs text-gray-500 hover:text-gray-900 dark:text-zinc-400 dark:hover:text-white">
+src/components/Footer.tsx:                <button onClick={() => setActiveView('cart')} className="text-xs text-gray-500 hover:text-gray-900 dark:text-zinc-400 dark:hover:text-white">
+src/components/Footer.tsx:                <button onClick={() => setActiveView('user-dashboard')} className="text-xs text-gray-500 hover:text-gray-900 dark:text-zinc-400 dark:hover:text-white">
+src/components/Footer.tsx:                <button onClick={() => setActiveView('admin-dashboard')} className="text-xs text-gray-500 hover:text-gray-900 dark:text-zinc-400 dark:hover:text-white">

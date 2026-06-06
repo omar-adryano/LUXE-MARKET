@@ -9,6 +9,8 @@ import {
   resendVerificationCode,
   forgotPassword,
   resetPassword,
+  getGoogleAuthUrl,
+  googleAuthCallback,
 } from '../controllers/userController';
 import { protect, admin } from '../middleware/auth';
 import { validateRegister, validateLogin } from '../middleware/validation';
@@ -26,5 +28,9 @@ router.post('/verify', verifyEmail);
 router.post('/resend-verification', resendVerificationCode);
 router.post('/forgotpassword', forgotPassword);
 router.post('/resetpassword', resetPassword);
+
+// Google OAuth routes
+router.get('/google/url', getGoogleAuthUrl);
+router.get(['/google/callback', '/google/callback/'], googleAuthCallback);
 
 export default router;

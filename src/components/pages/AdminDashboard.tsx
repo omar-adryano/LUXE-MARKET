@@ -58,16 +58,22 @@ export const AdminDashboard: React.FC = () => {
   const [replenishSuccess, setReplenishSuccess] = useState(false);
   const [replenishError, setReplenishError] = useState<string | null>(null);
 
-  // DSers state tracking
-  const [aliExpressUrl, setAliExpressUrl] = useState('');
-  const [dsersSyncing, setDsersSyncing] = useState<string | null>(null);
-  const [dsersSyncSuccess, setDsersSyncSuccess] = useState<string | null>(null);
-  const [aliImporting, setAliImporting] = useState(false);
-  const [aliImportError, setAliImportError] = useState<string | null>(null);
-  const [aliImportSuccess, setAliImportSuccess] = useState<string | null>(null);
+  // CJ Dropshipping tool states
+  const [cjKeyword, setCjKeyword] = useState('');
+  const [cjResults, setCjResults] = useState<any[]>([]);
+  const [cjSearching, setCjSearching] = useState(false);
+  const [cjImporting, setCjImporting] = useState<string | null>(null);
+
+  // CJ Dropshipping state tracking
+  const [cjUrl, setCjUrl] = useState('');
+  const [cjSyncing, setCjSyncing] = useState<string | null>(null);
+  const [cjSyncSuccess, setCjSyncSuccess] = useState<string | null>(null);
+  const [cjAutoImporting, setCjAutoImporting] = useState(false);
+  const [cjImportError, setCjImportError] = useState<string | null>(null);
+  const [cjImportSuccess, setCjImportSuccess] = useState<string | null>(null);
 
   // Filter state
-  const [filterTab, setFilterTab] = useState<'active' | 'archived' | 'dsers' | 'manual'>('active');
+  const [filterTab, setFilterTab] = useState<'active' | 'archived' | 'cj' | 'manual'>('active');
   const [productSearch, setProductSearch] = useState('');
 
   // Bulk Selection and Action state configuration
@@ -91,8 +97,8 @@ export const AdminDashboard: React.FC = () => {
       if (p.isArchived === true) return false;
     } else if (filterTab === 'archived') {
       if (p.isArchived !== true) return false;
-    } else if (filterTab === 'dsers') {
-      if (source !== 'dsers') return false;
+    } else if (filterTab === 'cj') {
+      if (source !== 'cj') return false;
     } else if (filterTab === 'manual') {
       if (source !== 'manual') return false;
     }
@@ -119,7 +125,7 @@ export const AdminDashboard: React.FC = () => {
   const [editProdStock, setEditProdStock] = useState('');
   const [editProdIsPublished, setEditProdIsPublished] = useState(true);
   const [editProdIsArchived, setEditProdIsArchived] = useState(false);
-  const [editProdDsersRemovedFromSync, setEditProdDsersRemovedFromSync] = useState(false);
+  const [editProdCjRemovedFromSync, setEditProdCjRemovedFromSync] = useState(false);
 
   const [editError, setEditError] = useState<string | null>(null);
   const [editSuccess, setEditSuccess] = useState<string | null>(null);
@@ -189,7 +195,7 @@ export const AdminDashboard: React.FC = () => {
           category: newProdCategory,
           price: parsedPrice,
           image: newProdImg.trim(),
-          description: newProdDesc.trim() || 'Atelier premium curated operational stock.',
+          description: newProdDesc.trim() || 'Store premium curated operational stock.',
           stock: Number(newProdStock) || 0
         })
       });
@@ -220,12 +226,12 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleDSersSync = async (action: 'sync-inventory' | 'sync-prices' | 'sync-fulfillment') => {
+  const handleCjSync = async (action: 'sync-inventory' | 'sync-prices' | 'sync-fulfillment') => {
     try {
-      setDsersSyncing(action);
-      setDsersSyncSuccess(null);
+      setCjSyncing(action);
+      setCjSyncSuccess(null);
       
-      const res = await fetch(`/api/admin/dsers/${action}`, {
+      const res = await fetch(`/api/admin/aliexpress/${action}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -234,42 +240,84 @@ export const AdminDashboard: React.FC = () => {
       });
       
       if (!res.ok) {
-        throw new Error(`DSers sync command rejected for ${action}`);
+        throw new Error(`CJ Dropshipping sync command rejected for ${action}`);
       }
       
       const data = await res.json();
-      setDsersSyncSuccess(data.message || 'Sync successful.');
+      setCjSyncSuccess(data.message || 'Sync successful.');
       fetchStats();
       if (refreshCatalog) {
         await refreshCatalog();
       }
       
       setTimeout(() => {
-        setDsersSyncSuccess(null);
+        setCjSyncSuccess(null);
       }, 5000);
     } catch (err: any) {
       setReplenishError(err.message || String(err));
     } finally {
-      setDsersSyncing(null);
+      setCjSyncing(null);
     }
   };
 
-  const handleAliExpressImport = async (e: React.FormEvent) => {
+  const handleCJSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!aliExpressUrl.trim()) return;
+    if (!cjKeyword.trim()) return;
+    setCjSearching(true);
+    try {
+      const res = await fetch(`/api/admin/cj/search?keyword=${encodeURIComponent(cjKeyword)}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCjResults(data.list);
+      }
+    } catch(err) {
+      console.error(err);
+    } finally {
+      setCjSearching(false);
+    }
+  };
+
+  const handleCJImport = async (productId: string) => {
+    setCjImporting(productId);
+    try {
+      const res = await fetch(`/api/admin/aliexpress/import`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchStats();
+        if (refreshCatalog) await refreshCatalog();
+      }
+    } catch(err) {
+      console.error(err);
+    } finally {
+      setCjImporting(null);
+    }
+  };
+
+  const handleCjImport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!cjUrl.trim()) return;
 
     try {
-      setAliImporting(true);
-      setAliImportError(null);
-      setAliImportSuccess(null);
+      setCjAutoImporting(true);
+      setCjImportError(null);
+      setCjImportSuccess(null);
 
-      // Heuristic auto-extraction of details from paste AliExpress URLs
-      const lowerUrl = aliExpressUrl.toLowerCase();
+      // Heuristic auto-extraction of details from paste CJ URLs
+      const lowerUrl = cjUrl.toLowerCase();
       let name = 'Design Concept Lounger';
       let category = 'Furniture';
       let price = 145.00;
       let image = 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=800&q=80';
-      let description = 'Elite architectural styling imported directly via automated DSers channels from verified AliExpress factories.';
+      let description = 'Elite architectural styling imported directly via automated CJ channels from verified CJ suppliers.';
 
       if (lowerUrl.includes('sofa') || lowerUrl.includes('couch') || lowerUrl.includes('lounge')) {
         category = 'Furniture';
@@ -299,14 +347,14 @@ export const AdminDashboard: React.FC = () => {
       }
 
       // Dynamic price from digits
-      const digits = aliExpressUrl.match(/\d+/);
+      const digits = cjUrl.match(/\d+/);
       if (digits && digits[0]) {
         price = Number(((Number(digits[0]) % 240) + 19.99).toFixed(2));
       }
 
       // Try title from slug
       try {
-        const pathSegments = aliExpressUrl.split('/');
+        const pathSegments = cjUrl.split('/');
         const lastSegment = pathSegments.pop() || '';
         const cleanSlug = lastSegment.replace(/\.html$/, '').replace(/[^a-zA-Z0-9-]/g, '');
         if (cleanSlug.length > 8 && !cleanSlug.match(/^\d+$/)) {
@@ -318,7 +366,7 @@ export const AdminDashboard: React.FC = () => {
         }
       } catch (pathErr) {}
 
-      const res = await fetch('/api/admin/dsers/import', {
+      const res = await fetch('/api/admin/aliexpress/import', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -339,8 +387,8 @@ export const AdminDashboard: React.FC = () => {
         throw new Error(errorData.message || 'Supplier import request failed.');
       }
 
-      setAliImportSuccess(`Successfully imported dropship product "${name}" to store catalog!`);
-      setAliExpressUrl('');
+      setCjImportSuccess(`Successfully imported dropship product "${name}" to store catalog!`);
+      setCjUrl('');
       fetchStats();
       
       if (refreshCatalog) {
@@ -348,12 +396,12 @@ export const AdminDashboard: React.FC = () => {
       }
 
       setTimeout(() => {
-        setAliImportSuccess(null);
+        setCjImportSuccess(null);
       }, 5000);
     } catch (err: any) {
-      setAliImportError(err.message || String(err));
+      setCjImportError(err.message || String(err));
     } finally {
-      setAliImporting(false);
+      setCjAutoImporting(false);
     }
   };
 
@@ -374,7 +422,7 @@ export const AdminDashboard: React.FC = () => {
     setEditProdStock(String(prod.stock || ''));
     setEditProdIsPublished(prod.isPublished !== false);
     setEditProdIsArchived(prod.isArchived === true);
-    setEditProdDsersRemovedFromSync(prod.dsersRemovedFromSync === true);
+    setEditProdCjRemovedFromSync(prod.cjRemovedFromSync === true);
     setEditError(null);
     setEditSuccess(null);
     setIsAdminEditing(true);
@@ -421,7 +469,7 @@ export const AdminDashboard: React.FC = () => {
       setEditError(null);
       setEditSuccess(null);
 
-      const isManual = selectedAdminProduct.source !== 'dsers';
+      const isManual = selectedAdminProduct.source !== 'cj';
       const parsedPrice = Number(editProdPrice);
       const parsedStock = Number(editProdStock);
 
@@ -456,10 +504,10 @@ export const AdminDashboard: React.FC = () => {
         payload.isArchived = editProdIsArchived;
         payload.isPublished = editProdIsPublished;
       } else {
-        // DSers product: Allow Unpublish, Allow Archive, Allow Remove from DSers sync list
+        // CJ Product: Allow Unpublish, Allow Archive, Allow Remove from CJ Dropshipping sync list
         payload.isPublished = editProdIsPublished;
         payload.isArchived = editProdIsArchived;
-        payload.dsersRemovedFromSync = editProdDsersRemovedFromSync;
+        payload.cjRemovedFromSync = editProdCjRemovedFromSync;
         
         // Also allow configuration of stock/price for sync-overrides optionally, but keep details
         if (editProdPrice && !isNaN(Number(editProdPrice))) {
@@ -622,8 +670,8 @@ export const AdminDashboard: React.FC = () => {
           if (!res.ok) throw new Error(`Could not unpublish ${originalProduct.name}`);
         } else if (bulkAction === 'sync') {
           const payload: any = {};
-          if (originalProduct.source === 'dsers') {
-            payload.dsersRemovedFromSync = false;
+          if (originalProduct.source === 'cj') {
+            payload.cjRemovedFromSync = false;
             payload.stock = Math.floor(Math.random() * 40) + 20;
           } else {
             payload.stock = Math.min(150, Number(originalProduct.stock) + Math.floor(Math.random() * 5));
@@ -669,7 +717,7 @@ export const AdminDashboard: React.FC = () => {
     return (
       <div id="admin-dashboard-loading" className="min-h-[500px] flex flex-col justify-center items-center space-y-4">
         <RefreshCw className="h-6 w-6 text-zinc-950 animate-spin dark:text-white" />
-        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Compiling gallery datasets...</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Compiling Data Sets...</span>
       </div>
     );
   }
@@ -678,7 +726,7 @@ export const AdminDashboard: React.FC = () => {
     return (
       <div id="admin-dashboard-error" className="min-h-[450px] flex flex-col justify-center items-center space-y-4 text-center max-w-sm mx-auto">
         <AlertTriangle className="h-10 w-10 text-rose-600" />
-        <h3 className="font-serif text-lg text-gray-950 dark:text-white">Operations Cabin Locked</h3>
+        <h3 className="font-serif text-lg text-gray-950 dark:text-white">Admin Dashboard Locked</h3>
         <p className="font-sans text-xs text-zinc-400 dark:text-zinc-500 leading-relaxed">
           {error || "An unexpected error blocked secure data retrieval protocols."}
         </p>
@@ -704,8 +752,8 @@ export const AdminDashboard: React.FC = () => {
       
       {/* Visual Header */}
       <div>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Atelier Operations Console</span>
-        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Retailer Administration Console</h2>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Admin Setup</span>
+        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Admin Dashboard</h2>
       </div>
 
       {/* Overview Stat Widgets bento grid */}
@@ -748,7 +796,7 @@ export const AdminDashboard: React.FC = () => {
         {/* Stat 3: Curated items collection (Dynamic categories & total items) */}
         <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
           <div className="flex justify-between items-start">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Gallery Inventory</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Inventory Overview</span>
             <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/45 px-2 py-0.5 rounded-full">
               Stable
             </span>
@@ -801,7 +849,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900 flex justify-between items-center">
             <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
               <TrendingUp className="h-4.5 w-4.5 text-zinc-650" />
-              <h3 className="font-serif text-sm font-semibold">Weekly Sales Charting Representation</h3>
+              <h3 className="font-serif text-sm font-semibold">Weekly Sales</h3>
             </div>
             <span className="font-mono text-[9px] text-gray-400 flex items-center space-x-1">
               <RefreshCw className="h-3 w-3 animate-spin text-zinc-400" />
@@ -832,9 +880,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="border-t border-gray-100 mt-6 pt-6 dark:border-zinc-900 text-center flex justify-between items-center text-xs text-gray-400">
-            <span className="font-mono">Atelier Average Daily Sales: ${averageDailySales.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span className="font-mono">Average Daily Sales: ${averageDailySales.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             <span className="font-mono font-semibold text-gray-800 dark:text-zinc-200 flex items-center space-x-1">
-              <span>Operations Sync Active</span>
+              <span>System Status</span>
               <Check className="h-3.5 w-3.5 text-emerald-600" />
             </span>
           </div>
@@ -843,7 +891,7 @@ export const AdminDashboard: React.FC = () => {
         {/* Stock Replenishment entry forms - Right 5 columns */}
         <div className="lg:col-span-5 rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
           <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900">
-            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Replenish Gallery Cabin Stock</h3>
+            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Inventory Management</h3>
           </div>
 
           <form onSubmit={handleCreateProduct} className="space-y-4">
@@ -860,7 +908,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-mono uppercase text-gray-400">Gallery category</label>
+              <label className="text-[10px] font-mono uppercase text-gray-400">Category</label>
               <select
                 value={newProdCategory}
                 onChange={(e) => setNewProdCategory(e.target.value)}
@@ -876,7 +924,7 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-mono uppercase text-gray-400">Carriage Pricing ($)</label>
+                <label className="text-[10px] font-mono uppercase text-gray-400">Pricing ($)</label>
                 <input
                   type="number"
                   required
@@ -933,7 +981,7 @@ export const AdminDashboard: React.FC = () => {
 
             {replenishSuccess && (
               <p className="font-mono text-[10px] text-emerald-600 dark:text-emerald-450 text-center">
-                ✓ Verified item registered inside core operations index.
+                ✓ Verified item registered inside core catalog.
               </p>
             )}
 
@@ -947,14 +995,14 @@ export const AdminDashboard: React.FC = () => {
 
       </div>
 
-      {/* SECTION: DSers Dropship & Supplier Automation Portal */}
+      {/* SECTION: CJ Dropshipping Dropship & Supplier Automation Portal */}
       <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20 space-y-6">
         <div className="border-b border-gray-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between dark:border-zinc-900 gap-2">
           <div>
             <span className="font-mono text-[9px] uppercase tracking-wider text-zinc-400">Dropship Automation Hub</span>
             <h3 className="font-serif text-base font-semibold text-gray-950 dark:text-white flex items-center gap-2">
               <Cpu className="h-4.5 w-4.5 text-zinc-650" />
-              <span>DSers Dropship & Supplier Integration</span>
+              <span>CJ Dropshipping Integration</span>
             </h3>
           </div>
           <span className="self-start inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-blue-50 text-blue-700 dark:bg-blue-955/20 dark:text-blue-400">
@@ -962,7 +1010,7 @@ export const AdminDashboard: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
             </span>
-            <span>DSers Gateway Active</span>
+            <span>CJ Gateway Active</span>
           </span>
         </div>
 
@@ -970,95 +1018,109 @@ export const AdminDashboard: React.FC = () => {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {/* Action 1: Stock Sync */}
           <button
-            onClick={() => handleDSersSync('sync-inventory')}
-            disabled={!!dsersSyncing}
+            onClick={() => handleCjSync('sync-inventory')}
+            disabled={!!cjSyncing}
             className="cursor-pointer group text-left rounded-2xl border border-gray-100 bg-zinc-50/50 p-4 hover:bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/10 w-full transition-all focus:outline-none"
           >
             <div className="flex justify-between items-center">
               <span className="font-mono text-[10px] uppercase text-zinc-400">Automatic Sync</span>
-              <RefreshCw className={`h-4 w-4 text-zinc-500 group-hover:rotate-180 transition-transform duration-500 ${dsersSyncing === 'sync-inventory' ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-4 w-4 text-zinc-500 group-hover:rotate-180 transition-transform duration-500 ${cjSyncing === 'sync-inventory' ? 'animate-spin' : ''}`} />
             </div>
-            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync DSers Inventory</h4>
+            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync CJ Inventory</h4>
             <p className="mt-1 text-[10px] text-zinc-400 leading-relaxed font-sans">Compare real-time wholesale supplier quantities and update active stock limits automatically.</p>
           </button>
 
           {/* Action 2: Price Sync */}
           <button
-            onClick={() => handleDSersSync('sync-prices')}
-            disabled={!!dsersSyncing}
+            onClick={() => handleCjSync('sync-prices')}
+            disabled={!!cjSyncing}
             className="cursor-pointer group text-left rounded-2xl border border-gray-100 bg-zinc-50/50 p-4 hover:bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/10 w-full transition-all focus:outline-none"
           >
             <div className="flex justify-between items-center">
               <span className="font-mono text-[10px] uppercase text-zinc-400">Supplier Sourcing</span>
-              <TrendingUp className={`h-4 w-4 text-zinc-500 group-hover:scale-110 transition-transform ${dsersSyncing === 'sync-prices' ? 'animate-spin' : ''}`} />
+              <TrendingUp className={`h-4 w-4 text-zinc-500 group-hover:scale-110 transition-transform ${cjSyncing === 'sync-prices' ? 'animate-spin' : ''}`} />
             </div>
-            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync DSers Pricing</h4>
+            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync CJ Pricing</h4>
             <p className="mt-1 text-[10px] text-zinc-400 leading-relaxed font-sans">Fluctuate pricing sheets automatically based on active margins and supplier wholesale updates.</p>
           </button>
 
           {/* Action 3: Order Sync */}
           <button
-            onClick={() => handleDSersSync('sync-fulfillment')}
-            disabled={!!dsersSyncing}
+            onClick={() => handleCjSync('sync-fulfillment')}
+            disabled={!!cjSyncing}
             className="cursor-pointer group text-left rounded-2xl border border-gray-100 bg-zinc-50/50 p-4 hover:bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/10 w-full transition-all focus:outline-none"
           >
             <div className="flex justify-between items-center">
               <span className="font-mono text-[10px] uppercase text-zinc-400">Fulfillment Engine</span>
-              <Check className={`h-4 w-4 text-zinc-500 ${dsersSyncing === 'sync-fulfillment' ? 'animate-bounce' : ''}`} />
+              <Check className={`h-4 w-4 text-zinc-500 ${cjSyncing === 'sync-fulfillment' ? 'animate-bounce' : ''}`} />
             </div>
             <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync Order Fulfillment</h4>
-            <p className="mt-1 text-[10px] text-zinc-400 leading-relaxed font-sans">Dispatch and track AliExpress orders. Auto-provision shipping codes for customer checkouts.</p>
+            <p className="mt-1 text-[10px] text-zinc-400 leading-relaxed font-sans">Dispatch and track CJ orders. Auto-provision shipping codes for customer checkouts.</p>
           </button>
         </div>
 
-        {dsersSyncSuccess && (
+        {cjSyncSuccess && (
           <div className="bg-emerald-50 border border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-900/40 rounded-xl p-3 text-center">
-            <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400">✓ {dsersSyncSuccess}</span>
+            <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400">✓ {cjSyncSuccess}</span>
           </div>
         )}
 
-        {/* AliExpress importer tool */}
+        {/* CJ Dropshipping importer tool */}
         <div className="p-5 border border-gray-100 dark:border-zinc-900 rounded-2xl bg-zinc-50/20">
           <h4 className="text-xs font-serif font-semibold text-gray-950 dark:text-white mb-2 flex items-center gap-1.5">
-            <Link className="h-3.5 w-3.5 text-blue-600" />
-            <span>AliExpress Direct Web URL Importer Pipeline</span>
+            <Search className="h-3.5 w-3.5 text-blue-600" />
+            <span>CJ Dropshipping Search & Import</span>
           </h4>
           <p className="text-[10px] text-zinc-400 mb-4 font-sans leading-relaxed">
-            Accepts any valid AliExpress item link. Extracts parameters including category, price, title characteristics, and imports directly to verified store catalog with source designation.
+            Search CJ Dropshipping for products and import them into the catalog automatically. 3x markup applied.
           </p>
           
-          <form onSubmit={handleAliExpressImport} className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleCJSearch} className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
-              <Globe className="absolute left-3.5 top-2.5 h-4.5 w-4.5 text-zinc-400" />
+              <Package className="absolute left-3.5 top-2.5 h-4.5 w-4.5 text-zinc-400" />
               <input
-                type="url"
+                type="text"
                 required
-                placeholder="Paste AliExpress item link (e.g. https://www.aliexpress.com/item/100500...html)"
-                value={aliExpressUrl}
-                onChange={(e) => setAliExpressUrl(e.target.value)}
+                placeholder="Search products by keyword (e.g. 'shoes')"
+                value={cjKeyword}
+                onChange={(e) => setCjKeyword(e.target.value)}
                 className="w-full rounded-xl border border-gray-200 bg-white pl-10 pr-3.5 py-2.5 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white font-mono"
               />
             </div>
             <button
               type="submit"
-              disabled={aliImporting}
+              disabled={cjSearching}
               className="px-6 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-850 dark:bg-white dark:text-zinc-950 flex items-center justify-center space-x-2 text-xs font-semibold text-white transition-all cursor-pointer shadow-sm"
             >
-              <Plus className="h-4 w-4" />
-              <span>{aliImporting ? 'Parsing Supplier Details...' : 'Import & Publish via DSers'}</span>
+              <Search className="h-4 w-4" />
+              <span>{cjSearching ? 'Searching...' : 'Search CJ Market'}</span>
             </button>
           </form>
 
-          {aliImportSuccess && (
-            <p className="mt-3 font-mono text-[10px] text-emerald-600 dark:text-emerald-450 text-center">
-              ✓ {aliImportSuccess}
-            </p>
-          )}
-
-          {aliImportError && (
-            <p className="mt-3 font-mono text-[10px] text-rose-600 dark:text-rose-450 text-center">
-              ❌ {aliImportError}
-            </p>
+          {cjResults.length > 0 && (
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              {cjResults.map((item) => (
+                <div key={item.pid} className="border border-gray-150 rounded-xl p-3 bg-white dark:bg-zinc-900 dark:border-zinc-800 flex flex-col justify-between">
+                  <div>
+                    <div className="aspect-square w-full rounded bg-zinc-100 overflow-hidden mb-3">
+                      <img src={item.productImageSet?.[0] || item.productImage} alt={item.productNameEn || ''} className="w-full h-full object-cover" />
+                    </div>
+                    <h5 className="text-[11px] font-sans font-bold leading-tight line-clamp-2 text-zinc-800 dark:text-zinc-200">{item.productNameEn}</h5>
+                    <div className="flex justify-between items-center mt-2">
+                       <span className="text-[10px] font-mono text-zinc-400">CJ: ${item.sellPrice}</span>
+                       <span className="text-[10px] font-mono font-bold text-[#2563eb]">Store: ${(((Number(item.sellPrice) || 10) * 3 < 4.99 ? 4.99 : (Number(item.sellPrice) || 10) * 3) + 0.99).toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleCJImport(item.pid)}
+                    disabled={cjImporting === item.pid}
+                    className="mt-3 w-full rounded p-2 text-[10px] font-bold text-white bg-zinc-900 hover:bg-zinc-800 uppercase tracking-widest disabled:opacity-50 transition-colors"
+                  >
+                    {cjImporting === item.pid ? 'Importing...' : 'Quick Import'}
+                  </button>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -1069,7 +1131,7 @@ export const AdminDashboard: React.FC = () => {
         {/* Recent Orders dynamic list */}
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
           <div className="border-b border-gray-100 pb-3 mb-4 dark:border-zinc-900 flex justify-between items-center">
-            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Recent Operations Orders Ledger</h3>
+            <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Recent Orders Ledger</h3>
             <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Dynamic database tracking</span>
           </div>
 
@@ -1080,6 +1142,7 @@ export const AdminDashboard: React.FC = () => {
                   <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider">Order Reference</th>
                   <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider font-sans">Purchased Items</th>
                   <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">Value</th>
+                  <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">CJ Order</th>
                   <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">State</th>
                 </tr>
               </thead>
@@ -1097,7 +1160,7 @@ export const AdminDashboard: React.FC = () => {
                       </td>
                       <td className="py-3">
                         <span className="text-gray-700 dark:text-zinc-300 block max-w-[200px] truncate">
-                          {order.itemsSummary || 'Gallery Collection'}
+                          {order.itemsSummary || 'Ordered Items'}
                         </span>
                         <span className="text-[9px] text-gray-400 block font-mono">
                           {new Date(order.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
@@ -1107,17 +1170,29 @@ export const AdminDashboard: React.FC = () => {
                         ${order.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td className="py-3 text-right">
-                        <span className={`inline-block text-[9px] font-mono px-2 py-0.5 rounded-full font-semibold ${
-                          order.status === 'Delivered' 
-                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400' 
-                            : order.status === 'Shipped'
-                            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400'
-                            : order.status === 'Processing'
-                            ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'
-                            : 'bg-zinc-150 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-400'
-                        }`}>
-                          {order.status}
+                        <span className="font-mono text-[9px] text-zinc-500">
+                          {order.cjOrderId ? order.cjOrderId : '—'}
                         </span>
+                      </td>
+                      <td className="py-3 text-right">
+                        <div className="flex flex-col items-end gap-1">
+                          <span className={`inline-block text-[9px] font-mono px-2 py-0.5 rounded-full font-semibold ${
+                            order.status === 'Delivered' 
+                              ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400' 
+                              : order.status === 'Shipped'
+                              ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400'
+                              : order.status === 'Processing'
+                              ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'
+                              : 'bg-zinc-150 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-400'
+                          }`}>
+                            {order.status}
+                          </span>
+                          {order.trackingNumber && (
+                            <span className="text-[9px] font-mono text-blue-500 dark:text-blue-400">
+                              {order.trackingNumber}
+                            </span>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -1229,10 +1304,10 @@ export const AdminDashboard: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setFilterTab('dsers')}
-                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'dsers' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
+                onClick={() => setFilterTab('cj')}
+                className={`px-3 py-1 cursor-pointer text-[10px] font-mono rounded-lg transition-all ${filterTab === 'cj' ? 'bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white font-bold shadow-[0_1px_2px_rgba(0,0,0,0.05)]' : 'text-zinc-400 hover:text-zinc-650'}`}
               >
-                DSers Products
+                CJ Products
               </button>
               <button
                 type="button"
@@ -1316,8 +1391,8 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </th>
                 <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider">Item Spec Details</th>
-                <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider">Gallery Category</th>
-                <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">Carriage pricing</th>
+                <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider">Category</th>
+                <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">Pricing</th>
                 <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-center">Fulfillment source / Status</th>
                 <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right">Stock</th>
                 <th className="pb-2.5 font-mono text-[9px] uppercase text-gray-400 tracking-wider text-right pr-2">Admin Actions</th>
@@ -1374,10 +1449,10 @@ export const AdminDashboard: React.FC = () => {
                       </td>
                       <td className="py-3 text-center">
                         <div className="flex flex-col items-center gap-1">
-                          {source === 'dsers' ? (
+                          {source === 'cj' ? (
                             <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-100/30">
                               <Database className="h-3 w-3" />
-                              <span>DSers Product</span>
+                              <span>CJ Product</span>
                             </span>
                           ) : (
                             <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400 border border-purple-100/30">
@@ -1398,7 +1473,7 @@ export const AdminDashboard: React.FC = () => {
                             </span>
                           )}
 
-                          {source === 'dsers' && prod.dsersRemovedFromSync === true && (
+                          {source === 'cj' && prod.cjRemovedFromSync === true && (
                             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-mono font-bold bg-rose-50 text-rose-600 dark:bg-rose-955/20 dark:text-rose-450 border border-rose-100/30">
                               Sync Off
                             </span>
@@ -1411,7 +1486,7 @@ export const AdminDashboard: React.FC = () => {
                             {prod.stock} Units
                           </span>
                           <span className="text-[8px] text-gray-400 block font-mono uppercase">
-                            {source === 'dsers' ? 'Auto synced' : 'Local inventory'}
+                            {source === 'cj' ? 'Auto synced' : 'Local inventory'}
                           </span>
                         </div>
                       </td>
@@ -1517,13 +1592,13 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-4 dark:border-zinc-900">
                 <div>
-                  <span className="text-[9px] font-mono text-zinc-400 block uppercase">Retail Carriage Pricing</span>
+                  <span className="text-[9px] font-mono text-zinc-400 block uppercase">Retail Price</span>
                   <p className="text-sm font-semibold font-mono text-gray-950 dark:text-white">
                     ${Number(selectedAdminProduct.price).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </p>
                 </div>
                 <div>
-                  <span className="text-[9px] font-mono text-zinc-400 block uppercase">Gallery Stock Volume</span>
+                  <span className="text-[9px] font-mono text-zinc-400 block uppercase">Stock Volume</span>
                   <p className="text-sm font-semibold font-mono text-gray-950 dark:text-white">
                     {selectedAdminProduct.stock} Units
                   </p>
@@ -1587,7 +1662,7 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400 font-bold">Atelier Catalog Editing</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400 font-bold">Store Catalog Editing</span>
                 <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white mt-0.5">
                   Modify Product Specifications
                 </h3>
@@ -1609,7 +1684,7 @@ export const AdminDashboard: React.FC = () => {
               )}
 
               <form onSubmit={handleSaveProductEdit} className="space-y-4">
-                {selectedAdminProduct.source !== 'dsers' ? (
+                {selectedAdminProduct.source !== 'cj' ? (
                   /* MANUAL PRODUCTS FIELDS */
                   <>
                     <div className="space-y-1">
@@ -1625,7 +1700,7 @@ export const AdminDashboard: React.FC = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-mono uppercase text-gray-400">Gallery category</label>
+                        <label className="text-[10px] font-mono uppercase text-gray-400">Category</label>
                         <select
                           value={editProdCategory}
                           onChange={(e) => setEditProdCategory(e.target.value)}
@@ -1640,7 +1715,7 @@ export const AdminDashboard: React.FC = () => {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-[10px] font-mono uppercase text-gray-400">Carriage Pricing ($)</label>
+                        <label className="text-[10px] font-mono uppercase text-gray-400">Pricing ($)</label>
                         <input
                           type="number"
                           required
@@ -1702,7 +1777,7 @@ export const AdminDashboard: React.FC = () => {
                       <div className="flex items-center justify-between border-t border-gray-100/60 dark:border-zinc-850/60 pt-3">
                         <div className="space-y-0.5">
                           <span className="text-xs font-semibold text-gray-901 dark:text-white block">Archive Catalog Item</span>
-                          <span className="text-[9px] text-gray-450 block">Moves listing into historical operations logs</span>
+                          <span className="text-[9px] text-gray-450 block">Moves listing into archive</span>
                         </div>
                         <input
                           type="checkbox"
@@ -1719,9 +1794,9 @@ export const AdminDashboard: React.FC = () => {
                     <div className="bg-blue-50/50 dark:bg-blue-955/10 border border-blue-100/30 p-3 rounded-2xl flex items-start gap-3">
                       <Database className="h-5 w-5 text-blue-605 dark:text-blue-400 shrink-0 mt-0.5" />
                       <div>
-                        <span className="font-serif text-xs font-semibold text-blue-950 dark:text-blue-400 block">AliExpress supplier Synced SKU</span>
+                        <span className="font-serif text-xs font-semibold text-blue-950 dark:text-blue-400 block">CJ Dropshipping Synced SKU</span>
                         <p className="text-[10px] text-blue-800 dark:text-blue-400 leading-relaxed font-sans mt-0.5 font-medium">
-                          AliExpress dropshipped catalogue properties remain pristine. You can toggle storefront visibility, archive parameters, or remove from DSers active automatic sync list.
+                          CJ dropshipped catalogue properties remain pristine. You can toggle storefront visibility, archive parameters, or remove from CJ active automatic sync list.
                         </p>
                       </div>
                     </div>
@@ -1768,7 +1843,7 @@ export const AdminDashboard: React.FC = () => {
                       {/* 2. Archive */}
                       <div className="flex items-center justify-between border-t border-gray-100/60 dark:border-zinc-850/60 pt-3">
                         <div className="space-y-0.5">
-                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Archive Gallery Catalog Item</span>
+                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">Archive Product</span>
                           <span className="text-[9px] text-gray-450 block font-medium">Moves dropship SKU into internal logistics log</span>
                         </div>
                         <input
@@ -1779,16 +1854,16 @@ export const AdminDashboard: React.FC = () => {
                         />
                       </div>
 
-                      {/* 3. Remove from DSers sync list */}
+                      {/* 3. Remove from CJ Dropshipping sync list */}
                       <div className="flex items-center justify-between border-t border-gray-100/60 dark:border-zinc-850/60 pt-3">
                         <div className="space-y-0.5">
-                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">De-Authorize DSers Automation</span>
+                          <span className="text-xs font-semibold text-gray-901 dark:text-white block">De-Authorize CJ Automation</span>
                           <span className="text-[9px] text-gray-450 block font-medium">Remove from automated markup & warehouse sync queue</span>
                         </div>
                         <input
                           type="checkbox"
-                          checked={editProdDsersRemovedFromSync}
-                          onChange={(e) => setEditProdDsersRemovedFromSync(e.target.checked)}
+                          checked={editProdCjRemovedFromSync}
+                          onChange={(e) => setEditProdCjRemovedFromSync(e.target.checked)}
                           className="h-4 w-4 rounded text-zinc-930 border-gray-300 dark:border-zinc-800 focus:ring-zinc-510 cursor-pointer"
                         />
                       </div>

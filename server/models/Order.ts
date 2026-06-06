@@ -33,11 +33,16 @@ const orderSchema = new Schema(
     },
     shippingAddress: {
       fullName: { type: String, required: true },
+      firstName: { type: String, required: false },
+      lastName: { type: String, required: false },
       street: { type: String, required: true },
+      apartmentUnit: { type: String, required: false },
       city: { type: String, required: true },
       state: { type: String, required: true },
       zipCode: { type: String, required: true },
       country: { type: String, required: true },
+      phone: { type: String, required: false },
+      email: { type: String, required: false },
     },
     paymentMethod: {
       type: String,
@@ -90,6 +95,14 @@ const orderSchema = new Schema(
       required: false,
     },
     stripeTransactionId: {
+      type: String,
+      required: false,
+    },
+    cjOrderId: {
+      type: String,
+      required: false,
+    },
+    trackingNumber: {
       type: String,
       required: false,
     },

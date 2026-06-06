@@ -6,17 +6,17 @@
 import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './components/pages/Home';
 import { ProductDetail } from './components/pages/Product';
 import { BoutiqueCart } from './components/pages/Cart';
 import { Checkout } from './components/pages/Checkout';
-import { CheckoutSuccess } from './components/pages/CheckoutSuccess';
-import { CheckoutCancel } from './components/pages/CheckoutCancel';
 import { UserDashboard } from './components/pages/UserDashboard';
 import { AdminDashboard } from './components/pages/AdminDashboard';
 import { Auth } from './components/pages/Auth';
+import { Wishlist } from './components/pages/Wishlist';
 import { 
   ShieldAlert, 
   Database, 
@@ -33,7 +33,7 @@ import {
 
 // Inner App with active view rendering and transition wrapper
 const AppContent: React.FC = () => {
-  const { activeView, user, setActiveView } = useApp();
+  const { activeView, user, setActiveView, toastMessage } = useApp();
   const [isDbHealthy, setIsDbHealthy] = useState<boolean | null>(null);
   const [isRetrying, setIsRetrying] = useState<boolean>(false);
   const [dbError, setDbError] = useState<{
@@ -103,11 +103,7 @@ const AppContent: React.FC = () => {
     
     const params = new URLSearchParams(window.location.search);
     const viewParam = params.get('view');
-    if (viewParam === 'checkout-success') {
-      setActiveView('checkout-success');
-    } else if (viewParam === 'checkout-cancel') {
-      setActiveView('checkout-cancel');
-    } else if (viewParam === 'admin-dashboard') {
+    if (viewParam === 'admin-dashboard') {
       setActiveView('admin-dashboard');
     } else if (viewParam === 'user-dashboard') {
       setActiveView('user-dashboard');
@@ -133,11 +129,8 @@ const AppContent: React.FC = () => {
       case 'checkout':
         return <Checkout />;
         
-      case 'checkout-success':
-        return <CheckoutSuccess />;
-        
-      case 'checkout-cancel':
-        return <CheckoutCancel />;
+      case 'wishlist':
+        return <Wishlist />;
         
       case 'user-dashboard':
         // Protected route check: Must be signed in
@@ -159,7 +152,7 @@ const AppContent: React.FC = () => {
                 <ShieldAlert className="h-12 w-12 text-red-500 mx-auto animate-pulse" />
                 <h3 className="mt-4 font-serif text-lg font-bold text-slate-900 dark:text-white">Admin Clearance Required</h3>
                 <p className="mt-2 text-xs text-slate-500 leading-relaxed dark:text-zinc-400 font-sans">
-                  The active customer account "<strong>{user.name}</strong>" does not have administrative roles required to log into the Luxe core operations console.
+                  The active customer account "<strong>{user.name}</strong>" does not have administrative roles required to log into the MORVEX admin console.
                 </p>
                 <div className="mt-6 flex flex-col space-y-2 font-mono">
                   <button
@@ -353,16 +346,36 @@ const AppContent: React.FC = () => {
 
       {/* Footer Level */}
       <Footer />
+
+      {/* App-Wide Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-24 right-4 sm:right-8 z-50 flex items-center space-x-2 rounded-lg bg-zinc-900 px-4 py-3 text-sm font-semibold text-white shadow-xl dark:bg-white dark:text-zinc-950 animate-fade-in">
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 };
 
 export default function App() {
+  const [paypalClientId, setPaypalClientId] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/paypal/config')
+      .then(r => r.json())
+      .then(d => setPaypalClientId(d.clientId || 'test'))
+      .catch(() => setPaypalClientId('test'));
+  }, []);
+
+  if (!paypalClientId) return null;
+
   return (
-    <PayPalScriptProvider options={{ clientId: "test", currency: "USD", intent: "capture" }}>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
+    <PayPalScriptProvider options={{ clientId: paypalClientId, currency: "USD", intent: "capture" }}>
+      <ThemeProvider>
+        <AppProvider>
+          <AppContent />
+        </AppProvider>
+      </ThemeProvider>
     </PayPalScriptProvider>
   );
 }

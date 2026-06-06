@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/luxe-market';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/morvex-db';
 
 // Export exact error details and diagnostics for the front-end to read
 export let lastConnectionError: any = null;

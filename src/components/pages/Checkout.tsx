@@ -14,7 +14,8 @@ import {
   Truck, 
   Check, 
   Compass,
-  ArrowRight
+  ArrowRight,
+  Mail
 } from 'lucide-react';
 
 export const Checkout: React.FC = () => {
@@ -38,19 +39,20 @@ export const Checkout: React.FC = () => {
   const [email, setEmail] = useState(() => {
     return user ? user.email : '';
   });
+  const [country, setCountry] = useState('United States');
   const [streetAddress, setStreetAddress] = useState('');
+  const [apartmentUnit, setApartmentUnit] = useState('');
   const [city, setCity] = useState('');
+  const [stateRegion, setStateRegion] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
-
-  // Stripe & Payment Selection state
-  const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'paypal'>('stripe');
-  const [stripeError, setStripeError] = useState<string | null>(null);
 
   // PayPal SDK loading & timeout state
   const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
   const [paypalTimeout, setPaypalTimeout] = useState(false);
   const [paypalErrorState, setPaypalErrorState] = useState<string | null>(null);
+  const [paypalError, setPaypalError] = useState<string | null>(null);
+  const pendingOrderIdRef = React.useRef<string | null>(null);
 
   useEffect(() => {
     console.log("[Checkout] PayPal Script Status - Pending:", isPending, "Resolved:", isResolved, "Rejected:", isRejected);
@@ -169,187 +171,6 @@ export const Checkout: React.FC = () => {
   const taxAmount = (subtotal - discountAmount) * 0.08;
   const totalAmount = subtotal - discountAmount + shippingCost + taxAmount;
 
-  const handleSaveBackendOrder = async (payMethod: string, transactionId?: string) => {
-    if (processingPayment) return;
-    setProcessingPayment(true);
-    setStripeError(null);
-
-    const shippingAddress = {
-      fullName: `${firstName} ${lastName}`,
-      street: streetAddress,
-      city: city,
-      state: city.includes(',') ? city.split(',')[1]?.trim() || city : 'Atelier Room',
-      zipCode: zipCode,
-      country: 'Japan',
-    };
-
-    const formattedItems = cart.map(item => ({
-      product: item.product.id,
-      name: item.product.name,
-      quantity: item.quantity,
-      price: item.product.price,
-      selectedColor: item.selectedColor || 'Default',
-      selectedMaterial: item.selectedMaterial || 'Default',
-      image: item.product.image
-    }));
-
-    try {
-      const token = localStorage.getItem('luxe_token');
-      const headers: any = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          items: formattedItems,
-          shippingAddress,
-          paymentMethod: payMethod,
-          subtotal,
-          discountAmount,
-          shippingCost,
-          taxRate: 0.08,
-          total: totalAmount,
-          transactionId: transactionId || '',
-        })
-      });
-
-      if (!response.ok) {
-        let errorMessage = 'Verification check failed during order placement.';
-        if (response.status === 429) {
-          errorMessage = 'Order registration rate limit exceeded. Please wait a moment before re-submitting.';
-        } else {
-          try {
-            const resData = await response.json();
-            errorMessage = resData.message || errorMessage;
-          } catch (jsonErr) {
-            try {
-              const text = await response.text();
-              if (text && (text.includes('Rate exceeded') || text.includes('Too Many Requests') || text.includes('rate limit'))) {
-                errorMessage = 'Order registration rate limit exceeded. Please wait a moment before re-submitting.';
-              } else if (text) {
-                errorMessage = text.substring(0, 150);
-              }
-            } catch (textErr) {
-              errorMessage = 'Ledger query failure. The order server is currently unresponsive.';
-            }
-          }
-        }
-        setStripeError(errorMessage);
-        setProcessingPayment(false);
-        return;
-      }
-
-      const resData = await response.json();
-      if (resData.success) {
-        setNewOrderCode(resData.order.id || resData.order._id);
-        clearCart();
-        setCheckoutStep('success');
-      } else {
-        setStripeError(resData.message || 'Verification check failed during order placement.');
-      }
-    } catch (err) {
-      setStripeError('Network connectivity check failed. Could not communicate with operations ledger.');
-    } finally {
-      setProcessingPayment(false);
-    }
-  };
-
-  const handleSubmitCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (paymentMethod !== 'stripe') return;
-    if (processingPayment) return;
-
-    setProcessingPayment(true);
-    setStripeError(null);
-
-    const shippingAddress = {
-      fullName: `${firstName} ${lastName}`,
-      street: streetAddress,
-      city: city,
-      state: city.includes(',') ? city.split(',')[1]?.trim() || city : 'Atelier Room',
-      zipCode: zipCode,
-      country: 'Japan',
-    };
-
-    try {
-      const items = cart.map(item => ({
-        product: item.product.id,
-        name: item.product.name,
-        quantity: item.quantity,
-        price: item.product.price,
-        selectedColor: item.selectedColor || 'Default',
-        selectedMaterial: item.selectedMaterial || 'Default',
-        image: item.product.image
-      }));
-
-      const token = localStorage.getItem('luxe_token');
-      const headers: any = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
-      const res = await fetch('/api/stripe/create-checkout-session', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          items,
-          shippingAddress,
-          subtotal,
-          discountAmount,
-          shippingCost,
-          taxRate: 0.08,
-          total: totalAmount,
-          originUrl: window.location.origin
-        })
-      });
-
-      if (!res.ok) {
-        let errorMessage = 'Error occurred initializing checkout session with Stripe.';
-        if (res.status === 429) {
-          errorMessage = 'Transaction rate limit exceeded. Please wait a moment before re-submitting your carriage request.';
-        } else {
-          try {
-            const data = await res.json();
-            errorMessage = data.message || errorMessage;
-          } catch (jsonErr) {
-            try {
-              const text = await res.text();
-              if (text && (text.includes('Rate exceeded') || text.includes('Too Many Requests') || text.includes('rate limit'))) {
-                errorMessage = 'Transaction rate limit exceeded. Please wait a moment before re-submitting your carriage request.';
-              } else if (text) {
-                errorMessage = text.substring(0, 150);
-              }
-            } catch (textErr) {
-              errorMessage = 'Ledger query failure. The Stripe gateway is currently unresponsive.';
-            }
-          }
-        }
-        setStripeError(errorMessage);
-        setProcessingPayment(false);
-        return;
-      }
-
-      const data = await res.json();
-      if (data.url) {
-        // Redirect the browser straight to Stripe Checkout
-        window.location.href = data.url;
-      } else {
-        setStripeError(data.message || 'Error occurred initializing checkout session with Stripe.');
-        setProcessingPayment(false);
-      }
-    } catch (err) {
-      setStripeError('Network connectivity check failed. Could not contact Stripe gateway.');
-      setProcessingPayment(false);
-    }
-  };
-
   const handleReturnToExplore = () => {
     setActiveView('home');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -366,7 +187,7 @@ export const Checkout: React.FC = () => {
       {/* Visual Title Header */}
       <div>
         <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Secure checkout process</span>
-        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Secure Order Carriage</h2>
+        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Secure Checkout</h2>
       </div>
 
       {staleRemovedMessage && (
@@ -389,7 +210,7 @@ export const Checkout: React.FC = () => {
               <p className="text-xs font-serif font-semibold text-gray-950 dark:text-white">Guest Checkout Active</p>
             </div>
             <p className="text-[11px] text-gray-550 dark:text-zinc-400 max-w-xl leading-relaxed">
-              Carriage registration is currently open. You do not need to authenticate to checkout. If you want to associate this purchase with your profile and track shipping, you can log in now.
+              Checkout is currently open. You do not need to authenticate to checkout. If you want to associate this purchase with your profile and track shipping, you can log in now.
             </p>
           </div>
           <button
@@ -415,7 +236,7 @@ export const Checkout: React.FC = () => {
             <h3 className="font-serif text-2xl text-gray-950 dark:text-white">Transaction Verified</h3>
             <p className="font-mono text-xs text-zinc-500">ORDER NO: <span className="font-bold text-gray-800 dark:text-zinc-200">{newOrderCode}</span></p>
             <p className="mt-4 text-xs text-gray-400 dark:text-zinc-500 leading-relaxed max-w-md mx-auto">
-              Your order has been registered securely. We have initiated dispatch logistics with our specialty premium carrier. Standard tracking is fully active and maps can be reviewed inside your User Account workspace directory of operations.
+              Your order has been placed successfully. We have initiated dispatch with our delivery partner. You can track your order status in your Account Dashboard.
             </p>
           </div>
 
@@ -454,99 +275,198 @@ export const Checkout: React.FC = () => {
           
           {/* Billing Form Section - Left 7 columns */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmitCheckout} className="space-y-6">
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
               
-              {/* Shipping address details */}
-              <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-zinc-900 dark:bg-zinc-950/20 space-y-4">
+              {/* Contact Information */}
+              <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-zinc-900 dark:bg-zinc-950/20 space-y-4 shadow-sm">
                 <h3 className="font-serif text-sm font-semibold flex items-center space-x-2 border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">
-                  <Truck className="h-4 w-4" />
-                  <span>Delivery Carriage Destination</span>
+                  <Mail className="h-4 w-4" />
+                  <span>Contact Information</span>
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-gray-400">First Name</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Email Address <span className="text-rose-500">*</span></label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="john.smith@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Phone Number <span className="text-rose-500">*</span></label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+49 123 456 789"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Shipping address details */}
+              <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-zinc-900 dark:bg-zinc-950/20 space-y-4 shadow-sm">
+                <h3 className="font-serif text-sm font-semibold flex items-center space-x-2 border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">
+                  <Truck className="h-4 w-4" />
+                  <span>Shipping Address</span>
+                </h3>
+
+                <div className="space-y-1.5 focus-within:relative z-10">
+                  <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Country <span className="text-rose-500">*</span></label>
+                  <div className="relative">
+                    <select
+                      required
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400 cursor-pointer"
+                    >
+                      <option value="" disabled>Select a country</option>
+                      <optgroup label="North America">
+                        <option value="United States">🇺🇸 United States</option>
+                        <option value="Canada">🇨🇦 Canada</option>
+                      </optgroup>
+                      <optgroup label="Europe">
+                        <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                        <option value="Germany">🇩🇪 Germany</option>
+                        <option value="France">🇫🇷 France</option>
+                        <option value="Italy">🇮🇹 Italy</option>
+                        <option value="Spain">🇪🇸 Spain</option>
+                        <option value="Netherlands">🇳🇱 Netherlands</option>
+                        <option value="Belgium">🇧🇪 Belgium</option>
+                        <option value="Austria">🇦🇹 Austria</option>
+                        <option value="Switzerland">🇨🇭 Switzerland</option>
+                        <option value="Ireland">🇮🇪 Ireland</option>
+                        <option value="Denmark">🇩🇰 Denmark</option>
+                        <option value="Norway">🇳🇴 Norway</option>
+                        <option value="Sweden">🇸🇪 Sweden</option>
+                        <option value="Finland">🇫🇮 Finland</option>
+                        <option value="Poland">🇵🇱 Poland</option>
+                        <option value="Portugal">🇵🇹 Portugal</option>
+                        <option value="Czech Republic">🇨🇿 Czech Republic</option>
+                      </optgroup>
+                      <optgroup label="Middle East">
+                        <option value="United Arab Emirates">🇦🇪 United Arab Emirates</option>
+                        <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                        <option value="Qatar">🇶🇦 Qatar</option>
+                        <option value="Kuwait">🇰🇼 Kuwait</option>
+                        <option value="Bahrain">🇧🇭 Bahrain</option>
+                        <option value="Egypt">🇪🇬 Egypt</option>
+                      </optgroup>
+                      <optgroup label="Asia Pacific">
+                        <option value="Australia">🇦🇺 Australia</option>
+                        <option value="New Zealand">🇳🇿 New Zealand</option>
+                        <option value="Japan">🇯🇵 Japan</option>
+                        <option value="Singapore">🇸🇬 Singapore</option>
+                        <option value="Malaysia">🇲🇾 Malaysia</option>
+                      </optgroup>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">First Name <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Kenzo"
+                      placeholder="John"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-gray-400">Last Name</label>
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Last Name <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Tanaka"
+                      placeholder="Smith"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-[10px] font-mono uppercase text-gray-400">Personal Email</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="e.g. kenzo@atelier.net"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-[10px] font-mono uppercase text-gray-400">Street Address</label>
+                <div className="space-y-1.5 focus-within:relative z-10">
+                  <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Street Address <span className="text-rose-500">*</span></label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. 7-1 Minami-Aoyama"
+                    placeholder="123 Main Street"
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-gray-400">Atelier Ward / City</label>
+                <div className="space-y-1.5 focus-within:relative z-10">
+                  <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Apartment / Unit <span className="lowercase normal-case font-normal">(Optional)</span></label>
+                  <input
+                    type="text"
+                    placeholder="Apt 4B"
+                    value={apartmentUnit}
+                    onChange={(e) => setApartmentUnit(e.target.value)}
+                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">City <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Minato-ku, Tokyo"
+                      placeholder="Berlin"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-gray-400">Postal Zip Code</label>
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">State / Region <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. 107-0062"
-                      value={zipCode}
-                      onChange={(e) => setZipCode(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
+                      placeholder="Berlin"
+                      value={stateRegion}
+                      onChange={(e) => setStateRegion(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-[10px] font-mono uppercase text-gray-400">Carriage Contact Telephone</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="+81 90 0000 0000"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5 focus-within:relative z-10">
+                    <label className="text-[10px] font-sans font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Postal Code <span className="text-rose-500">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="10115"
+                      value={zipCode}
+                      onChange={(e) => setZipCode(e.target.value)}
+                      pattern={
+                        country === 'United States' ? "^\\d{5}(-\\d{4})?$" :
+                        country === 'United Kingdom' ? "^[A-Za-z]{1,2}\\d[A-Za-z\\d]? ?\\d[A-Za-z]{2}$" :
+                        country === 'Canada' ? "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$" :
+                        country === 'Australia' || country === 'New Zealand' ? "^\\d{4}$" :
+                        country === 'Germany' || country === 'Italy' || country === 'Spain' || country === 'France' ? "^\\d{5}$" :
+                        country === 'Japan' ? "^\\d{3}-\\d{4}$" : undefined
+                      }
+                      title="Please enter a valid postal code for your country"
+                      className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -554,147 +474,134 @@ export const Checkout: React.FC = () => {
               <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-zinc-900 dark:bg-zinc-950/20 space-y-4">
                 <h3 className="font-serif text-sm font-semibold flex items-center space-x-2 border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">
                   <CreditCard className="h-4 w-4" />
-                  <span>Secure Payment Methodologies</span>
+                  <span>Secure Global Payments</span>
                 </h3>
 
-                {/* Method Options Selector Tabs */}
-                <div className="grid grid-cols-2 gap-2 pb-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPaymentMethod('stripe');
-                      setStripeError(null);
-                    }}
-                    className={`flex flex-col items-center justify-center rounded-xl p-2.5 transition-all border cursor-pointer ${
-                      paymentMethod === 'stripe'
-                        ? 'bg-zinc-950 border-zinc-950 text-white dark:bg-white dark:text-zinc-950'
-                        : 'bg-white border-gray-200 text-gray-500 hover:text-gray-900 dark:bg-zinc-900/10 dark:border-zinc-850 dark:text-zinc-400'
-                    }`}
-                  >
-                    <span className="text-[10px] font-mono tracking-wider font-extrabold">STRIPE</span>
-                    <span className="text-[8px] text-gray-400 mt-0.5">Cards & Pay</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPaymentMethod('paypal');
-                      setStripeError(null);
-                    }}
-                    className={`flex flex-col items-center justify-center rounded-xl p-2.5 transition-all border cursor-pointer ${
-                      paymentMethod === 'paypal'
-                        ? 'bg-zinc-950 border-zinc-950 text-white dark:bg-white dark:text-zinc-950'
-                        : 'bg-white border-gray-200 text-gray-500 hover:text-gray-900 dark:bg-zinc-900/10 dark:border-zinc-850 dark:text-zinc-400'
-                    }`}
-                  >
-                    <span className="text-[10px] font-mono tracking-wider font-extrabold">PAYPAL</span>
-                    <span className="text-[8px] text-gray-400 mt-0.5">PayPal Wallet</span>
-                  </button>
-                </div>
-
-                {paymentMethod === 'stripe' && (
-                  <div className="space-y-4 pt-1 font-mono">
-                    <div className="p-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/40 dark:bg-zinc-900/10 text-center space-y-2">
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[8.5px] font-mono font-bold bg-[#ff4747]/10 text-[#ff4747]">
-                        SECURE CARD & EXPRESS PAY CHANNELS
+                <div className="space-y-4 pt-1">
+                  <div className="p-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/40 dark:bg-zinc-900/10 text-center space-y-4">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[8.5px] font-mono font-bold bg-amber-500/10 text-amber-600">
+                        OFFICIAL PAYPAL PAYMENTS
                       </div>
-                      <p className="text-xs font-serif text-gray-950 dark:text-white">Central Stripe Merchant Gateway</p>
-                      <p className="text-[10px] text-gray-450 dark:text-zinc-505 max-w-sm mx-auto leading-relaxed">
-                        Validation uses the secure card transaction networks of Visa, Mastercard, American Express, Apple Pay, and Google Pay through the Stripe hosted portal.
+                      <p className="text-xs font-serif text-gray-950 dark:text-white mt-1">PayPal Wallet Checkout</p>
+                      <p className="text-[10px] text-gray-450 dark:text-zinc-500 max-w-sm mx-auto leading-relaxed mt-1">
+                        Process high-speed merchant payments with your verified PayPal Balance, Bank Accounts, or connected Credit Cards securely.
                       </p>
                     </div>
-                    {stripeError && (
-                      <div className="p-3 text-[10px] font-mono text-[#ff4747] bg-[#ff4747]/10 border border-[#ff4747]/20 rounded-xl leading-relaxed">
-                        {stripeError}
-                      </div>
-                    )}
-                  </div>
-                )}
 
-                {paymentMethod === 'paypal' && (
-                  <div className="space-y-4 pt-1">
-                    <div className="p-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/40 dark:bg-zinc-900/10 text-center space-y-4">
-                      <div>
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[8.5px] font-mono font-bold bg-amber-500/10 text-amber-600">
-                          OFFICIAL PAYPAL PAYMENTS
+                    <div className="w-full max-w-sm mx-auto pt-2 text-left">
+                      {isPending && !paypalTimeout && !paypalErrorState && (
+                        <div className="py-2.5 flex flex-col items-center justify-center space-y-2">
+                          <span className="inline-block h-4 w-4 rounded-full border-2 border-zinc-300 border-t-zinc-950 animate-spin"></span>
+                          <span className="text-[10px] font-mono text-gray-400 font-medium">Initializing secure PayPal interface...</span>
                         </div>
-                        <p className="text-xs font-serif text-gray-950 dark:text-white mt-1">PayPal Wallet Checkout</p>
-                        <p className="text-[10px] text-gray-450 dark:text-zinc-500 max-w-sm mx-auto leading-relaxed mt-1">
-                          Process high-speed merchant payments with your verified PayPal Balance, Bank Accounts, or connected Credit Cards securely.
-                        </p>
-                      </div>
+                      )}
 
-                      <div className="w-full max-w-sm mx-auto pt-2 text-left">
-                        {isPending && !paypalTimeout && !paypalErrorState && (
-                          <div className="py-2.5 flex flex-col items-center justify-center space-y-2">
-                            <span className="inline-block h-4 w-4 rounded-full border-2 border-zinc-300 border-t-zinc-950 animate-spin"></span>
-                            <span className="text-[10px] font-mono text-gray-400 font-medium">Initializing secure PayPal interface...</span>
-                          </div>
-                        )}
-
-                        {paypalErrorState ? (
-                          <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100 text-center space-y-2 dark:bg-rose-955/15 dark:border-rose-900/40">
-                            <p className="text-xs font-serif text-rose-900 dark:text-rose-450 font-semibold">PayPal Connection Offline</p>
-                            <p className="text-[10px] font-mono text-rose-700 leading-relaxed dark:text-rose-400">
-                              {paypalErrorState}
-                            </p>
-                            <p className="text-[9px] text-zinc-500 font-sans">
-                              Please utilize our primary Credit Card (Stripe) payment method if initialization issues persist.
-                            </p>
-                          </div>
-                        ) : (
-                          (!isPending || isResolved) && (
-                            <PayPalButtons
-                              style={{ layout: "vertical", shape: "rect", label: "paypal", height: 40 }}
-                              disabled={processingPayment || cart.length === 0}
-                              onClick={(data, actions) => {
-                                if (!firstName || !lastName || !email || !streetAddress || !city || !zipCode || !phone) {
-                                  setStripeError("Please complete your delivery carriage destination details before proceeding with PayPal.");
-                                  return actions.reject();
-                                } else {
-                                  setStripeError(null);
-                                  return actions.resolve();
-                                }
-                              }}
-                              createOrder={(data, actions) => {
-                                return actions.order.create({
-                                  intent: "CAPTURE",
-                                  purchase_units: [
-                                    {
-                                      amount: {
-                                        currency_code: "USD",
-                                        value: totalAmount.toFixed(2),
-                                      },
-                                      description: `Luxe Market Order Carriage for ${firstName} ${lastName}`
-                                    },
-                                  ],
-                                });
-                              }}
-                              onApprove={async (data, actions) => {
-                                if (actions.order) {
-                                  try {
-                                    const details = await actions.order.capture();
-                                    const paypalOrderId = details.id || data.orderID;
-                                    await handleSaveBackendOrder('PayPal Wallet', paypalOrderId);
-                                  } catch (err: any) {
-                                    setStripeError(err.message || 'PayPal transaction authentication check failed.');
-                                  }
-                                }
-                              }}
-                              onError={(err) => {
-                                setStripeError('PayPal gateway experienced an execution error: ' + String(err));
-                              }}
-                            />
-                          )
-                        )}
-                      </div>
+                      {paypalErrorState ? (
+                        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100 text-center space-y-2 dark:bg-rose-955/15 dark:border-rose-900/40">
+                          <p className="text-xs font-serif text-rose-900 dark:text-rose-450 font-semibold">PayPal Connection Offline</p>
+                          <p className="text-[10px] font-mono text-rose-700 leading-relaxed dark:text-rose-400">
+                            {paypalErrorState}
+                          </p>
+                        </div>
+                      ) : (
+                        (!isPending || isResolved) && (
+                          <PayPalButtons
+                            style={{ layout: "vertical", shape: "rect", label: "paypal", height: 40 }}
+                            disabled={processingPayment || cart.length === 0}
+                            onClick={(data, actions) => {
+                              if (!firstName || !lastName || !email || !country || !streetAddress || !city || !stateRegion || !zipCode || !phone) {
+                                setPaypalError("Please complete your delivery details before proceeding with PayPal.");
+                                return actions.reject();
+                              } else {
+                                setPaypalError(null);
+                                return actions.resolve();
+                              }
+                            }}
+                            createOrder={async (data, actions) => {
+                              const shippingAddress = {
+                                fullName: `${firstName} ${lastName}`,
+                                firstName: firstName,
+                                lastName: lastName,
+                                street: `${streetAddress} ${apartmentUnit}`.trim(),
+                                apartmentUnit: apartmentUnit,
+                                city: city,
+                                state: stateRegion,
+                                zipCode: zipCode,
+                                country: country,
+                                phone: phone,
+                                email: email,
+                              };
+                              const items = cart.map(item => ({
+                                product: item.product.id || item.product._id,
+                                name: item.product.name,
+                                quantity: item.quantity,
+                                price: item.product.price,
+                                selectedColor: item.selectedColor || 'Default',
+                                selectedMaterial: item.selectedMaterial || 'Default',
+                                image: item.product.image
+                              }));
+                              const token = localStorage.getItem('morvex_token');
+                              const res = await fetch('/api/paypal/create-order', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                  ...(token && { 'Authorization': `Bearer ${token}` })
+                                },
+                                body: JSON.stringify({
+                                  items,
+                                  shippingAddress,
+                                  subtotal,
+                                  discountAmount,
+                                  shippingCost,
+                                  taxRate: 0.08,
+                                  total: totalAmount,
+                                })
+                              });
+                              const resData = await res.json();
+                              if(res.ok && resData.id) {
+                                pendingOrderIdRef.current = resData.orderId;
+                                return resData.id;
+                              } else {
+                                throw new Error(resData.message || 'Order creation failed');
+                              }
+                            }}
+                            onApprove={async (data, actions) => {
+                              const token = localStorage.getItem('morvex_token');
+                              const res = await fetch('/api/paypal/capture-order', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                  ...(token && { 'Authorization': `Bearer ${token}` })
+                                },
+                                body: JSON.stringify({
+                                  paypalOrderId: data.orderID,
+                                  systemOrderId: pendingOrderIdRef.current
+                                })
+                              });
+                              const details = await res.json();
+                              if(details.success) {
+                                setNewOrderCode(details.order._id);
+                                clearCart();
+                                setCheckoutStep('success');
+                              } else {
+                                setPaypalError(details.message || 'Capture failed');
+                              }
+                            }}
+                            onError={(err) => {
+                              setPaypalError('PayPal gateway experienced an execution error: ' + String(err));
+                            }}
+                          />
+                        )
+                      )}
                     </div>
-                    {stripeError && (
-                      <div className="p-3 text-[10px] font-mono text-[#ff4747] bg-[#ff4747]/10 border border-[#ff4747]/20 rounded-xl leading-relaxed">
-                        {stripeError}
-                      </div>
-                    )}
                   </div>
-                )}
+                  {paypalError && (
+                    <div className="p-3 text-[10px] font-mono text-[#2563eb] bg-[#2563eb]/10 border border-[#2563eb]/20 rounded-xl leading-relaxed">
+                      {paypalError}
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex items-center space-x-2 rounded-xl bg-gray-50 p-3.5 dark:bg-zinc-900/40">
                   <ShieldCheck className="h-4.5 w-4.5 text-emerald-600 dark:text-emerald-500" />
@@ -704,25 +611,13 @@ export const Checkout: React.FC = () => {
                 </div>
               </div>
 
-              {/* Secure checkout triggers */}
-              {paymentMethod === 'stripe' && (
-                <button
-                  type="submit"
-                  disabled={processingPayment || cart.length === 0}
-                  className="w-full flex items-center justify-between rounded-xl bg-zinc-900 px-6 py-4 text-xs font-semibold text-white shadow-xl hover:bg-zinc-800 disabled:bg-gray-450 transition-all dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 cursor-pointer"
-                >
-                  <span>{processingPayment ? 'Processing carriage validation...' : 'Proceed to Secure Stripe Checkout'}</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              )}
-
             </form>
           </div>
 
           {/* Checkout Totals details - Right 5 columns */}
           <div className="lg:col-span-5 space-y-4">
             <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-zinc-900 dark:bg-zinc-950/20">
-              <h3 className="font-serif text-sm font-semibold border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">Carriage Review Summary</h3>
+              <h3 className="font-serif text-sm font-semibold border-b border-gray-100 pb-3 dark:border-zinc-900 text-gray-950 dark:text-white">Order Summary</h3>
               
               {/* Product items loop inside summary */}
               <div className="divide-y divide-gray-100 dark:divide-zinc-900 max-h-72 overflow-y-auto pr-2 mt-4 space-y-3">
@@ -748,7 +643,7 @@ export const Checkout: React.FC = () => {
               {/* Financial computations summary */}
               <div className="border-t border-gray-100 mt-6 pt-6 space-y-3 text-xs text-gray-500 dark:text-zinc-400">
                 <div className="flex justify-between">
-                  <span>Carriage subtotal</span>
+                  <span>Subtotal</span>
                   <span className="font-mono text-gray-950 dark:text-white">${subtotal.toFixed(2)}</span>
                 </div>
                 {couponApplied && (
@@ -769,7 +664,7 @@ export const Checkout: React.FC = () => {
                 </div>
 
                 <div className="border-t border-gray-100 pt-3.5 dark:border-zinc-900 flex justify-between font-serif text-sm font-bold text-gray-950 dark:text-white">
-                  <span>Total Carriage Costs</span>
+                  <span>Total</span>
                   <span className="font-sans text-base">${totalAmount.toFixed(2)}</span>
                 </div>
               </div>

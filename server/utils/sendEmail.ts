@@ -16,22 +16,8 @@ export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
 
   // Check if SMTP configuration is provided
   if (!host || !user || !pass) {
-    console.warn(`
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ℹ️  [EMAIL SIMULATION]
-To: ${options.email}
-Subject: ${options.subject}
-Message: ${options.message}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ To enable real outgoing email delivery, please configure SMTP credentials in your .env.example/environment variables:
-- SMTP_HOST
-- SMTP_PORT (defaults to 587)
-- SMTP_USER
-- SMTP_PASS
-- SMTP_FROM
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    `);
-    return false; // Simulating email
+    console.error('❌ [Email Service] Critical Error: SMTP credentials are not configured. Cannot send email to:', options.email);
+    throw new Error('Email service is not configured. Please set up SMTP credentials in environment variables.');
   }
 
   try {
@@ -50,14 +36,14 @@ Message: ${options.message}
       to: options.email,
       subject: options.subject,
       text: options.message,
-      html: options.html || `<div style="font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333;">${options.message.replace(/\n/g, '<br/>')}</div>`,
+      html: options.html || `<div style="font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333;">${options.message.replace(/\\n/g, '<br/>')}</div>`,
     };
 
     const info = await transporter.sendMail(mailOptions);
     console.log('✨ [Email Service] Real email sent successfully: %s', info.messageId);
     return true;
-  } catch (error) {
-    console.error('❌ [Email Service] Error sending real email, falling back to log simulation:', error);
-    return false;
+  } catch (error: any) {
+    console.error('❌ [Email Service] Internal Error sending email:', error.message || error);
+    throw new Error(`Failed to send email: ${error.message || 'Unknown SMTP error'}`);
   }
 }

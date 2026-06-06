@@ -68,19 +68,19 @@ export const BoutiqueCart: React.FC = () => {
       {/* Page Title */}
       <div>
         <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Your Selection</span>
-        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Boutique Shopping Cart</h2>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Shopping Cart</h2>
       </div>
 
       {cart.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-gray-200 p-12 text-center dark:border-zinc-800">
-          <p className="font-serif text-lg text-gray-400 dark:text-zinc-500">Your boutique cart is currently empty.</p>
-          <p className="mt-2 text-xs text-gray-400 dark:text-zinc-550 leading-relaxed max-w-sm mx-auto">Browse our curated capsules to add beautiful handcrafted architectural furniture and digital components to your workspace.</p>
+        <div className="rounded-xl border border-dashed border-slate-200 p-12 text-center dark:border-zinc-800">
+          <p className="text-lg font-medium text-slate-500 dark:text-zinc-400">Your shopping cart is empty.</p>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-slate-400 dark:text-zinc-500">Discover great deals and amazing products in our store.</p>
           <button
             onClick={() => setActiveView('home')}
-            className="mt-6 inline-flex items-center space-x-2 rounded-full bg-zinc-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
+            className="mt-6 inline-flex items-center space-x-2 rounded bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Return to Galleries</span>
+            <span>Continue Shopping</span>
           </button>
         </div>
       ) : (
@@ -129,7 +129,7 @@ export const BoutiqueCart: React.FC = () => {
                     </div>
                     <button
                       onClick={() => removeFromCart(item.product.id)}
-                      className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-50 hover:text-red-500 dark:hover:bg-zinc-900"
+                      className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-50 hover:text-blue-500 dark:hover:bg-zinc-900"
                       title="Remove product"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -167,7 +167,7 @@ export const BoutiqueCart: React.FC = () => {
               className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-500 hover:text-gray-950 dark:text-zinc-400 dark:hover:text-white"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Continue Shopping Boutique</span>
+              <span>Continue Shopping</span>
             </button>
           </div>
 
@@ -212,7 +212,7 @@ export const BoutiqueCart: React.FC = () => {
                   <div className="relative mt-2 flex">
                     <input
                       type="text"
-                      placeholder="e.g. LUXE25"
+                      placeholder="e.g. MORVEX25"
                       value={couponText}
                       onChange={(e) => setCouponText(e.target.value)}
                       className="w-full rounded-xl border border-gray-200 bg-white py-2 pl-3 pr-10 text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
@@ -229,7 +229,7 @@ export const BoutiqueCart: React.FC = () => {
                   <p className="mt-2 text-[10px] font-mono text-emerald-600 dark:text-emerald-400">✓ Authentic privilege code applied.</p>
                 )}
                 {couponError && (
-                  <p className="mt-2 text-[10px] font-mono text-red-500">Invalid code. Try "LUXE25" for 25% off.</p>
+                  <p className="mt-2 text-[10px] font-mono text-red-500">Invalid code. Try "MORVEX25" for 25% off.</p>
                 )}
               </div>
 
@@ -237,14 +237,14 @@ export const BoutiqueCart: React.FC = () => {
               <div className="mt-6 space-y-3">
                 <button
                   onClick={handleCheckoutClick}
-                  className="w-full flex items-center justify-between rounded-xl bg-zinc-900 px-5 py-4 text-xs font-semibold text-white shadow-md hover:bg-zinc-855 transition-all dark:bg-white dark:text-zinc-950"
+                  className="flex w-full items-center justify-between rounded-xl bg-[#2563eb] px-5 py-4 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all hover:bg-slate-900 dark:text-white"
                 >
-                  <span>Proceed to Shipping</span>
+                  <span>Secure Checkout</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
-                <div className="flex items-center justify-center space-x-1.5 text-[10px] text-gray-400 font-mono">
+                <div className="flex items-center justify-center space-x-1.5 font-sans text-xs font-medium text-slate-500">
                   <Lock className="h-3.5 w-3.5" />
-                  <span>Verified AES Encrypted Process</span>
+                  <span>Secure Encrypted Checkout</span>
                 </div>
               </div>
             </div>
@@ -255,7 +255,7 @@ export const BoutiqueCart: React.FC = () => {
       {/* Recents banner with bento items (Recently Viewed) */}
       <section className="border-t border-gray-100 pt-10 dark:border-zinc-900">
         <div>
-          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Atelier Recommendations</span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Product Recommendations</span>
           <h3 className="mt-1 font-serif text-xl font-normal text-gray-900 dark:text-white">Recently Viewed Selection</h3>
         </div>
 

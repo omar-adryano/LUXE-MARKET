@@ -39,7 +39,7 @@ const initialProducts = [
     stock: 20
   },
   {
-    name: 'Aural Luxe Wireless Headphones',
+    name: 'Aural MORVEX Wireless Headphones',
     category: 'Electronics',
     price: 299.00,
     originalPrice: 375.00,
@@ -155,24 +155,14 @@ export async function seedDB(): Promise<void> {
 
     const productCount = await Product.countDocuments();
     if (productCount === 0) {
-      await Product.create(initialProducts);
-      console.log('🌱 [Database Seed] Initialized default boutique products catalog.');
-    } else {
-      // Ensure missing products are seeded even if the collection is partially created
-      for (const p of initialProducts) {
-        const exists = await Product.findOne({ name: p.name });
-        if (!exists) {
-          await Product.create(p);
-          console.log(`🌱 [Database Seed] Added missing product: ${p.name}`);
-        }
-      }
+      console.log('🌱 [Database Seed] Skipped default boutique products catalog as CJ products are used.');
     }
 
     const usersToSeed = [
       {
         name: 'Omar Admin',
         username: 'omar',
-        email: 'admin@luxemarket.com',
+        email: 'admin@morvex.com',
         password: 'omar2006$$$',
         role: 'admin' as const,
         isVerified: true,
@@ -180,7 +170,7 @@ export async function seedDB(): Promise<void> {
       {
         name: 'Boutique Guest',
         username: 'guest',
-        email: 'user@luxemarket.com',
+        email: 'user@morvex.com',
         password: 'password',
         role: 'user' as const,
         isVerified: true,
@@ -213,7 +203,7 @@ export async function seedDB(): Promise<void> {
         await existingUser.save();
       }
     }
-    console.log('🌱 [Database Seed] Initialized & verified default boutique users: omar (admin@luxemarket.com), guest (user@luxemarket.com), atelier (name@atelier.com).');
+    console.log('🌱 [Database Seed] Initialized & verified default boutique users: omar (admin@morvex.com), guest (user@morvex.com), atelier (name@atelier.com).');
   } catch (error) {
     console.error('❌ [Database Seed] Seeding error encountered:', error);
   }

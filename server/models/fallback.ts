@@ -48,7 +48,7 @@ const initialProducts = [
     stock: 20
   },
   {
-    name: 'Aural Luxe Wireless Headphones',
+    name: 'Aural MORVEX Wireless Headphones',
     category: 'Electronics',
     price: 299.00,
     originalPrice: 375.00,

@@ -4,6 +4,7 @@ import { Order } from '../models/Order';
 import { Product } from '../models/Product';
 import { Category } from '../models/Category';
 import { AuthRequest } from '../middleware/auth';
+import { CJDropshippingService } from '../services/aliexpressService';
 
 /**
  * @desc    Get Admin Dashboard Statistics and analytical datasets
@@ -103,185 +104,156 @@ export async function getDashboardStats(
 }
 
 /**
- * @desc    Import a new product directly from DSers supplier database (AliExpress, etc.)
- * @route   POST /api/admin/dsers/import
+ * @desc    AliExpress Open Platform Product Import (Architecture Scaffold)
+ * @route   POST /api/admin/aliexpress/import
  * @access  Private/Admin
  */
-export async function importDSersProduct(
+export async function importAliExpressProduct(
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const { name, category, price, image, description, stock } = req.body;
+    const { productId } = req.body;
     
-    if (!name || !price || !image) {
-      res.status(400).json({
-        success: false,
-        message: 'Product Specification Naming, Carriage Pricing, and Image URL are required to register imported products.'
-      });
+    if (!productId) {
+      res.status(400).json({ success: false, message: 'AliExpress Product ID is required.' });
       return;
     }
 
-    const priceNum = Number(price);
-    if (isNaN(priceNum) || priceNum < 0) {
-      res.status(400).json({
-        success: false,
-        message: 'Pricing must be a valid positive number.'
-      });
+    // TODO: Implement actual 'aliexpress.postproduct.redefining.findaeproductbyidForDropShipper' API Call
+    // Requires TopClient SDK & AliExpress AppKey, AppSecret, and dropshipper access token.
+    
+    res.status(501).json({
+      success: false,
+      message: 'AliExpress API connection is architected but awaits live Developer Account Credentials to authorize import capabilities.'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    AliExpress Inventory Sync Architecture Scaffold
+ * @route   POST /api/admin/aliexpress/sync-inventory
+ * @access  Private/Admin
+ */
+export async function syncAliExpressInventory(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    // TODO: Implement batch query to AliExpress dropship API to fetch live SKU inventory levels.
+    res.status(501).json({
+      success: false,
+      message: 'Inventory Sync requires active AliExpress Dropshipping developer credentials array.'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    AliExpress Price Sync Architecture Scaffold
+ * @route   POST /api/admin/aliexpress/sync-prices
+ * @access  Private/Admin
+ */
+export async function syncAliExpressPrices(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    // TODO: Implement querying the AliExpress product bulk pricing API array.
+    res.status(501).json({
+      success: false,
+      message: 'Pricing Sync requires active AliExpress Dropshipping developer credentials.'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    AliExpress Auto-Fulfillment Architecture Scaffold
+ * @route   POST /api/admin/aliexpress/sync-fulfillment
+ * @access  Private/Admin
+ */
+export async function searchCJProducts(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const keyword = (req.query.keyword as string) || '';
+    if (!keyword) {
+      res.status(400).json({ success: false, message: 'Keyword is required' });
       return;
     }
-
-    const product = await Product.create({
-      name: name.trim(),
-      category: category || 'Furniture',
-      price: priceNum,
-      image: image.trim(),
-      description: description?.trim() || 'DSers premium dropshipped operational stock sync core.',
-      stock: stock ? Number(stock) : 45,
-      source: 'dsers',
-      rating: 4.8,
-      numReviews: Math.floor(Math.random() * 20) + 5,
-    });
-
-    res.status(201).json({
-      success: true,
-      message: 'Product successfully imported from DSers supplier catalogue and published directly to store catalog.',
-      product
-    });
+    const data = await CJDropshippingService.getProducts(keyword, 1);
+    res.json({ success: true, list: data?.list || [] });
   } catch (error) {
     next(error);
   }
 }
 
-/**
- * @desc    Automatically sync stock/inventory of DSers products with dropshipped supplier limits
- * @route   POST /api/admin/dsers/sync-inventory
- * @access  Private/Admin
- */
-export async function syncDSersInventory(
+export async function importCJProduct(
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const dsersProducts = await Product.find({ 
-      source: 'dsers', 
-      isArchived: { $ne: true },
-      dsersRemovedFromSync: { $ne: true } 
-    });
-    const synced = [];
-
-    for (const prod of dsersProducts) {
-      const oldStock = prod.stock;
-      // Syncing inventory automatically to supplier warehouse levels
-      const newStock = Math.floor(Math.random() * 80) + 15;
-      prod.stock = newStock;
-      await prod.save();
-      
-      synced.push({
-        id: prod._id,
-        name: prod.name,
-        oldStock,
-        newStock
-      });
+    const { productId } = req.body;
+    if (!productId) {
+      res.status(400).json({ success: false, message: 'Product ID is required' });
+      return;
     }
-
-    res.json({
-      success: true,
-      message: `DSers Inventory Synced. Successfully retrieved live inventory limits for ${dsersProducts.length} DSers products.`,
-      count: dsersProducts.length,
-      synced
-    });
+    const product = await CJDropshippingService.importProductToDB(productId);
+    res.json({ success: true, product });
   } catch (error) {
     next(error);
   }
 }
 
-/**
- * @desc    Automatically sync pricing of DSers products based on active dropship markups
- * @route   POST /api/admin/dsers/sync-prices
- * @access  Private/Admin
- */
-export async function syncDSersPrices(
+export async function syncAliExpressFulfillment(
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const dsersProducts = await Product.find({ 
-      source: 'dsers', 
-      isArchived: { $ne: true },
-      dsersRemovedFromSync: { $ne: true } 
+    const activeOrders = await Order.find({
+      status: { $in: ['Processing', 'Shipped'] },
+      cjOrderId: { $exists: true, $ne: null }
     });
-    const synced = [];
+    
+    let updatedCount = 0;
+    for (const order of activeOrders) {
+      if (!order.cjOrderId) continue;
+      const trackInfo = await CJDropshippingService.trackOrder(order.cjOrderId) as any;
+      if (trackInfo && trackInfo.data) {
+        const trackingData = trackInfo.data[0] || trackInfo.data;
+        const status = trackingData.status;
 
-    for (const prod of dsersProducts) {
-      const oldPrice = prod.price;
-      // Adjust prices automatically with a slight markup index float
-      const ratio = 0.97 + Math.random() * 0.06;
-      const newPrice = Number((prod.price * ratio).toFixed(2));
-      prod.price = newPrice;
-      await prod.save();
+        if (trackingData.trackingNumber && !order.trackingNumber) {
+          order.trackingNumber = trackingData.trackingNumber;
+          order.status = 'Shipped';
+          order.trackingStep = 2;
+          updatedCount++;
+        }
 
-      synced.push({
-        id: prod._id,
-        name: prod.name,
-        oldPrice,
-        newPrice
-      });
+        if (status === 'Delivered' || status === 'completed') {
+           order.status = 'Delivered';
+           order.trackingStep = 3;
+           updatedCount++;
+        }
+        await order.save();
+      }
     }
 
     res.json({
       success: true,
-      message: `DSers Pricing Synced. Automated markup updates completed successfully for ${dsersProducts.length} dropshipped products.`,
-      count: dsersProducts.length,
-      synced
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
-/**
- * @desc    Synchronize order fulfillment statuses of outstanding orders, processing via DSers AliExpress API
- * @route   POST /api/admin/dsers/sync-fulfillment
- * @access  Private/Admin
- */
-export async function syncDSersFulfillment(
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> {
-  try {
-    // Find outstanding/unfulfilled orders (Pending or Processing)
-    const processingOrders = await Order.find({ status: { $in: ['Pending', 'Processing'] } });
-    const synced = [];
-
-    for (const order of processingOrders) {
-      // DSers dropshipping: sync state updates tracking steps
-      const oldStatus = order.status;
-      order.status = 'Shipped';
-      order.trackingStep = 2; // Transition to Shipped/In Transit
-      
-      // Generate standard DSers tracking
-      const trackingCode = 'DS' + Math.floor(100000 + Math.random() * 900000) + 'CN';
-      order.itemsSummary = order.itemsSummary + ` (DSers Tracking: ${trackingCode})`;
-      await order.save();
-
-      synced.push({
-        orderId: order._id,
-        oldStatus,
-        newStatus: 'Shipped',
-        trackingCode
-      });
-    }
-
-    res.json({
-      success: true,
-      message: `DSers Fulfillment Synced. Processed fulfillment request with AliExpress logistics. Dispatched tracking references for ${processingOrders.length} orders.`,
-      count: processingOrders.length,
-      synced
+      message: `Fulfillment sync complete. Updated ${updatedCount} orders from CJ Dropshipping.`
     });
   } catch (error) {
     next(error);
