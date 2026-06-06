@@ -504,7 +504,8 @@ export const AdminDashboard: React.FC = () => {
         payload.isArchived = editProdIsArchived;
         payload.isPublished = editProdIsPublished;
       } else {
-        // CJ Product: Allow Unpublish, Allow Archive, Allow Remove from CJ Dropshipping sync list
+        // CJ Product: Allow category override, Unpublish, Archive, Remove from CJ Dropshipping sync list
+        payload.category = editProdCategory;
         payload.isPublished = editProdIsPublished;
         payload.isArchived = editProdIsArchived;
         payload.cjRemovedFromSync = editProdCjRemovedFromSync;
@@ -914,8 +915,19 @@ export const AdminDashboard: React.FC = () => {
                 onChange={(e) => setNewProdCategory(e.target.value)}
                 className="w-full rounded-xl border border-gray-205 bg-white px-3 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
               >
-                <option value="Furniture">Furniture</option>
                 <option value="Electronics">Electronics</option>
+                <option value="Phone Accessories">Phone Accessories</option>
+                <option value="Smart Gadgets">Smart Gadgets</option>
+                <option value="Apparel & Fashion">Apparel & Fashion</option>
+                <option value="Beauty & Skincare">Beauty & Skincare</option>
+                <option value="Home & Kitchen">Home & Kitchen</option>
+                <option value="Fitness & Health">Fitness & Health</option>
+                <option value="Pet Supplies">Pet Supplies</option>
+                <option value="Office & Desk">Office & Desk</option>
+                <option value="Travel Accessories">Travel Accessories</option>
+                <option value="Baby & Kids">Baby & Kids</option>
+                <option value="Jewelry & Watches">Jewelry & Watches</option>
+                <option value="Furniture">Furniture</option>
                 <option value="Accessories">Accessories</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Beauty">Beauty</option>
@@ -1706,8 +1718,19 @@ export const AdminDashboard: React.FC = () => {
                           onChange={(e) => setEditProdCategory(e.target.value)}
                           className="w-full rounded-xl border border-gray-205 bg-white px-3 py-2 text-xs outline-none focus:border-zinc-500 dark:border-zinc-805 dark:bg-zinc-900 dark:text-white"
                         >
-                          <option value="Furniture">Furniture</option>
                           <option value="Electronics">Electronics</option>
+                          <option value="Phone Accessories">Phone Accessories</option>
+                          <option value="Smart Gadgets">Smart Gadgets</option>
+                          <option value="Apparel & Fashion">Apparel & Fashion</option>
+                          <option value="Beauty & Skincare">Beauty & Skincare</option>
+                          <option value="Home & Kitchen">Home & Kitchen</option>
+                          <option value="Fitness & Health">Fitness & Health</option>
+                          <option value="Pet Supplies">Pet Supplies</option>
+                          <option value="Office & Desk">Office & Desk</option>
+                          <option value="Travel Accessories">Travel Accessories</option>
+                          <option value="Baby & Kids">Baby & Kids</option>
+                          <option value="Jewelry & Watches">Jewelry & Watches</option>
+                          <option value="Furniture">Furniture</option>
                           <option value="Accessories">Accessories</option>
                           <option value="Fashion">Fashion</option>
                           <option value="Beauty">Beauty</option>
@@ -1796,8 +1819,45 @@ export const AdminDashboard: React.FC = () => {
                       <div>
                         <span className="font-serif text-xs font-semibold text-blue-950 dark:text-blue-400 block">CJ Dropshipping Synced SKU</span>
                         <p className="text-[10px] text-blue-800 dark:text-blue-400 leading-relaxed font-sans mt-0.5 font-medium">
-                          CJ dropshipped catalogue properties remain pristine. You can toggle storefront visibility, archive parameters, or remove from CJ active automatic sync list.
+                          CJ dropshipped catalogue properties remain pristine. You can override category, storefront visibility, archive parameters, or remove from CJ active automatic sync list.
                         </p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono uppercase text-gray-400">CJ Original Sync Category</label>
+                        <input
+                          type="text"
+                          disabled
+                          value={selectedAdminProduct.cjCategory || selectedAdminProduct.category || ''}
+                          className="w-full rounded-xl border border-gray-100 bg-gray-50/50 px-3.5 py-2 text-xs text-gray-500 outline-none dark:border-zinc-800 dark:bg-zinc-900/50"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono uppercase text-blue-600 dark:text-blue-400 font-bold">Storefront Category Override</label>
+                        <select
+                          value={editProdCategory}
+                          onChange={(e) => setEditProdCategory(e.target.value)}
+                          className="w-full rounded-xl border border-blue-200 bg-white px-3 py-2 text-xs outline-none focus:border-blue-500 dark:border-blue-900 dark:bg-zinc-900 dark:text-white"
+                        >
+                          <option value="Electronics">Electronics</option>
+                          <option value="Phone Accessories">Phone Accessories</option>
+                          <option value="Smart Gadgets">Smart Gadgets</option>
+                          <option value="Apparel & Fashion">Apparel & Fashion</option>
+                          <option value="Beauty & Skincare">Beauty & Skincare</option>
+                          <option value="Home & Kitchen">Home & Kitchen</option>
+                          <option value="Fitness & Health">Fitness & Health</option>
+                          <option value="Pet Supplies">Pet Supplies</option>
+                          <option value="Office & Desk">Office & Desk</option>
+                          <option value="Travel Accessories">Travel Accessories</option>
+                          <option value="Baby & Kids">Baby & Kids</option>
+                          <option value="Jewelry & Watches">Jewelry & Watches</option>
+                          <option value="Furniture">Furniture</option>
+                          <option value="Accessories">Accessories</option>
+                          <option value="Fashion">Fashion</option>
+                          <option value="Beauty">Beauty</option>
+                        </select>
                       </div>
                     </div>
 

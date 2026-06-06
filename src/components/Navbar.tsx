@@ -54,21 +54,21 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header id="morvex-navbar" className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white transition-colors duration-300 dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header id="morvex-navbar" className="sticky top-0 z-40 w-full bg-[#131921] transition-colors duration-300 text-white">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <div 
           onClick={() => setActiveView('home')} 
-          className="flex cursor-pointer items-center space-x-3 duration-150 active:scale-95 group"
+          className="flex cursor-pointer items-center space-x-4 duration-150 active:scale-95 group"
         >
-          <div className="flex h-10 w-10 items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <div className="flex h-12 w-12 items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
               <path d="M10 12V8C10 4.686 12.686 2 16 2C19.314 2 22 4.686 22 8V12" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
               <rect x="4" y="10" width="24" height="20" rx="3" fill="#2563eb" />
               <path d="M9 23V15L16 21L23 15V23" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="font-sans text-2xl font-black tracking-tighter text-slate-900 transition-colors dark:text-white">MORVEX</span>
+          <span className="font-sans text-2xl font-black tracking-tighter text-white">MORVEX</span>
         </div>
 
         {/* Search Bar Premium Styling */}
@@ -145,26 +145,26 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Action Controls & Navigation */}
-        <div className="flex items-center space-x-2 sm:space-x-4">
-          <nav className="hidden items-center space-x-1 lg:flex">
+        <div className="flex items-center space-x-4 sm:space-x-6">
+          <nav className="hidden items-center space-x-3 lg:flex">
             {user ? (
               <button
                 onClick={() => {
                   setActiveView('user-dashboard');
                   window.location.hash = 'orders';
                 }}
-                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-zinc-900/50 ${activeView === 'user-dashboard' ? 'text-[#2563eb]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-white/10 ${activeView === 'user-dashboard' ? 'text-white' : 'text-white/80 hover:text-white'}`}
               >
-                <User className="h-4.5 w-4.5 mb-1 stroke-[1.5]" />
-                <span className="text-[9px] font-bold uppercase tracking-wider">Account</span>
+                <User className="h-5 w-5 mb-1.5 stroke-[1.5]" />
+                <span className="text-[11px] font-bold uppercase tracking-wider">Account</span>
               </button>
             ) : (
               <button
                 onClick={() => setActiveView('auth')}
-                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-zinc-900/50 ${activeView === 'auth' ? 'text-[#2563eb]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-white/10 ${activeView === 'auth' ? 'text-white' : 'text-white/80 hover:text-white'}`}
               >
-                <User className="h-4.5 w-4.5 mb-1 stroke-[1.5]" />
-                <span className="text-[9px] font-bold uppercase tracking-wider">Sign In</span>
+                <User className="h-5 w-5 mb-1.5 stroke-[1.5]" />
+                <span className="text-[11px] font-bold uppercase tracking-wider">Sign In</span>
               </button>
             )}
 
@@ -172,20 +172,20 @@ export const Navbar: React.FC = () => {
               onClick={() => {
                 setActiveView('wishlist');
               }}
-              className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-zinc-900/50 ${activeView === 'wishlist' ? 'text-[#2563eb]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+              className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-white/10 ${activeView === 'wishlist' ? 'text-white' : 'text-white/80 hover:text-white'}`}
             >
-              <Heart className="h-4.5 w-4.5 mb-1 stroke-[1.5]" />
-              <span className="text-[9px] font-bold uppercase tracking-wider">Wishlist</span>
+              <Heart className="h-5 w-5 mb-1.5 stroke-[1.5]" />
+              <span className="text-[11px] font-bold uppercase tracking-wider">Wishlist</span>
             </button>
 
             <button
               onClick={() => setActiveView('cart')}
-              className={`relative flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-zinc-900/50 ${activeView === 'cart' ? 'text-[#2563eb]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+              className={`relative flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-white/10 ${activeView === 'cart' ? 'text-white' : 'text-white/80 hover:text-white'}`}
             >
-              <ShoppingBag className="h-4.5 w-4.5 mb-1 stroke-[1.5]" />
-              <span className="text-[9px] font-bold uppercase tracking-wider">Cart</span>
+              <ShoppingBag className="h-5 w-5 mb-1.5 stroke-[1.5]" />
+              <span className="text-[11px] font-bold uppercase tracking-wider">Cart</span>
               {cartItemsCount > 0 && (
-                <span className="absolute right-2 top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#2563eb] px-1 text-[9px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-zinc-950">
+                <span className="absolute right-2 top-0.5 flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-[#2563eb] px-1 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-zinc-950">
                   {cartItemsCount}
                 </span>
               )}
@@ -194,10 +194,10 @@ export const Navbar: React.FC = () => {
             {user?.role === 'admin' && (
               <button
                 onClick={() => setActiveView('admin-dashboard')}
-                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-zinc-900/50 ${activeView === 'admin-dashboard' ? 'text-[#2563eb]' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                className={`flex flex-col items-center justify-center rounded-lg px-4 py-1.5 transition-all duration-200 hover:bg-white/10 ${activeView === 'admin-dashboard' ? 'text-white' : 'text-white/80 hover:text-white'}`}
               >
-                <ShieldAlert className="h-4.5 w-4.5 mb-1 stroke-[1.5]" />
-                <span className="text-[9px] font-bold uppercase tracking-wider">Console</span>
+                <ShieldAlert className="h-5 w-5 mb-1.5 stroke-[1.5]" />
+                <span className="text-[11px] font-bold uppercase tracking-wider">Console</span>
               </button>
             )}
           </nav>
@@ -205,7 +205,7 @@ export const Navbar: React.FC = () => {
           {/* Theme Toggle Button */}
           <button
             onClick={toggleDarkMode}
-            className="rounded p-2 text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-gray-100 border border-transparent hover:border-slate-200 dark:hover:border-zinc-800"
+            className="rounded p-2 text-white/80 hover:bg-white/10 hover:text-white border border-transparent"
             title="Toggle Theme"
           >
             {isDarkMode ? <Sun className="h-4 w-4 text-yellow-500" /> : <Moon className="h-4 w-4" />}
@@ -214,7 +214,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded p-2 text-gray-500 hover:bg-gray-50 hover:text-gray-950 lg:hidden dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-gray-100"
+            className="rounded p-2 text-white/80 hover:bg-white/10 hover:text-white lg:hidden"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -222,7 +222,7 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Always-Visible Search Row */}
-      <div className="border-t border-slate-100 bg-white px-4 py-2.5 md:hidden dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="bg-[#131921] px-4 py-2.5 md:hidden">
         <div className="relative flex w-full items-center">
           <input
             type="text"

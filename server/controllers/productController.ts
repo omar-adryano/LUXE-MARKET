@@ -105,15 +105,20 @@ export async function updateProduct(
   next: NextFunction
 ): Promise<void> {
   try {
+    const existingProduct = await Product.findById(req.params.id);
+    if (!existingProduct) {
+      next(new APIError('Product details update target not found', 404));
+      return;
+    }
+
+    if (existingProduct.source === 'cj' && req.body.category && !existingProduct.cjCategory) {
+      req.body.cjCategory = existingProduct.category;
+    }
+
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-
-    if (!product) {
-      next(new APIError('Product details update target not found', 404));
-      return;
-    }
 
     res.json({
       success: true,

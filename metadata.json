@@ -1,6 +1,12 @@
 {
-  "name": "Luxe Market",
-  "description": "A premium, minimalist e-commerce digital marketplace with custom boutique layouts, interactive cart, secure checkout, and stylized dashboards.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "name": "Morvex",
+  "description": "Luxe Market E-commerce Platform",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

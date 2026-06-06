@@ -407,7 +407,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Fetch wishlist helper
   const fetchWishlist = async () => {
     if (!token || !user) {
-      setWishlist([]);
+      const saved = localStorage.getItem('morvex_wishlist');
+      if (saved) {
+        try {
+          setWishlist(JSON.parse(saved));
+        } catch {
+          setWishlist([]);
+        }
+      } else {
+        setWishlist([]);
+      }
       return;
     }
     try {

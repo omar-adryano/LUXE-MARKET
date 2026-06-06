@@ -349,8 +349,18 @@ const AppContent: React.FC = () => {
 
       {/* App-Wide Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-24 right-4 sm:right-8 z-50 flex items-center space-x-2 rounded-lg bg-zinc-900 px-4 py-3 text-sm font-semibold text-white shadow-xl dark:bg-white dark:text-zinc-950 animate-fade-in">
-          <span>{toastMessage}</span>
+        <div 
+          className="fixed z-[9999] pointer-events-none"
+          style={{ top: '20px', left: '50%', transform: 'translateX(-50%)' }}
+        >
+          <div className="flex animate-toast-fade items-center space-x-3 rounded-xl bg-white px-6 py-4 text-sm font-medium text-zinc-900 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-green-500/20 dark:bg-zinc-900 dark:text-white dark:border-green-500/30">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span className="whitespace-nowrap">{toastMessage.replace('✓ ', '')}</span>
+          </div>
         </div>
       )}
     </div>

@@ -13,6 +13,10 @@ const productSchema = new Schema(
       required: [true, 'Please provide a category name'],
       trim: true,
     },
+    cjCategory: {
+      type: String,
+      trim: true,
+    },
     price: {
       type: Number,
       required: [true, 'Please provide a product price'],

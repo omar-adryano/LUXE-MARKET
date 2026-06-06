@@ -154,6 +154,7 @@ export class CJDropshippingService {
       const importedProductData = {
          name: info.productNameEn || info.productName,
          category: info.categoryName || 'Imported CJ',
+         cjCategory: info.categoryName || 'Imported CJ',
          price: salePrice,
          originalPrice: originalPrice,
         image: finalImage,

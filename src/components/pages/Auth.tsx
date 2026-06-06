@@ -540,6 +540,7 @@ export const Auth: React.FC<AuthPageProps> = ({ onSuccessRedirect }) => {
                   {authLoading ? 'Authenticating...' : 'Sign in'}
                 </button>
 
+                {/* Google Auth hidden for audit
                 <div className="relative mt-8 mb-6">
                   <div className="absolute inset-0 flex items-center" aria-hidden="true">
                     <div className="w-full border-t border-slate-200 dark:border-zinc-800" />
@@ -565,6 +566,7 @@ export const Auth: React.FC<AuthPageProps> = ({ onSuccessRedirect }) => {
                     <span>{googleLoading ? 'Connecting to Google...' : 'Continue with Google'}</span>
                   </button>
                 </div>
+                */}
 
                 <div className="mt-8 text-center text-sm text-slate-500 dark:text-zinc-400">
                   Don't have a MORVEX account?{' '}
@@ -667,6 +669,7 @@ export const Auth: React.FC<AuthPageProps> = ({ onSuccessRedirect }) => {
                   {authLoading ? 'Creating Account...' : 'Create Account'}
                 </button>
 
+                {/* Google Auth hidden for audit
                 <div className="relative mt-8 mb-6">
                   <div className="absolute inset-0 flex items-center" aria-hidden="true">
                     <div className="w-full border-t border-slate-200 dark:border-zinc-800" />
@@ -692,6 +695,7 @@ export const Auth: React.FC<AuthPageProps> = ({ onSuccessRedirect }) => {
                     <span>{googleLoading ? 'Connecting to Google...' : 'Continue with Google'}</span>
                   </button>
                 </div>
+                */}
 
                 <div className="mt-8 text-center text-sm text-slate-500 dark:text-zinc-400">
                   Already have an account?{' '}

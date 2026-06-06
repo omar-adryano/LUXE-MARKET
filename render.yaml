@@ -1,23 +1,12 @@
 services:
   - type: web
-    name: luxe-atelier-backend
+    name: morvex-api
     env: node
-    buildCommand: "npm run build"
-    startCommand: "npm run start"
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
-      - key: MONGODB_URI
-        sync: false
-      - key: JWT_SECRET
-        sync: false
-      - key: PAYPAL_CLIENT_ID
-        sync: false
-      - key: PAYPAL_CLIENT_SECRET
-        sync: false
-      - key: CJ_API_EMAIL
-        sync: false
-      - key: CJ_API_KEY
-        sync: false
-      - key: ADMIN_SECRET
-        sync: false
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 3000

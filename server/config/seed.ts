@@ -186,21 +186,28 @@ export async function seedDB(): Promise<void> {
     ];
 
     for (const u of usersToSeed) {
-      const existingUser = await User.findOne({ email: u.email });
-      if (!existingUser) {
-        const userObj = await User.create(u);
-        await Wishlist.findOneAndUpdate(
-          { user: userObj._id },
-          { $setOnInsert: { products: [] } },
-          { upsert: true }
-        );
-      } else {
-        existingUser.password = u.password;
-        existingUser.name = u.name;
-        existingUser.role = u.role;
-        (existingUser as any).username = u.username;
-        existingUser.isVerified = true;
-        await existingUser.save();
+      try {
+        const existingUser = await User.findOne({ 
+          $or: [{ email: u.email }, { username: u.username }] 
+        });
+        if (!existingUser) {
+          const userObj = await User.create(u);
+          await Wishlist.findOneAndUpdate(
+            { user: userObj._id },
+            { $setOnInsert: { products: [] } },
+            { upsert: true }
+          );
+        } else {
+          existingUser.password = u.password;
+          existingUser.name = u.name;
+          existingUser.role = u.role;
+          (existingUser as any).username = u.username;
+          existingUser.email = u.email;
+          existingUser.isVerified = true;
+          await existingUser.save();
+        }
+      } catch (err) {
+        console.warn(`⚠️ [Database Seed] Could not seed user ${u.username}:`, (err as any).message);
       }
     }
     console.log('🌱 [Database Seed] Initialized & verified default boutique users: omar (admin@morvex.com), guest (user@morvex.com), atelier (name@atelier.com).');
