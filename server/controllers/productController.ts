@@ -245,26 +245,34 @@ export async function recalculatePrices(req: Request, res: Response, next: NextF
          return;
      }
 
-     // Required calculation: CJ Cost + Shipping Cost + PayPal Fee + Profit Rules = Selling Price
+     if (!product.vid) {
+         res.json({ success: true, message: 'Missing VID, skipping', status: 'skipped', reason: 'missing VID' });
+         return;
+     }
+
      const cjCost = product.originalPrice || 0;
+     if (cjCost <= 0.05) {
+         res.json({ success: true, message: 'Data Error (Price <= 0.05), skipping', status: 'skipped', reason: 'originalPrice <= 0.05' });
+         return;
+     }
      
-     // Fetch shipping cost from cache
-     let shippingCost = 4.99;
-     if (product.vid) {
-         const cache = await ShippingCache.findOne({ vid: product.vid, countryCode: 'US' });
-         if (cache && cache.shippingCost) {
-             shippingCost = cache.shippingCost;
-         }
+     const cache = await ShippingCache.findOne({ vid: product.vid, countryCode: 'US' });
+     if (!cache || !cache.shippingCost) {
+         res.json({ success: true, message: 'Missing Shipping Data, skipping', status: 'skipped', reason: 'missing ShippingCache' });
+         return;
+     }
+
+     let shippingCost = cache.shippingCost;
+
+     if (shippingCost > 50) {
+         res.json({ success: true, message: 'Heavy item (Shipping > 50), skipping', status: 'skipped', reason: 'shippingCost > 50' });
+         return;
      }
 
      // Base cost
      const baseCost = cjCost + shippingCost;
      
-     // PayPal Fee typically 2.9% + 0.30
      // Profit rule: let's add 30% margin
-     // SellPrice = (baseCost + 0.30 + ProfitMarginAmount) / (1 - 0.029)
-     // Let ProfitMarginAmount = baseCost * 0.30
-     
      const profitMargin = baseCost * 0.30;
      let sellPrice = (baseCost + 0.30 + profitMargin) / (1 - 0.029);
      
@@ -273,9 +281,85 @@ export async function recalculatePrices(req: Request, res: Response, next: NextF
      product.price = sellPrice;
      await product.save();
 
-     res.json({ success: true, product });
+     res.json({ success: true, product, status: 'recalculated' });
   } catch(error) {
      next(error);
+  }
+}
+
+// @desc    Get pricing audit results for CJ products
+// @route   GET /api/products/pricing-audit
+// @access  Private/Admin
+export async function getPricingAudit(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const products = await Product.find({ source: 'cj' });
+    const caches = await ShippingCache.find({ countryCode: 'US' });
+    
+    const shippingMap = new Map();
+    caches.forEach(c => {
+        if (c.vid && c.shippingCost) {
+            shippingMap.set(c.vid, c.shippingCost);
+        }
+    });
+
+    let validProducts = 0;
+    let skippedProducts = 0;
+    let dataErrors = 0;
+    let heavyShippingItems = 0;
+
+    const recalculated = [];
+    const skipped = [];
+
+    for (const p of products) {
+        if (!p.vid) {
+            skippedProducts++;
+            skipped.push({ id: p._id, name: p.name, reason: 'missing VID' });
+            continue;
+        }
+
+        const origPrice = p.originalPrice || 0;
+        
+        if (origPrice <= 0.05) {
+            skippedProducts++;
+            dataErrors++;
+            skipped.push({ id: p._id, name: p.name, reason: 'originalPrice <= 0.05' });
+            continue;
+        }
+
+        const shipCost = shippingMap.get(p.vid);
+        
+        if (shipCost === undefined) {
+            skippedProducts++;
+            skipped.push({ id: p._id, name: p.name, reason: 'missing ShippingCache' });
+            continue;
+        }
+
+        if (shipCost > 50) {
+            skippedProducts++;
+            heavyShippingItems++;
+            skipped.push({ id: p._id, name: p.name, reason: 'shippingCost > 50' });
+            continue;
+        }
+
+        validProducts++;
+        recalculated.push({ id: p._id, name: p.name });
+    }
+
+    res.json({
+        success: true,
+        summary: {
+            validProducts,
+            skippedProducts,
+            dataErrors,
+            heavyShippingItems
+        },
+        report: {
+            recalculated,
+            skipped
+        }
+    });
+  } catch(error) {
+    next(error);
   }
 }
 

@@ -102,6 +102,10 @@ const orderSchema = new Schema(
       type: String,
       required: false,
     },
+    fulfillmentStatus: {
+      type: String,
+      required: false,
+    },
     trackingNumber: {
       type: String,
       required: false,

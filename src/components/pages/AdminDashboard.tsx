@@ -11,6 +11,7 @@ import { DashboardOverview } from '../admin/DashboardOverview';
 import { SalesAnalytics } from '../admin/SalesAnalytics';
 import { CategoryPerformance, ProfitCenter, ShippingAnalytics } from '../admin/AnalyticsSections';
 import { CustomerAnalytics } from '../admin/AnalyticsSections2';
+import { OrderDirectory } from '../admin/OrderDirectory';
 
 import { 
   TrendingUp, 
@@ -90,6 +91,10 @@ export const AdminDashboard: React.FC = () => {
   const [shippingSyncState, setShippingSyncState] = useState<'idle' | 'syncing' | 'finished'>('idle');
   const [shippingSyncProgress, setShippingSyncProgress] = useState({ processed: 0, total: 0, success: 0, failed: 0, totalCost: 0, avgCost: 0 });
   const [lastShippingUpdate, setLastShippingUpdate] = useState<string | null>(null);
+
+  // Pricing Audit States
+  const [pricingAuditLoading, setPricingAuditLoading] = useState(false);
+  const [pricingAuditResult, setPricingAuditResult] = useState<any>(null);
 
   const [cjAutoImporting, setCjAutoImporting] = useState(false);
   const [cjImportError, setCjImportError] = useState<string | null>(null);
@@ -247,6 +252,26 @@ export const AdminDashboard: React.FC = () => {
       }, 3000);
     } catch (err: any) {
       setReplenishError(err.message || String(err));
+    }
+  };
+
+  const handlePricingAudit = async () => {
+    try {
+      setPricingAuditLoading(true);
+      const res = await fetch('/api/products/pricing-audit', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setPricingAuditResult(data.summary);
+      } else {
+        alert(data.message || 'Error running pricing audit');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error running pricing audit');
+    } finally {
+      setPricingAuditLoading(false);
     }
   };
 
@@ -1160,7 +1185,53 @@ export const AdminDashboard: React.FC = () => {
               )}
             </div>
           </button>
+
+          {/* Action 5: Pricing Audit */}
+          <button
+            onClick={handlePricingAudit}
+            disabled={pricingAuditLoading}
+            className="cursor-pointer group text-left rounded-2xl border border-gray-100 bg-zinc-50/50 p-4 hover:bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/10 w-full transition-all focus:outline-none"
+          >
+            <div className="flex justify-between items-center">
+              <span className="font-mono text-[10px] uppercase text-zinc-400">Validation Engine</span>
+              <AlertTriangle className={`h-4 w-4 text-zinc-500 ${pricingAuditLoading ? 'animate-pulse text-amber-500' : 'group-hover:text-amber-600'}`} />
+            </div>
+            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Run Pricing Audit</h4>
+            <div className="mt-1 flex flex-col space-y-1">
+              <p className="text-[10px] text-zinc-400 leading-relaxed font-sans block">Simulate safe bulk recalculation and identify anomalous or heavy products.</p>
+            </div>
+          </button>
         </div>
+
+        {pricingAuditResult && (
+          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/30 dark:bg-amber-950/10 shadow-sm">
+            <h4 className="text-xs font-semibold text-amber-900 dark:text-amber-500 font-serif mb-3 flex items-center">
+              <AlertTriangle className="h-4 w-4 mr-2" />
+              Pricing Audit Results (Safe Recalculation System)
+            </h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="flex flex-col border-l-2 border-emerald-500 pl-3">
+                <span className="text-xl font-mono text-gray-900 dark:text-white font-semibold">{pricingAuditResult.validProducts}</span>
+                <span className="text-[10px] uppercase tracking-wide text-zinc-500 mt-1">Valid Products</span>
+              </div>
+              <div className="flex flex-col border-l-2 border-rose-500 pl-3">
+                <span className="text-xl font-mono text-gray-900 dark:text-white font-semibold">{pricingAuditResult.skippedProducts}</span>
+                <span className="text-[10px] uppercase tracking-wide text-zinc-500 mt-1">Skipped Products</span>
+              </div>
+              <div className="flex flex-col border-l-2 border-orange-500 pl-3">
+                <span className="text-xl font-mono text-gray-900 dark:text-white font-semibold">{pricingAuditResult.dataErrors}</span>
+                <span className="text-[10px] uppercase tracking-wide text-zinc-500 mt-1">Data Errors</span>
+              </div>
+              <div className="flex flex-col border-l-2 border-amber-500 pl-3">
+                <span className="text-xl font-mono text-gray-900 dark:text-white font-semibold">{pricingAuditResult.heavyShippingItems}</span>
+                <span className="text-[10px] uppercase tracking-wide text-zinc-500 mt-1">Heavy Shipping Items</span>
+              </div>
+            </div>
+            <p className="mt-4 text-[10px] font-mono text-amber-800 dark:text-amber-400">
+              Only Valid Products will be processed during a Bulk Recalculation. Anomalous products are skipped automatically to protect profit margins.
+            </p>
+          </div>
+        )}
 
         {cjSyncSuccess && (
           <div className="bg-emerald-50 border border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-900/40 rounded-xl p-3 text-center">
@@ -2211,7 +2282,7 @@ export const AdminDashboard: React.FC = () => {
            </div>
         )}
         {activeTab === 'orders' && (
-           <div className="p-8 text-center text-zinc-500 font-mono">Order Directory placeholder.</div>
+           <OrderDirectory />
         )}
         {activeTab === 'reports' && (
            <div className="p-8 text-center text-zinc-500 font-mono">Reports Hub placeholder.</div>

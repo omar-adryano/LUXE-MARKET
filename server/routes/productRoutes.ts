@@ -7,7 +7,8 @@ import {
   deleteProduct,
   syncProduct,
   recalculatePrices,
-  resetPricing
+  resetPricing,
+  getPricingAudit
 } from '../controllers/productController';
 import { protect, admin } from '../middleware/auth';
 import { validateProduct } from '../middleware/validation';
@@ -15,6 +16,7 @@ import { validateProduct } from '../middleware/validation';
 const router = Router();
 
 router.get('/', getProducts);
+router.get('/pricing-audit', protect, admin, getPricingAudit); // MUST be before /:id
 router.get('/:id', getProductById);
 router.post('/', protect, admin, validateProduct, createProduct);
 router.put('/:id', protect, admin, validateProduct, updateProduct);

@@ -39,7 +39,7 @@ export const Checkout: React.FC = () => {
   const [email, setEmail] = useState(() => {
     return user ? user.email : '';
   });
-  const [country, setCountry] = useState('United States');
+  const [country, setCountry] = useState('US');
   const [streetAddress, setStreetAddress] = useState('');
   const [apartmentUnit, setApartmentUnit] = useState('');
   const [city, setCity] = useState('');
@@ -184,7 +184,7 @@ export const Checkout: React.FC = () => {
           const res = await fetch('/api/shipping/calculate', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify({ items, countryCode: country === 'United States' ? 'US' : country === 'United Kingdom' ? 'UK' : country === 'Canada' ? 'CA' : country === 'Australia' ? 'AU' : 'US' })
+             body: JSON.stringify({ items, countryCode: country })
           });
           const data = await res.json();
           if (active && data.shippingCost !== undefined) {
@@ -361,42 +361,42 @@ export const Checkout: React.FC = () => {
                     >
                       <option value="" disabled>Select a country</option>
                       <optgroup label="North America">
-                        <option value="United States">🇺🇸 United States</option>
-                        <option value="Canada">🇨🇦 Canada</option>
+                        <option value="US">🇺🇸 United States</option>
+                        <option value="CA">🇨🇦 Canada</option>
                       </optgroup>
                       <optgroup label="Europe">
-                        <option value="United Kingdom">🇬🇧 United Kingdom</option>
-                        <option value="Germany">🇩🇪 Germany</option>
-                        <option value="France">🇫🇷 France</option>
-                        <option value="Italy">🇮🇹 Italy</option>
-                        <option value="Spain">🇪🇸 Spain</option>
-                        <option value="Netherlands">🇳🇱 Netherlands</option>
-                        <option value="Belgium">🇧🇪 Belgium</option>
-                        <option value="Austria">🇦🇹 Austria</option>
-                        <option value="Switzerland">🇨🇭 Switzerland</option>
-                        <option value="Ireland">🇮🇪 Ireland</option>
-                        <option value="Denmark">🇩🇰 Denmark</option>
-                        <option value="Norway">🇳🇴 Norway</option>
-                        <option value="Sweden">🇸🇪 Sweden</option>
-                        <option value="Finland">🇫🇮 Finland</option>
-                        <option value="Poland">🇵🇱 Poland</option>
-                        <option value="Portugal">🇵🇹 Portugal</option>
-                        <option value="Czech Republic">🇨🇿 Czech Republic</option>
+                        <option value="GB">🇬🇧 United Kingdom</option>
+                        <option value="DE">🇩🇪 Germany</option>
+                        <option value="FR">🇫🇷 France</option>
+                        <option value="IT">🇮🇹 Italy</option>
+                        <option value="ES">🇪🇸 Spain</option>
+                        <option value="NL">🇳🇱 Netherlands</option>
+                        <option value="BE">🇧🇪 Belgium</option>
+                        <option value="AT">🇦🇹 Austria</option>
+                        <option value="CH">🇨🇭 Switzerland</option>
+                        <option value="IE">🇮🇪 Ireland</option>
+                        <option value="DK">🇩🇰 Denmark</option>
+                        <option value="NO">🇳🇴 Norway</option>
+                        <option value="SE">🇸🇪 Sweden</option>
+                        <option value="FI">🇫🇮 Finland</option>
+                        <option value="PL">🇵🇱 Poland</option>
+                        <option value="PT">🇵🇹 Portugal</option>
+                        <option value="CZ">🇨🇿 Czech Republic</option>
                       </optgroup>
                       <optgroup label="Middle East">
-                        <option value="United Arab Emirates">🇦🇪 United Arab Emirates</option>
-                        <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
-                        <option value="Qatar">🇶🇦 Qatar</option>
-                        <option value="Kuwait">🇰🇼 Kuwait</option>
-                        <option value="Bahrain">🇧🇭 Bahrain</option>
-                        <option value="Egypt">🇪🇬 Egypt</option>
+                        <option value="AE">🇦🇪 United Arab Emirates</option>
+                        <option value="SA">🇸🇦 Saudi Arabia</option>
+                        <option value="QA">🇶🇦 Qatar</option>
+                        <option value="KW">🇰🇼 Kuwait</option>
+                        <option value="BH">🇧🇭 Bahrain</option>
+                        <option value="EG">🇪🇬 Egypt</option>
                       </optgroup>
                       <optgroup label="Asia Pacific">
-                        <option value="Australia">🇦🇺 Australia</option>
-                        <option value="New Zealand">🇳🇿 New Zealand</option>
-                        <option value="Japan">🇯🇵 Japan</option>
-                        <option value="Singapore">🇸🇬 Singapore</option>
-                        <option value="Malaysia">🇲🇾 Malaysia</option>
+                        <option value="AU">🇦🇺 Australia</option>
+                        <option value="NZ">🇳🇿 New Zealand</option>
+                        <option value="JP">🇯🇵 Japan</option>
+                        <option value="SG">🇸🇬 Singapore</option>
+                        <option value="MY">🇲🇾 Malaysia</option>
                       </optgroup>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
@@ -488,12 +488,12 @@ export const Checkout: React.FC = () => {
                       value={zipCode}
                       onChange={(e) => setZipCode(e.target.value)}
                       pattern={
-                        country === 'United States' ? "^\\d{5}(-\\d{4})?$" :
-                        country === 'United Kingdom' ? "^[A-Za-z]{1,2}\\d[A-Za-z\\d]? ?\\d[A-Za-z]{2}$" :
-                        country === 'Canada' ? "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$" :
-                        country === 'Australia' || country === 'New Zealand' ? "^\\d{4}$" :
-                        country === 'Germany' || country === 'Italy' || country === 'Spain' || country === 'France' ? "^\\d{5}$" :
-                        country === 'Japan' ? "^\\d{3}-\\d{4}$" : undefined
+                        country === 'US' ? "^\\d{5}(-\\d{4})?$" :
+                        country === 'GB' ? "^[A-Za-z]{1,2}\\d[A-Za-z\\d]? ?\\d[A-Za-z]{2}$" :
+                        country === 'CA' ? "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$" :
+                        country === 'AU' || country === 'NZ' ? "^\\d{4}$" :
+                        country === 'DE' || country === 'IT' || country === 'ES' || country === 'FR' ? "^\\d{5}$" :
+                        country === 'JP' ? "^\\d{3}-\\d{4}$" : undefined
                       }
                       title="Please enter a valid postal code for your country"
                       className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-all focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:focus:border-zinc-400 dark:focus:ring-zinc-400"
