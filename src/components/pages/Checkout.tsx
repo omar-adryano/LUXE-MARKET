@@ -164,10 +164,42 @@ export const Checkout: React.FC = () => {
     };
   }, []);
 
+  const [shippingCost, setShippingCost] = useState<number>(0);
+  const [shippingLoading, setShippingLoading] = useState(false);
+
   // Subtotal calculations
   const subtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   const discountAmount = couponApplied ? subtotal * 0.25 : 0;
-  const shippingCost = subtotal > 150 ? 0 : 15.00;
+  
+  useEffect(() => {
+    let active = true;
+    const fetchShipping = async () => {
+       if (cart.length === 0) return;
+       setShippingLoading(true);
+       try {
+          const items = cart.map(item => ({
+             product: item.product.id || item.product._id,
+             quantity: item.quantity
+          }));
+          const res = await fetch('/api/shipping/calculate', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ items, countryCode: country === 'United States' ? 'US' : country === 'United Kingdom' ? 'UK' : country === 'Canada' ? 'CA' : country === 'Australia' ? 'AU' : 'US' })
+          });
+          const data = await res.json();
+          if (active && data.shippingCost !== undefined) {
+             setShippingCost(data.shippingCost);
+          }
+       } catch (e) {
+          console.error("Failed to calculate shipping:", e);
+       } finally {
+          if (active) setShippingLoading(false);
+       }
+    };
+    fetchShipping();
+    return () => { active = false; };
+  }, [cart, country]);
+
   const taxAmount = (subtotal - discountAmount) * 0.08;
   const totalAmount = subtotal - discountAmount + shippingCost + taxAmount;
 
@@ -508,7 +540,7 @@ export const Checkout: React.FC = () => {
                         (!isPending || isResolved) && (
                           <PayPalButtons
                             style={{ layout: "vertical", shape: "rect", label: "paypal", height: 40 }}
-                            disabled={processingPayment || cart.length === 0}
+                            disabled={processingPayment || cart.length === 0 || shippingLoading}
                             onClick={(data, actions) => {
                               if (!firstName || !lastName || !email || !country || !streetAddress || !city || !stateRegion || !zipCode || !phone) {
                                 setPaypalError("Please complete your delivery details before proceeding with PayPal.");
@@ -655,7 +687,7 @@ export const Checkout: React.FC = () => {
                 <div className="flex justify-between">
                   <span>Priority Courier Delivery</span>
                   <span className="font-mono text-gray-950 dark:text-white">
-                    {shippingCost === 0 ? 'FREE' : `$${shippingCost.toFixed(2)}`}
+                    {shippingLoading ? 'Calculating...' : shippingCost === 0 ? 'FREE' : `$${shippingCost.toFixed(2)}`}
                   </span>
                 </div>
                 <div className="flex justify-between">

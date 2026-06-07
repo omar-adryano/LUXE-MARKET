@@ -5,6 +5,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
+import { AdminDataProvider } from '../admin/AdminDataContext';
+import { AdminLayout } from '../admin/AdminLayout';
+import { DashboardOverview } from '../admin/DashboardOverview';
+import { SalesAnalytics } from '../admin/SalesAnalytics';
+import { CategoryPerformance, ProfitCenter, ShippingAnalytics } from '../admin/AnalyticsSections';
+import { CustomerAnalytics } from '../admin/AnalyticsSections2';
+
 import { 
   TrendingUp, 
   Users, 
@@ -24,7 +31,9 @@ import {
   X,
   Edit2,
   Archive,
-  RotateCcw
+  RotateCcw,
+  Activity,
+  Lock
 } from 'lucide-react';
 
 interface StatsData {
@@ -47,6 +56,14 @@ export const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<StatsData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+     if (isDarkMode) document.documentElement.classList.add('dark');
+     else document.documentElement.classList.remove('dark');
+  }, [isDarkMode]);
+
 
   // New product form states
   const [newProdName, setNewProdName] = useState('');
@@ -68,6 +85,12 @@ export const AdminDashboard: React.FC = () => {
   const [cjUrl, setCjUrl] = useState('');
   const [cjSyncing, setCjSyncing] = useState<string | null>(null);
   const [cjSyncSuccess, setCjSyncSuccess] = useState<string | null>(null);
+  
+  // Manual Shipping Cache Sync States
+  const [shippingSyncState, setShippingSyncState] = useState<'idle' | 'syncing' | 'finished'>('idle');
+  const [shippingSyncProgress, setShippingSyncProgress] = useState({ processed: 0, total: 0, success: 0, failed: 0, totalCost: 0, avgCost: 0 });
+  const [lastShippingUpdate, setLastShippingUpdate] = useState<string | null>(null);
+
   const [cjAutoImporting, setCjAutoImporting] = useState(false);
   const [cjImportError, setCjImportError] = useState<string | null>(null);
   const [cjImportSuccess, setCjImportSuccess] = useState<string | null>(null);
@@ -112,6 +135,7 @@ export const AdminDashboard: React.FC = () => {
 
   // Product management action and modal states
   const [selectedAdminProduct, setSelectedAdminProduct] = useState<any | null>(null);
+  const [adminProdShipping, setAdminProdShipping] = useState<any | null>(null);
   const [isAdminViewing, setIsAdminViewing] = useState(false);
   const [isAdminEditing, setIsAdminEditing] = useState(false);
   const [isConfirmingDelete, setIsConfirmingDelete] = useState<any | null>(null);
@@ -224,6 +248,55 @@ export const AdminDashboard: React.FC = () => {
     } catch (err: any) {
       setReplenishError(err.message || String(err));
     }
+  };
+
+  const handleShippingSync = async () => {
+    const cjProducts = visibleProducts.filter((p: any) => p.source === 'cj' && p.vid).slice(0, 100);
+    if (cjProducts.length === 0) {
+      alert("No CJ products with VIDs currently visible. Try importing some or syncing catalog.");
+      return;
+    }
+
+    setShippingSyncState('syncing');
+    setShippingSyncProgress({ processed: 0, total: cjProducts.length, success: 0, failed: 0, totalCost: 0, avgCost: 0 });
+
+    let successCount = 0;
+    let failedCount = 0;
+    let totalCostAccum = 0;
+
+    for (let i = 0; i < cjProducts.length; i++) {
+        const prod = cjProducts[i];
+        try {
+            const res = await fetch('/api/shipping/sync-variant', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ vid: prod.vid, countryCode: 'US' })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                successCount++;
+                totalCostAccum += data.cost || 0;
+            } else {
+                failedCount++;
+            }
+        } catch(e) {
+            failedCount++;
+        }
+        setShippingSyncProgress({ 
+            processed: i + 1, 
+            total: cjProducts.length, 
+            success: successCount, 
+            failed: failedCount, 
+            totalCost: totalCostAccum,
+            avgCost: successCount > 0 ? (totalCostAccum / successCount) : 0
+        });
+    }
+
+    setLastShippingUpdate(new Date().toLocaleString());
+    setShippingSyncState('finished');
+    setTimeout(() => {
+        setShippingSyncState('idle');
+    }, 10000); // Back to idle after 10 seconds to allow review of stats
   };
 
   const handleCjSync = async (action: 'sync-inventory' | 'sync-prices' | 'sync-fulfillment') => {
@@ -406,9 +479,25 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // 1. OPEN VIEW MODAL
-  const handleOpenView = (prod: any) => {
+  const handleOpenView = async (prod: any) => {
     setSelectedAdminProduct(prod);
     setIsAdminViewing(true);
+    setAdminProdShipping('loading');
+    try {
+      if (prod.source === 'cj' && prod.vid) {
+         const res = await fetch(`/api/shipping/admin-cache?vid=${prod.vid}`);
+         if (res.ok) {
+            const data = await res.json();
+            setAdminProdShipping(data.cache || 'none');
+         } else {
+            setAdminProdShipping('none');
+         }
+      } else {
+         setAdminProdShipping('none');
+      }
+    } catch(e) {
+      setAdminProdShipping('none');
+    }
   };
 
   // 2. OPEN EDIT MODAL - hydrate state from selected product
@@ -434,21 +523,24 @@ export const AdminDashboard: React.FC = () => {
       const isCurrentlyArchived = prod.isArchived === true;
       const updatedArchived = !isCurrentlyArchived;
       
-      const res = await fetch(`/api/products/${prod.id || prod._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          isArchived: updatedArchived,
-          // If we archive, set published to false, else set published to true
-          isPublished: !updatedArchived
-        })
-      });
+      const prodId = prod.id || prod._id;
+      if (/^[0-9a-fA-F]{24}$/.test(prodId)) {
+        const res = await fetch(`/api/products/${prodId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            isArchived: updatedArchived,
+            // If we archive, set published to false, else set published to true
+            isPublished: !updatedArchived
+          })
+        });
 
-      if (!res.ok) {
-        throw new Error('Server rejected the archive action.');
+        if (!res.ok) {
+          throw new Error('Server rejected the archive action.');
+        }
       }
 
       fetchStats();
@@ -519,18 +611,21 @@ export const AdminDashboard: React.FC = () => {
         }
       }
 
-      const res = await fetch(`/api/products/${selectedAdminProduct.id || selectedAdminProduct._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
+      const prodId = selectedAdminProduct.id || selectedAdminProduct._id;
+      if (/^[0-9a-fA-F]{24}$/.test(prodId)) {
+        const res = await fetch(`/api/products/${prodId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
 
-      if (!res.ok) {
-        const errJson = await res.json();
-        throw new Error(errJson.message || 'Database rejected product modification logs.');
+        if (!res.ok) {
+          const errJson = await res.json();
+          throw new Error(errJson.message || 'Database rejected product modification logs.');
+        }
       }
 
       setEditSuccess('Product parameters updated successfully!');
@@ -553,15 +648,18 @@ export const AdminDashboard: React.FC = () => {
     if (!isConfirmingDelete) return;
 
     try {
-      const res = await fetch(`/api/products/${isConfirmingDelete.id || isConfirmingDelete._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const prodId = isConfirmingDelete.id || isConfirmingDelete._id;
+      if (/^[0-9a-fA-F]{24}$/.test(prodId)) {
+        const res = await fetch(`/api/products/${prodId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-      if (!res.ok) {
-        throw new Error('Server rejected manual product deletion.');
+        if (!res.ok) {
+          throw new Error('Server rejected manual product deletion.');
+        }
       }
 
       fetchStats();
@@ -619,9 +717,50 @@ export const AdminDashboard: React.FC = () => {
       setBulkSuccess(null);
       setLoading(true);
 
+      if (bulkAction === 'update-shipping-costs') {
+        let successCount = 0;
+        let failedCount = 0;
+        
+        for (const id of selectedProductIds) {
+          const originalProduct = (products || []).find((p: any) => (p.id || p._id) === id);
+          if (!originalProduct || !originalProduct.vid) {
+            failedCount++;
+            continue;
+          }
+          
+          try {
+             // Rate limit 1 request per second
+             await new Promise(resolve => setTimeout(resolve, 1100));
+             
+             const res = await fetch('/api/shipping/sync-variant', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ vid: originalProduct.vid, countryCode: 'US' })
+             });
+             if (res.ok) {
+                 successCount++;
+             } else {
+                 failedCount++;
+             }
+          } catch(e) {
+             failedCount++;
+          }
+        }
+        
+        setBulkSuccess(`Finished shipping sync for ${selectedProductIds.length} listings. Success: ${successCount}, Failed: ${failedCount}`);
+        setSelectedProductIds([]);
+        setBulkAction('');
+        setIsConfirmingBulkAction('');
+        setLoading(false);
+        return;
+      }
+
       const promises = selectedProductIds.map(async (id) => {
         const originalProduct = (products || []).find((p: any) => (p.id || p._id) === id);
         if (!originalProduct) return;
+        
+        // Skip API execution for statically injected fallback frontend products (they lack valid 24-character hex MongoDB ObjectIDs)
+        if (!/^[0-9a-fA-F]{24}$/.test(id)) return;
 
         if (bulkAction === 'delete') {
           const res = await fetch(`/api/products/${id}`, {
@@ -657,6 +796,18 @@ export const AdminDashboard: React.FC = () => {
             })
           });
           if (!res.ok) throw new Error(`Could not restore ${originalProduct.name}`);
+        } else if (bulkAction === 'publish') {
+          const res = await fetch(`/api/products/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              isPublished: true
+            })
+          });
+          if (!res.ok) throw new Error(`Could not publish ${originalProduct.name}`);
         } else if (bulkAction === 'unpublish') {
           const res = await fetch(`/api/products/${id}`, {
             method: 'PUT',
@@ -670,23 +821,40 @@ export const AdminDashboard: React.FC = () => {
           });
           if (!res.ok) throw new Error(`Could not unpublish ${originalProduct.name}`);
         } else if (bulkAction === 'sync') {
-          const payload: any = {};
-          if (originalProduct.source === 'cj') {
-            payload.cjRemovedFromSync = false;
-            payload.stock = Math.floor(Math.random() * 40) + 20;
-          } else {
-            payload.stock = Math.min(150, Number(originalProduct.stock) + Math.floor(Math.random() * 5));
-          }
-
-          const res = await fetch(`/api/products/${id}`, {
-            method: 'PUT',
+          const res = await fetch(`/api/products/${id}/sync`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(payload)
+            }
           });
-          if (!res.ok) throw new Error(`Could not sync ${originalProduct.name}`);
+          if (!res.ok) throw new Error(`Could not sync ${originalProduct.name} - ${await res.text()}`);
+        } else if (bulkAction === 'enable-automatic-pricing') {
+          const res = await fetch(`/api/products/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ isManualPrice: false })
+          });
+          if (!res.ok) throw new Error(`Could not enable automatic pricing for ${originalProduct.name}`);
+        } else if (bulkAction === 'lock-manual-pricing') {
+          const res = await fetch(`/api/products/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ isManualPrice: true })
+          });
+          if (!res.ok) throw new Error(`Could not lock manual pricing for ${originalProduct.name}`);
+        } else if (bulkAction === 'reset-pricing') {
+          const res = await fetch(`/api/products/${id}/reset-pricing`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+          });
+          if (!res.ok) throw new Error(`Could not reset pricing for ${originalProduct.name} - ${await res.text()}`);
+        } else if (bulkAction === 'recalculate-prices') {
+          const res = await fetch(`/api/products/${id}/recalculate-prices`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+          });
+          if (!res.ok) throw new Error(`Could not recalculate pricing for ${originalProduct.name} - ${await res.text()}`);
         }
       });
 
@@ -749,148 +917,28 @@ export const AdminDashboard: React.FC = () => {
   const averageDailySales = stats.revenueHistoryWeek.reduce((acc, day) => acc + day.value, 0) / 7;
 
   return (
+    <AdminDataProvider>
+      <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} toggleDarkMode={() => setIsDarkMode(!isDarkMode)}>
+        {activeTab === 'dashboard' && <DashboardOverview />}
+        {activeTab === 'analytics' && <SalesAnalytics />}
+        {activeTab === 'profit' && <ProfitCenter />}
+        {activeTab === 'categories' && <CategoryPerformance />}
+        {activeTab === 'shipping' && <ShippingAnalytics />}
+        {activeTab === 'customers' && <CustomerAnalytics />}
+        {activeTab === 'products' && (
     <div id="admin-dashboard-page" className="space-y-8">
       
-      {/* Visual Header */}
-      <div>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 dark:text-zinc-550">Admin Setup</span>
-        <h2 className="mt-1 font-serif text-2xl font-normal text-gray-950 dark:text-white">Admin Dashboard</h2>
-      </div>
-
-      {/* Overview Stat Widgets bento grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        
-        {/* Stat 1: Weekly sales (Dynamic from MongoDB) */}
-        <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
-          <div className="flex justify-between items-start">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Total Revenue Sales</span>
-            <span className="flex items-center space-x-0.5 text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 rounded-full px-2 py-0.5">
-              <TrendingUp className="h-3 w-3" />
-              <span>Realtime</span>
-            </span>
-          </div>
-          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">
-            ${stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </p>
-          <div className="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden dark:bg-zinc-900">
-            <div className="h-full bg-zinc-950 dark:bg-white rounded-full" style={{ width: `${revenueGoalProgress}%` }} />
-          </div>
-          <p className="mt-2 text-[10px] font-mono text-gray-400 dark:text-zinc-550">Quota target: $50,000.00 ({revenueGoalProgress}%)</p>
-        </div>
-
-        {/* Stat 2: Active Customer registry (Dynamic from MongoDB) */}
-        <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
-          <div className="flex justify-between items-start">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Customer Registries</span>
-            <span className="flex items-center space-x-0.5 text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 rounded-full px-2 py-0.5">
-              <Users className="h-3 w-3" />
-              <span>Synced</span>
-            </span>
-          </div>
-          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">{stats.totalUsers}</p>
-          <div className="mt-4 h-1.5 w-full bg-gray-100 rounded-full overflow-hidden dark:bg-zinc-900">
-            <div className="h-full bg-zinc-950 dark:bg-white rounded-full" style={{ width: `${activeUsersGoalPct}%` }} />
-          </div>
-          <p className="mt-2 text-[10px] font-mono text-gray-400 dark:text-zinc-550">Target registration: 100 ({activeUsersGoalPct}%)</p>
-        </div>
-
-        {/* Stat 3: Curated items collection (Dynamic categories & total items) */}
-        <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
-          <div className="flex justify-between items-start">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-gray-400">Inventory Overview</span>
-            <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/45 px-2 py-0.5 rounded-full">
-              Stable
-            </span>
-          </div>
-          <p className="mt-4 font-serif text-2xl font-normal text-gray-950 dark:text-white">{stats.totalProducts} Products</p>
-          <div className="mt-4 border-t border-gray-50 pt-2 dark:border-zinc-900/60">
-            <p className="text-[10px] font-mono text-gray-400 dark:text-zinc-550">
-              Categories: {stats.totalCategories} | Items stock: {stats.totalInventoryCount} units
-            </p>
-          </div>
-        </div>
-
-        {/* Stat 4: Risk depletion notification (Real warning trigger based on depletion lists) */}
-        <div className={`rounded-3xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.01)] border ${
-          stats.lowStockProducts.length > 0
-            ? 'bg-rose-50 border-rose-100 dark:bg-rose-955/15 dark:border-rose-900/40 text-rose-900'
-            : 'bg-zinc-50 border-gray-100 dark:bg-zinc-900/10 dark:border-zinc-900'
-        }`}>
-          <div className="flex justify-between items-start">
-            <span className={`font-mono text-[9px] uppercase tracking-wider ${
-              stats.lowStockProducts.length > 0 ? 'text-rose-800' : 'text-gray-400'
-            }`}>
-              Depleted Stock Warnings
-            </span>
-            <AlertTriangle className={`h-4 w-4 ${stats.lowStockProducts.length > 0 ? 'text-rose-600' : 'text-zinc-400'}`} />
-          </div>
-          <p className={`mt-4 font-serif text-2xl font-normal ${stats.lowStockProducts.length > 0 ? 'text-rose-900 dark:text-rose-400' : 'text-zinc-700 dark:text-zinc-400'}`}>
-            {stats.lowStockProducts.length > 0 ? `${stats.lowStockProducts.length} Depleted` : 'All Stock Stable'}
-          </p>
-          <div className="mt-4 text-[10px] leading-relaxed font-mono min-h-[30px]">
-            {stats.lowStockProducts.length > 0 ? (
-              <span className="text-rose-700 dark:text-rose-500">
-                "{stats.lowStockProducts[0]?.name}" stock levels consist of only {stats.lowStockProducts[0]?.stock} units remaining!
-              </span>
-            ) : (
-              <span className="text-zinc-400 dark:text-zinc-550">
-                All physical product storehouses running above minimum alert targets.
-              </span>
-            )}
-          </div>
-        </div>
-
-      </div>
+      {/* Visual Header HIDDEN */}
+      {/* Overview Stat Widgets bento grid HIDDEN */}
+      
 
       {/* Split layout: Charts Performance vs Stock replenishment */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         
-        {/* Sales Performance charts visualization - Left 7 columns */}
-        <div className="lg:col-span-7 rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20 flex flex-col justify-between">
-          <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900 flex justify-between items-center">
-            <div className="flex items-center space-x-2 text-gray-950 dark:text-white">
-              <TrendingUp className="h-4.5 w-4.5 text-zinc-650" />
-              <h3 className="font-serif text-sm font-semibold">Weekly Sales</h3>
-            </div>
-            <span className="font-mono text-[9px] text-gray-400 flex items-center space-x-1">
-              <RefreshCw className="h-3 w-3 animate-spin text-zinc-400" />
-              <span>Realtime Synced</span>
-            </span>
-          </div>
-
-          {/* Styled HTML Bar chart for highest responsive performance */}
-          <div className="h-64 flex items-end justify-between px-2 pt-6">
-            {stats.revenueHistoryWeek.map((day) => (
-              <div key={day.label} className="flex flex-col items-center flex-1 max-w-[50px] group">
-                {/* Floating tooltip on hover */}
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-[10px] font-mono py-1 px-1.5 rounded-md absolute -translate-y-12 shadow-md">
-                  ${day.value.toFixed(2)}
-                </span>
-
-                {/* Vertical Revenue Bar */}
-                <div className="w-8 bg-zinc-100 rounded-lg overflow-hidden dark:bg-zinc-900 relative h-48 flex items-end">
-                  <div 
-                    className="w-full bg-zinc-950 dark:bg-white rounded-lg transition-all duration-1000 group-hover:bg-zinc-850 dark:group-hover:bg-zinc-200"
-                    style={{ height: `${day.scale}%` }}
-                  />
-                </div>
-
-                <span className="mt-3 font-mono text-[10px] text-gray-400 dark:text-zinc-550">{day.label}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-gray-100 mt-6 pt-6 dark:border-zinc-900 text-center flex justify-between items-center text-xs text-gray-400">
-            <span className="font-mono">Average Daily Sales: ${averageDailySales.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            <span className="font-mono font-semibold text-gray-800 dark:text-zinc-200 flex items-center space-x-1">
-              <span>System Status</span>
-              <Check className="h-3.5 w-3.5 text-emerald-600" />
-            </span>
-          </div>
-        </div>
-
-        {/* Stock Replenishment entry forms - Right 5 columns */}
-        <div className="lg:col-span-5 rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
+        {/* Sales Performance charts visualization HIDDEN */}
+        
+        {/* Stock Replenishment entry forms */}
+        <div className="lg:col-span-12 rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20">
           <div className="border-b border-gray-100 pb-3 mb-6 dark:border-zinc-900">
             <h3 className="font-serif text-sm font-semibold text-gray-950 dark:text-white">Inventory Management</h3>
           </div>
@@ -1008,6 +1056,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* SECTION: CJ Dropshipping Dropship & Supplier Automation Portal */}
+      {/* Moved to CJ tab for cleanliness, or kept here if needed. But let's keep everything inside the original products wrapper for safety */}
       <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01)] dark:border-zinc-900 dark:bg-zinc-950/20 space-y-6">
         <div className="border-b border-gray-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between dark:border-zinc-900 gap-2">
           <div>
@@ -1068,6 +1117,48 @@ export const AdminDashboard: React.FC = () => {
             </div>
             <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Sync Order Fulfillment</h4>
             <p className="mt-1 text-[10px] text-zinc-400 leading-relaxed font-sans">Dispatch and track CJ orders. Auto-provision shipping codes for customer checkouts.</p>
+          </button>
+
+          {/* Action 4: Shipping Sync */}
+          <button
+            onClick={handleShippingSync}
+            disabled={shippingSyncState !== 'idle'}
+            className="cursor-pointer group text-left rounded-2xl border border-gray-100 bg-zinc-50/50 p-4 hover:bg-zinc-50 dark:border-zinc-900 dark:bg-zinc-900/10 w-full transition-all focus:outline-none"
+          >
+            <div className="flex justify-between items-center">
+              <span className="font-mono text-[10px] uppercase text-zinc-400">Logistics & Rates</span>
+              <Activity className={`h-4 w-4 text-zinc-500 ${shippingSyncState === 'syncing' ? 'animate-pulse' : 'group-hover:text-amber-600'}`} />
+            </div>
+            <h4 className="mt-2 text-xs font-serif font-semibold text-gray-950 dark:text-white">Update Shipping Costs</h4>
+            <div className="mt-1 flex flex-col space-y-1">
+              {shippingSyncState === 'idle' ? (
+                <>
+                  <p className="text-[10px] text-zinc-400 leading-relaxed font-sans block">Fetch up-to-date shipping cost rates cache directly from CJ. Limited 1 req/sec.</p>
+                  {lastShippingUpdate && (
+                    <span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400">Last Updated: {lastShippingUpdate}</span>
+                  )}
+                </>
+              ) : shippingSyncState === 'syncing' ? (
+                <div className="py-1">
+                  <span className="text-[10px] font-mono text-amber-600 block animate-pulse mb-1">Updating Shipping Data...</span>
+                  <div className="flex items-center space-x-2 text-[9px] font-mono text-zinc-500">
+                    <span>Processed: {shippingSyncProgress.processed} / {shippingSyncProgress.total}</span>
+                    <span className="text-emerald-600">S: {shippingSyncProgress.success}</span>
+                    <span className="text-rose-600">F: {shippingSyncProgress.failed}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="py-1">
+                  <span className="text-[10px] font-mono text-emerald-600 block mb-1">Update Complete.</span>
+                  <div className="flex items-center space-x-2 text-[9px] font-mono text-zinc-500 flex-wrap gap-1">
+                    <span>Processed: {shippingSyncProgress.processed}</span>
+                    <span className="text-emerald-600">Updated: {shippingSyncProgress.success}</span>
+                    <span className="text-rose-600">Failed: {shippingSyncProgress.failed}</span>
+                    <span className="text-blue-600">Avg Cost: ${shippingSyncProgress.avgCost.toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </button>
         </div>
 
@@ -1366,11 +1457,18 @@ export const AdminDashboard: React.FC = () => {
               className="rounded-xl border border-gray-205 bg-white dark:border-zinc-805 dark:bg-zinc-900 dark:text-white px-3.5 py-1.5 text-xs outline-none focus:border-zinc-500 font-mono cursor-pointer"
             >
               <option value="">-- Apply Bulk Directive --</option>
-              <option value="delete">🗑 Delete Selected Products</option>
-              <option value="archive">📦 Archive Selected Products</option>
-              <option value="restore">🔄 Restore Selected Products</option>
-              <option value="unpublish">🚫 Unpublish Selected Products</option>
-              <option value="sync">⚡ Sync Selected Products</option>
+              <option value="enable-automatic-pricing">📈 Enable Automatic Pricing</option>
+              <option value="lock-manual-pricing">🔒 Lock Manual Pricing</option>
+              <option value="recalculate-prices">🔄 Recalculate Prices</option>
+              <option value="reset-pricing">💸 Reset Pricing</option>
+              <option value="update-shipping-costs">🚚 Update Shipping Costs</option>
+              <option disabled>──────────</option>
+              <option value="delete">🗑 Delete Selected</option>
+              <option value="archive">📦 Archive Selected</option>
+              <option value="restore">🔄 Restore Selected</option>
+              <option value="publish">✅ Publish Selected</option>
+              <option value="unpublish">🚫 Unpublish Selected</option>
+              <option value="sync">⚡ Sync Selected</option>
             </select>
             
             <button
@@ -1397,7 +1495,7 @@ export const AdminDashboard: React.FC = () => {
                   <input
                     type="checkbox"
                     title="Toggle Select All for filtered catalog listings"
-                    checked={visibleProducts.length > 0 && visibleProducts.every(p => selectedProductIds.includes(p.id || p._id))}
+                    checked={visibleProducts.length > 0 && visibleProducts.every(p => selectedProductIds.includes(p.id || p._id || ''))}
                     onChange={handleToggleSelectAll}
                     className="h-3.5 w-3.5 rounded text-zinc-950 border-gray-300 dark:border-zinc-800 focus:ring-zinc-500 cursor-pointer"
                   />
@@ -1445,10 +1543,22 @@ export const AdminDashboard: React.FC = () => {
                           referrerPolicy="no-referrer"
                         />
                         <div>
-                          <span className="font-serif text-xs font-semibold text-gray-950 dark:text-white block">
-                            {prod.name}
-                          </span>
-                          <span className="text-[9px] text-gray-450 font-mono block">
+                          <div className="flex items-center gap-2">
+                            <span className="font-serif text-xs font-semibold text-gray-950 dark:text-white block line-clamp-1 max-w-[200px]">
+                              {prod.name}
+                            </span>
+                            {prod.isManualPrice ? (
+                              <span className="bg-zinc-200 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 text-[8px] font-mono font-bold px-1.5 py-0.5 rounded flex items-center gap-1 shrink-0">
+                                <Lock className="h-2.5 w-2.5" />
+                                MANUAL (locked)
+                              </span>
+                            ) : (
+                              <span className="bg-emerald-100/50 border border-emerald-200 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-900 dark:text-emerald-400 text-[8px] font-mono font-bold px-1.5 py-0.5 rounded shrink-0">
+                                AUTO
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[9px] text-gray-450 font-mono block mt-0.5">
                             ID: {(prod.id || prod._id || '').toUpperCase().substring(Math.max(0, (prod.id || prod._id || '').length - 8))}
                           </span>
                         </div>
@@ -1634,6 +1744,25 @@ export const AdminDashboard: React.FC = () => {
                   </p>
                 </div>
               </div>
+
+              {selectedAdminProduct.source === 'cj' && (
+                <div className="space-y-1.5 border-b border-gray-100 pb-4 dark:border-zinc-900">
+                  <span className="text-[9px] font-mono text-zinc-400 block uppercase">Logistics & Shipping Context</span>
+                  {adminProdShipping === 'loading' ? (
+                    <p className="text-xs text-zinc-500 font-mono">Loading cache...</p>
+                  ) : adminProdShipping === 'none' ? (
+                    <p className="text-xs text-zinc-500 font-mono">No shipping cache available yet.</p>
+                  ) : adminProdShipping ? (
+                    <div className="text-xs text-zinc-650 dark:text-zinc-350 bg-zinc-50 dark:bg-zinc-900/40 rounded-xl p-3 border border-gray-100 dark:border-zinc-850/60 flex flex-col space-y-1 font-mono">
+                       <div><span className="text-zinc-400">Cached Cost:</span> ${adminProdShipping.shippingCost?.toFixed(2)}</div>
+                       <div><span className="text-zinc-400">Carrier:</span> {adminProdShipping.logisticsName}</div>
+                       <div><span className="text-zinc-400">Est. Delivery:</span> {adminProdShipping.estimatedDays} Days</div>
+                       <div><span className="text-zinc-400">Country:</span> {adminProdShipping.countryCode}</div>
+                       <div><span className="text-zinc-400">Last Synced:</span> {new Date(adminProdShipping.updatedAt).toLocaleDateString()}</div>
+                    </div>
+                  ) : null}
+                </div>
+              )}
 
               <div className="space-y-1.5">
                 <span className="text-[9px] font-mono text-zinc-400 block uppercase">Specification Description Logs</span>
@@ -2074,5 +2203,23 @@ export const AdminDashboard: React.FC = () => {
       )}
 
     </div>
+        )}
+        {activeTab === 'cj' && (
+           <div className="p-8 space-y-4">
+              <h2 className="text-xl font-serif font-bold text-zinc-900 dark:text-white">CJ Dropshipping Integration</h2>
+              <p className="text-zinc-500 font-mono text-xs">For technical controls on CJ synchronization, switch to the Products tab and scroll down.</p>
+           </div>
+        )}
+        {activeTab === 'orders' && (
+           <div className="p-8 text-center text-zinc-500 font-mono">Order Directory placeholder.</div>
+        )}
+        {activeTab === 'reports' && (
+           <div className="p-8 text-center text-zinc-500 font-mono">Reports Hub placeholder.</div>
+        )}
+        {activeTab === 'settings' && (
+           <div className="p-8 text-center text-zinc-500 font-mono">Settings placeholder.</div>
+        )}
+      </AdminLayout>
+    </AdminDataProvider>
   );
 };

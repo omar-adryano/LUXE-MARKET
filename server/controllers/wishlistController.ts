@@ -3,6 +3,7 @@ import { Wishlist } from '../models/Wishlist';
 import { Product } from '../models/Product';
 import { APIError } from '../middleware/errorHandler';
 import { AuthRequest } from '../middleware/auth';
+import mongoose from 'mongoose';
 
 // @desc    Get current user's wishlist
 // @route   GET /api/wishlist
@@ -45,6 +46,10 @@ export async function toggleWishlistItem(
   }
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      next(new APIError('Target product does not exist in catalog records', 404));
+      return;
+    }
     const product = await Product.findById(productId);
     if (!product) {
       next(new APIError('Target product does not exist in catalog records', 404));

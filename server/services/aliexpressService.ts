@@ -47,7 +47,7 @@ export class CJDropshippingService {
         this.tokenExpiry = expiry;
       }
 
-      return this.cachedToken;
+      return this.cachedToken!;
     } catch (error: any) {
       console.error('[CJDropshipping.getAccessToken] error:', error);
       throw new APIError(`Failed to authenticate with CJ Dropshipping: ${error.message}`, 500);
@@ -164,6 +164,9 @@ export class CJDropshippingService {
         source: 'cj',
         aliexpressProductId: productId,
         aliexpressUrl: `https://cjdropshipping.com/product/${productId}.html`, 
+        vid: info.variants?.[0]?.vid || '',
+        weight: Number(info.productWeight) || 0,
+        sourceCountry: 'CN', // Defaulting to CN since mostly dropshipped from China
       };
 
       const product = await Product.create(importedProductData);

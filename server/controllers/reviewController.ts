@@ -3,6 +3,7 @@ import { Review } from '../models/Review';
 import { Product } from '../models/Product';
 import { APIError } from '../middleware/errorHandler';
 import { AuthRequest } from '../middleware/auth';
+import mongoose from 'mongoose';
 
 // @desc    Add a review for a product
 // @route   POST /api/reviews
@@ -15,6 +16,10 @@ export async function createReview(
   const { productId, rating, comment } = req.body;
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      next(new APIError('Review target product not found', 404));
+      return;
+    }
     const product = await Product.findById(productId);
     if (!product) {
       next(new APIError('Review target product not found', 404));
@@ -81,6 +86,10 @@ export async function deleteReview(
   next: NextFunction
 ): Promise<void> {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      next(new APIError('Review target not found', 404));
+      return;
+    }
     const review = await Review.findById(req.params.id);
     if (!review) {
       next(new APIError('Review target not found', 404));

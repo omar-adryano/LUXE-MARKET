@@ -110,6 +110,32 @@ const productSchema = new Schema(
       type: String,
       trim: true,
     },
+    vid: {
+      type: String,
+      trim: true,
+    },
+    weight: {
+      type: Number,
+    },
+    dimensions: {
+      type: Schema.Types.Mixed,
+    },
+    sourceCountry: {
+      type: String,
+      trim: true,
+    },
+    warehouse: {
+      type: String,
+      trim: true,
+    },
+    priceReset: {
+      type: Boolean,
+      default: false
+    },
+    isManualPrice: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

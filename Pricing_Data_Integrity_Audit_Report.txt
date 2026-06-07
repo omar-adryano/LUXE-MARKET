@@ -1,0 +1,2043 @@
+=== PRICING DATA INTEGRITY AUDIT ===
+
+1. Products where originalPrice < $0.50: 278
+2. Products where shippingCost > 10x originalPrice: 324
+3. Products where originalPrice <= 0.05: 69
+4. Products where shippingCost > $50: 11
+
+--- Details ---
+
+Name: High Capacity Super Fast Charging Battery
+CJ Product ID / VID: 2606050623101609800
+Original Price: $0.01
+Shipping Cost: $8.11
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Full Bodied Multi Effect Moisturizing Stick
+CJ Product ID / VID: 2606050542491631200
+Original Price: $0.01
+Shipping Cost: $5.26
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Bakuchiol Plump Glow Serum
+CJ Product ID / VID: 2606050534381623800
+Original Price: $0.38
+Shipping Cost: $5.53
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Long Range Four Wheel Drive Off
+CJ Product ID / VID: 2606050513231612700
+Original Price: $0.01
+Shipping Cost: $20.80
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Nourishing And Firming Massage Roller Cream
+CJ Product ID / VID: 2606050531431628100
+Original Price: $0.46
+Shipping Cost: $6.36
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Antiperspirant Stick
+CJ Product ID / VID: 2606050528471612900
+Original Price: $0.46
+Shipping Cost: $6.84
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Convenient Mini Aluminum Alloy Bluetooth Speaker
+CJ Product ID / VID: 2606050511061614500
+Original Price: $0.39
+Shipping Cost: $8.93
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Headwear Halloween Hat For Dogs And
+CJ Product ID / VID: 2606050507531615100
+Original Price: $0.35
+Shipping Cost: $6.81
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Enhancement Cream
+CJ Product ID / VID: 2606050504271622400
+Original Price: $0.35
+Shipping Cost: $5.41
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Child Seat Cushionabsorbent And Stain Resistant
+CJ Product ID / VID: 2606050501021611500
+Original Price: $0.06
+Shipping Cost: $6.77
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Christmas Knitted Scarf And Hat For
+CJ Product ID / VID: 2606050514571601100
+Original Price: $0.46
+Shipping Cost: $5.66
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Ultra Fairy Hydrangea Petal Earrings
+CJ Product ID / VID: 2606050359151601900
+Original Price: $0.14
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Cat And Dog Gem Pearl Necklace
+CJ Product ID / VID: 2606050357461636000
+Original Price: $0.01
+Shipping Cost: $5.18
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Cherry Blossom And Butterfly Open Ring
+CJ Product ID / VID: 2606050355321614900
+Original Price: $0.20
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dog Handmade Woven Leash Polyester Fiber
+CJ Product ID / VID: 2606050318161607300
+Original Price: $0.29
+Shipping Cost: $7.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Disposable Replacement Head Toilet Cleaning Brush
+CJ Product ID / VID: 2606050314041636300
+Original Price: $0.01
+Shipping Cost: $10.22
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Ring With A Hexagonal Starburst Pattern
+CJ Product ID / VID: 2606050305471619800
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Womens Four Leaf Clover Titanium Steel
+CJ Product ID / VID: 2606050259361636500
+Original Price: $0.22
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Dog Clothes For Large Breeds Labrador
+CJ Product ID / VID: 2606050343121624200
+Original Price: $0.01
+Shipping Cost: $6.77
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Able Malachite Index Finger Ring
+CJ Product ID / VID: 2606050253271613000
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Wood Grain Pattern Trash Can Household
+CJ Product ID / VID: 2606050342431635700
+Original Price: $0.01
+Shipping Cost: $24.20
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Titanium Steel Ball Ring Vintage Style
+CJ Product ID / VID: 2606050246301621000
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Pet Oral Care Spray
+CJ Product ID / VID: 2606050244541628300
+Original Price: $0.46
+Shipping Cost: $6.30
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Unisex Polished Tungsten Steel Personalized Ring
+CJ Product ID / VID: 2606050242321610900
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Pet Hair Care Liquid
+CJ Product ID / VID: 2606050239481622500
+Original Price: $0.35
+Shipping Cost: $7.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Cat Pheromone Calming Diffuser Gel
+CJ Product ID / VID: 2606050237471614600
+Original Price: $0.35
+Shipping Cost: $7.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Light Luxury Asymmetrical Cross Ring
+CJ Product ID / VID: 2606050234461609100
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Nasal Pillow Silicone Soft Cushion For
+CJ Product ID / VID: 2606050225321615100
+Original Price: $0.01
+Shipping Cost: $4.98
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Cross Border Mens Short Wallet Vintage
+CJ Product ID / VID: 2606050221481628400
+Original Price: $0.14
+Shipping Cost: $6.60
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dietary Supplement
+CJ Product ID / VID: 2606050218111600700
+Original Price: $0.01
+Shipping Cost: $9.49
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Male Enhancement Gummies
+CJ Product ID / VID: 2606050215111611200
+Original Price: $0.03
+Shipping Cost: $9.49
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Round Bubble Stick
+CJ Product ID / VID: 2606050210011604600
+Original Price: $0.39
+Shipping Cost: $10.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Sports Invisible Running Waist Bag Fitness
+CJ Product ID / VID: 2606050204201612700
+Original Price: $0.17
+Shipping Cost: $5.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Car Seat Gap Filler Leak Proof
+CJ Product ID / VID: 2606050302381612600
+Original Price: $0.35
+Shipping Cost: $6.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Chenyue Cross Border Earrings Simple Stylish
+CJ Product ID / VID: 2606050254581611900
+Original Price: $0.12
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Teachers Day Flower Bouquet Birthday Gift
+CJ Product ID / VID: 2606050248571608200
+Original Price: $0.01
+Shipping Cost: $11.57
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Pet Odor Eliminator Spray
+CJ Product ID / VID: 2606050242541631100
+Original Price: $0.35
+Shipping Cost: $8.83
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Pet Oral Care Spray
+CJ Product ID / VID: 2606050235411624300
+Original Price: $0.46
+Shipping Cost: $6.22
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Shade Providing Waterproof Velcro Ready Finished
+CJ Product ID / VID: 2606050644371617900
+Original Price: $0.29
+Shipping Cost: $6.64
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Portable Storage Bag For Collectible Jewelry
+CJ Product ID / VID: 2606050554131608600
+Original Price: $0.14
+Shipping Cost: $4.42
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Logistics Waterproof Bag
+CJ Product ID / VID: 2606050601401615900
+Original Price: $0.01
+Shipping Cost: $4.75
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Cross Border Pet Licking Mat Dog
+CJ Product ID / VID: 2606050546151622300
+Original Price: $0.08
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Pure Titanium Cutting Board Food Grade
+CJ Product ID / VID: 2606050539191608800
+Original Price: $0.49
+Shipping Cost: $21.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Breathing Mask Silicone Pad
+CJ Product ID / VID: 2606050532301606800
+Original Price: $0.36
+Shipping Cost: $6.32
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Cheese Shaped Ceramic Bowl Cute Cat
+CJ Product ID / VID: 2606050522271628700
+Original Price: $0.01
+Shipping Cost: $13.79
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Christmas Tree Floor Cushion Lazy Pouf
+CJ Product ID / VID: 2606050527131606000
+Original Price: $0.01
+Shipping Cost: $12.80
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Happy Spring Toy Cat Teaser Ball
+CJ Product ID / VID: 2606050415301613900
+Original Price: $0.01
+Shipping Cost: $6.60
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Sterling Silver Gradient Cherry Blossom Stud
+CJ Product ID / VID: 2606050407591600100
+Original Price: $0.03
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Flower Mahjong Table Cushion Crystal Velvet
+CJ Product ID / VID: 2606050702471635600
+Original Price: $0.06
+Shipping Cost: $6.84
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: French Style Vintage Dessert Table Side
+CJ Product ID / VID: 2606050400161602000
+Original Price: $0.01
+Shipping Cost: $82.98
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Batana Nourish Cream
+CJ Product ID / VID: 2606050619211616100
+Original Price: $0.38
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Decontamination Whitening Tooth Powder
+CJ Product ID / VID: 2606050612151616800
+Original Price: $0.46
+Shipping Cost: $6.34
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Litter Tent Foreign Trade Semi Enclosed
+CJ Product ID / VID: 2606050622281636501
+Original Price: $0.01
+Shipping Cost: $12.80
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Home Wall Mounted Door Back Storage
+CJ Product ID / VID: 2606050615471637900
+Original Price: $0.01
+Shipping Cost: $13.11
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Dog Leash 2 Meter And Extended
+CJ Product ID / VID: 2606050605561603000
+Original Price: $0.01
+Shipping Cost: $9.37
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Large Cat Tree All In One
+CJ Product ID / VID: 2606050515381607500
+Original Price: $0.12
+Shipping Cost: $82.98
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Korean Style Ethereal Camellia Ring
+CJ Product ID / VID: 2606050707061603700
+Original Price: $0.17
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Hair Care Spray
+CJ Product ID / VID: 2606050512171638800
+Original Price: $0.35
+Shipping Cost: $5.96
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Transparent Universal Ventilator Nasal Oral Mask
+CJ Product ID / VID: 2606050631331636600
+Original Price: $0.01
+Shipping Cost: $6.92
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Double Beveled Smooth Tungsten Steel Anti
+CJ Product ID / VID: 2606050138291625900
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Design Forward Top With An Irregular
+CJ Product ID / VID: 2606040959241603800
+Original Price: $0.42
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Arched Bathroom Mirror Led Smart Mirror
+CJ Product ID / VID: 2606040853351627800
+Original Price: $0.41
+Shipping Cost: $82.98
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Down Padded Eyewear Case With Automatic
+CJ Product ID / VID: 2606040808111615700
+Original Price: $0.17
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Silicone Nail Manicure Keyboard Film For
+CJ Product ID / VID: 2606040756491621400
+Original Price: $0.06
+Shipping Cost: $9.33
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Eyecare Massage Device For Home Usemultifunctional
+CJ Product ID / VID: 2606050221591611100
+Original Price: $0.36
+Shipping Cost: $12.75
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Beauty Device Home Use Facial Massager
+CJ Product ID / VID: 2606050219331630000
+Original Price: $0.01
+Shipping Cost: $9.90
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Mini Doll House Bee Doll
+CJ Product ID / VID: 2606050202521634700
+Original Price: $0.09
+Shipping Cost: $8.03
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Baby Bath Tub For Home Use
+CJ Product ID / VID: 2606050115131634800
+Original Price: $0.01
+Shipping Cost: $82.98
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Silicone Feel Dove Orchid Artificial Flower
+CJ Product ID / VID: 2606041511461600700
+Original Price: $0.06
+Shipping Cost: $28.52
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Multiple Effect The Floor Clean Sheet
+CJ Product ID / VID: 2606041147311626200
+Original Price: $0.01
+Shipping Cost: $5.18
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Reduce Odor Remove Scale And Use
+CJ Product ID / VID: 2606041143121601800
+Original Price: $0.35
+Shipping Cost: $5.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Swaddling Blanket With Large Floral Pattern
+CJ Product ID / VID: 2606041136131622700
+Original Price: $0.17
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Kitchen Stove Range Hood Stubborn Oil
+CJ Product ID / VID: 2606041130451600700
+Original Price: $0.46
+Shipping Cost: $8.49
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Winter Peach Butt Yoga Pants Thickened
+CJ Product ID / VID: 2606041231341623000
+Original Price: $0.14
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Robot Vacuum Detergent
+CJ Product ID / VID: 2606041128571624600
+Original Price: $0.35
+Shipping Cost: $7.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Firming And Smoothing Toner
+CJ Product ID / VID: 2606041229541602100
+Original Price: $0.46
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Persimmon Nourishing Cleaning Soap
+CJ Product ID / VID: 2606041228011601300
+Original Price: $0.46
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Transdermal Tanning Patch
+CJ Product ID / VID: 2606041226101629300
+Original Price: $0.46
+Shipping Cost: $5.30
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Shirt With A Relaxed Linen
+CJ Product ID / VID: 2606041224221635200
+Original Price: $0.22
+Shipping Cost: $6.54
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Joint Soothing Ball
+CJ Product ID / VID: 2606041224181637900
+Original Price: $0.46
+Shipping Cost: $6.79
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: High Waisted Butt Lifting Fleece Lined
+CJ Product ID / VID: 2606041352071614400
+Original Price: $0.12
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Joint Soothing Care Cream
+CJ Product ID / VID: 2606041222271602900
+Original Price: $0.35
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Anti Friction Stick
+CJ Product ID / VID: 2606041259281620800
+Original Price: $0.46
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Lace Panel Long Sleeve Hooded Sweatshirt
+CJ Product ID / VID: 2606041215431613800
+Original Price: $0.26
+Shipping Cost: $8.02
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Autumn Set With Long Sleeved Wide
+CJ Product ID / VID: 2606041209281601300
+Original Price: $0.38
+Shipping Cost: $9.84
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Joint Muscle Comfort Patch
+CJ Product ID / VID: 2606041256071609000
+Original Price: $0.46
+Shipping Cost: $5.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Weight Management Patch
+CJ Product ID / VID: 2606041208501608700
+Original Price: $0.35
+Shipping Cost: $5.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Zircon Cross Open Ring
+CJ Product ID / VID: 2606041206581617800
+Original Price: $0.35
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Hair Growth Serum
+CJ Product ID / VID: 2606041250321616200
+Original Price: $0.35
+Shipping Cost: $6.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Zircon Adjustable Open Ring
+CJ Product ID / VID: 2606041203131631200
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Stylish Zircon Ring
+CJ Product ID / VID: 2606041200211625500
+Original Price: $0.35
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Moisturizing And Soothing Liquid
+CJ Product ID / VID: 2606041232291629200
+Original Price: $0.35
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Adjustable Band Everyday Ring
+CJ Product ID / VID: 2606050310091638800
+Original Price: $0.17
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Blood Pressure And Blood Oxygen Monitoring Smartwatch
+CJ Product ID / VID: 2606050742591602800
+Original Price: $0.17
+Shipping Cost: $5.09
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Stainless Steel Ice Bully Cup
+CJ Product ID / VID: 2606050722501616900
+Original Price: $0.20
+Shipping Cost: $10.84
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Load-bearing Universal Plastic Caster Wheel
+CJ Product ID / VID: 2606050722371625300
+Original Price: $0.17
+Shipping Cost: $5.58
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Casual Soft And Breathable Black Long Socksversatile For All Seasons
+CJ Product ID / VID: 2606050700071632100
+Original Price: $0.01
+Shipping Cost: $5.18
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Retro Mori-style Open-toe Outdoor Soft-soled Woven Slippers
+CJ Product ID / VID: 2606050658281614800
+Original Price: $0.04
+Shipping Cost: $9.56
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Peliss Printed Halter-neck Maxi Dress
+CJ Product ID / VID: 2606050631191615000
+Original Price: $0.39
+Shipping Cost: $7.34
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Elegant Waist-cinching V-neck Slimming Chic Jumpsuit For Women
+CJ Product ID / VID: 2606050625371623700
+Original Price: $0.45
+Shipping Cost: $9.01
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Elegant Mesh Patchwork And Calf-length Skirt
+CJ Product ID / VID: 2606050615491637500
+Original Price: $0.18
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Vintage-style Patchwork Fashion-print Dress
+CJ Product ID / VID: 2606050615351634600
+Original Price: $0.42
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Figure-flattering Slimming Fashionable Embroidered Wide-leg Pants With An Elastic Waist
+CJ Product ID / VID: 2606050607061608300
+Original Price: $0.14
+Shipping Cost: $6.78
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Seamless Push-Up Plus-Size Bra
+CJ Product ID / VID: 2606050606551621100
+Original Price: $0.39
+Shipping Cost: $6.32
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Versatile 3D-printed Short-sleeve Mens Set
+CJ Product ID / VID: 2606050547181614500
+Original Price: $0.01
+Shipping Cost: $8.17
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Stiletto-heel Peep-toe Pumps With A Bow Detail
+CJ Product ID / VID: 2606050544521601400
+Original Price: $0.24
+Shipping Cost: $9.42
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Elegant Style Floral Print Sleeveless Dress With Tie-up Straps
+CJ Product ID / VID: 2606050543441616400
+Original Price: $0.01
+Shipping Cost: $9.56
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Mens Summer Casual Printed Shirt Set
+CJ Product ID / VID: 2606050543161616700
+Original Price: $0.20
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Loose-fit Flight Jacket Cotton Coat
+CJ Product ID / VID: 2606050539021615200
+Original Price: $0.09
+Shipping Cost: $12.94
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Off-Shoulder Ruched Stretchy Sleeveless Dress
+CJ Product ID / VID: 2606050537031607400
+Original Price: $0.39
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Thin Long-sleeve V-neck Sweater Jacket
+CJ Product ID / VID: 2606050534321621900
+Original Price: $0.15
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Vitamin B12 Eye-washing Care Solution Set
+CJ Product ID / VID: 2606050803191617300
+Original Price: $0.38
+Shipping Cost: $11.11
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plus-size Cotton Sportswear Set For Middle-aged And Elderly Adults
+CJ Product ID / VID: 2606050527431618900
+Original Price: $0.17
+Shipping Cost: $20.33
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Waist-cinched Sleeveless Lapel-collar Trench-style Dress
+CJ Product ID / VID: 2606050524521615000
+Original Price: $0.29
+Shipping Cost: $10.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Chain-link Spliced Zipper Short-sleeve T-shirt Top
+CJ Product ID / VID: 2606050520001627100
+Original Price: $0.30
+Shipping Cost: $6.78
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: European And American-style Leopard-print One-piece Swimsuit For Women
+CJ Product ID / VID: 2606051206071611400
+Original Price: $0.20
+Shipping Cost: $6.92
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: European And American-style Womens Strap Jumpsuit
+CJ Product ID / VID: 2606051039091623000
+Original Price: $0.26
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Bright Eight-Eye Monster High-Intensity Flashlight Rechargeable For Outdoor Use
+CJ Product ID / VID: 2606051032581607700
+Original Price: $0.01
+Shipping Cost: $8.09
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Sodium Chloride Physiological Saline Cleaning Solution
+CJ Product ID / VID: 2606051031201607700
+Original Price: $0.26
+Shipping Cost: $7.54
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Two-Piece Summer Casual Set
+CJ Product ID / VID: 2606051005501601200
+Original Price: $0.26
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Non-fatiguing Niche Toe-separated Fashion Sandals
+CJ Product ID / VID: 2606050928051618300
+Original Price: $0.14
+Shipping Cost: $13.23
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: English Letter Personalized Pendant Bracelet
+CJ Product ID / VID: 2606050918051610500
+Original Price: $0.01
+Shipping Cost: $4.75
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: High-Precision Industrial Infrared Thermometer
+CJ Product ID / VID: 2606050912331635000
+Original Price: $0.14
+Shipping Cost: $7.91
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Hand-push Lawn Mower Multi-purpose Grass Cutter
+CJ Product ID / VID: 2606050907181619800
+Original Price: $0.01
+Shipping Cost: $82.98
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Fuel Dispenser Electronic Meter High-precision Meter
+CJ Product ID / VID: 2606050859271620500
+Original Price: $0.01
+Shipping Cost: $22.05
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Retro-style Turntable With Vinyl Record Playback
+CJ Product ID / VID: 2606050854181603500
+Original Price: $0.01
+Shipping Cost: $14.92
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Copper-plated Silver Devils Eye DIY Bracelet Bead Accessories
+CJ Product ID / VID: 2606050848201618000
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Multi Purpose Double Ended Wire Breaking Extractor
+CJ Product ID / VID: 2606050846581630700
+Original Price: $0.01
+Shipping Cost: $6.77
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Mao Mao Niche-design Long-sleeve Feather Blouse And Trousers
+CJ Product ID / VID: 2606050846501638000
+Original Price: $0.01
+Shipping Cost: $6.62
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Silver-plated Copper Tree Of Life DIY Beaded Bracelet Accessory, Warm-hearted Family Design
+CJ Product ID / VID: 2606050840421610400
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Womens Leather Shoes With A Single-strap Buckle
+CJ Product ID / VID: 2606050940281637900
+Original Price: $0.04
+Shipping Cost: $12.48
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Oil Painting Dog Canvas Tote Bag
+CJ Product ID / VID: 2606050846491606700
+Original Price: $0.14
+Shipping Cost: $6.78
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Citrulline Capsules
+CJ Product ID / VID: 2606050824151629000
+Original Price: $0.01
+Shipping Cost: $6.77
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Wig Wispy Bangs Layered Cut Atmospheric Vibe Ombre Brown Long Length
+CJ Product ID / VID: 2606050810041608400
+Original Price: $0.45
+Shipping Cost: $7.34
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Hand-held Golf Swing Correction Band
+CJ Product ID / VID: 2606050808391617800
+Original Price: $0.26
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Electric Hammer And Angle Grinder Chuck
+CJ Product ID / VID: 2606050806391600300
+Original Price: $0.42
+Shipping Cost: $9.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Instant Stain Remover
+CJ Product ID / VID: 2606050752571614100
+Original Price: $0.35
+Shipping Cost: $7.43
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: White Shoe Care Spray
+CJ Product ID / VID: 2606050750211622100
+Original Price: $0.35
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Adhesive Remover
+CJ Product ID / VID: 2606050748011631900
+Original Price: $0.35
+Shipping Cost: $8.38
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: AI Intelligent Noise Reduction Painting Projector
+CJ Product ID / VID: 2606050746261621400
+Original Price: $0.01
+Shipping Cost: $12.34
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Ceramic Refrigerator Magnet
+CJ Product ID / VID: 2606050741471635400
+Original Price: $0.01
+Shipping Cost: $5.02
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Plant-based Body Care Cream Skin Type
+CJ Product ID / VID: 2606050735181628100
+Original Price: $0.26
+Shipping Cost: $6.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Eye Care Eyewash Solution
+CJ Product ID / VID: 2606050733521621100
+Original Price: $0.17
+Shipping Cost: $7.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dried Flower Bookmarks Pressed Flower DIY Craft Materials Plant Specimen Stickers
+CJ Product ID / VID: 2606050733001635900
+Original Price: $0.26
+Shipping Cost: $5.09
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Versatile Long Solid-color Blazer Without Buttons
+CJ Product ID / VID: 2606050732041619900
+Original Price: $0.22
+Shipping Cost: $8.73
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Comfortable Breathable Patchwork Underwear
+CJ Product ID / VID: 2606050729591629300
+Original Price: $0.33
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Wooden Vintage Magnetic Refrigerator Sticker
+CJ Product ID / VID: 2606050727211634600
+Original Price: $0.26
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: FX9503 Four-Channel F6F Hellcat Fighter Brushless Toy
+CJ Product ID / VID: 2606050956111627300
+Original Price: $0.27
+Shipping Cost: $60.80
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Tile Divider And Cutter Multi Functional Tile Cutter
+CJ Product ID / VID: 2606050831091628100
+Original Price: $0.01
+Shipping Cost: $9.29
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Charming Marine Life Starfish Sea Turtle And Jellyfish Charm Beads For DIY Projects
+CJ Product ID / VID: 2606050830171608900
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Cute Puppyshaped Charm For Snakechain Bracelets In Colorful Drippainted Finish
+CJ Product ID / VID: 2606050828251605700
+Original Price: $0.33
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Woodworking Three-function Manual Nail Gun
+CJ Product ID / VID: 2606050824481606100
+Original Price: $0.01
+Shipping Cost: $18.80
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Waist-cinching Figure-flattering Casual Yoga Skort With Mesh Fitness Wear Sports Pants
+CJ Product ID / VID: 2606050742351636800
+Original Price: $0.35
+Shipping Cost: $7.55
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Delicate Lace-panelled Romantic Floral Dress
+CJ Product ID / VID: 2606050741511620600
+Original Price: $0.15
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Loose-fit Striped Elegant Single-breasted Dress
+CJ Product ID / VID: 2606050726591619700
+Original Price: $0.33
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plus-size Chunky-heel Strappy High-heeled Sandals
+CJ Product ID / VID: 2606050723561619000
+Original Price: $0.35
+Shipping Cost: $12.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Bohemian Vintage StyleTurquoisecolored Faux Thai Silver Owl
+CJ Product ID / VID: 2606050718231620800
+Original Price: $0.17
+Shipping Cost: $2.25
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Three-person Floating Inflatable Water Toy
+CJ Product ID / VID: 2606050716561608400
+Original Price: $0.01
+Shipping Cost: $19.76
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Single-strap Square-toe Mid-heel Buckle Sandals
+CJ Product ID / VID: 2606050713121603400
+Original Price: $0.09
+Shipping Cost: $13.51
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Magnetic Flip-top Jewelry Box
+CJ Product ID / VID: 2606050712381602600
+Original Price: $0.01
+Shipping Cost: $6.36
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Womens Retro Floral Short-Sleeve V-Neck Dress
+CJ Product ID / VID: 2606050656031632600
+Original Price: $0.29
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Long-sleeve Professional Suit With Formal Trousers
+CJ Product ID / VID: 2606050652501605200
+Original Price: $0.01
+Shipping Cost: $12.80
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Botanical Body Oil
+CJ Product ID / VID: 2606050650531613400
+Original Price: $0.38
+Shipping Cost: $5.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Nourishing Facial Serum
+CJ Product ID / VID: 2606050647471637700
+Original Price: $0.38
+Shipping Cost: $5.53
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Hollowed-Out Beach Vacation Dress
+CJ Product ID / VID: 2606051018351639600
+Original Price: $0.42
+Shipping Cost: $9.01
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Niacinamide Magnesium Cream Relief Cream Magnesium Cream
+CJ Product ID / VID: 2606050727151619000
+Original Price: $0.35
+Shipping Cost: $7.71
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Long-sleeve Professional Suit With Dress Pants
+CJ Product ID / VID: 2606050641071600500
+Original Price: $0.01
+Shipping Cost: $11.65
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Womens Sporty Printed High-Waisted Two-Piece Bikini
+CJ Product ID / VID: 2606050539481616900
+Original Price: $0.22
+Shipping Cost: $6.76
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Zip-up Polo Shirt And Shorts Set
+CJ Product ID / VID: 2606050625461636100
+Original Price: $0.21
+Shipping Cost: $7.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Earrings Hollowed-out Pattern Design Light-luxury Hoop Style
+CJ Product ID / VID: 2606050728371629300
+Original Price: $0.17
+Shipping Cost: $2.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: 24k Gold-plated Jewelry Four-piece Set
+CJ Product ID / VID: 2606050901381607700
+Original Price: $0.09
+Shipping Cost: $6.39
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Multi-Functional Metal Soldering Iron Stand
+CJ Product ID / VID: 2606050813441631100
+Original Price: $0.26
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Wrap-style Slimming Waist-cinching Pleated Solid-color Dress For Women
+CJ Product ID / VID: 2606050908491609200
+Original Price: $0.18
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Western-style Versatile White Loose-fitting Shirt
+CJ Product ID / VID: 2606051202431601500
+Original Price: $0.03
+Shipping Cost: $7.48
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Charms Beads DIY Jewelry Accessories Bracelets
+CJ Product ID / VID: 2606051127131622900
+Original Price: $0.01
+Shipping Cost: $4.89
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Pet Teething Chew Stick For Quick Teeth Brushing
+CJ Product ID / VID: 2606050906511639400
+Original Price: $0.35
+Shipping Cost: $5.66
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Striped Long-sleeve Casual Shirt For Women
+CJ Product ID / VID: 2606050516291622200
+Original Price: $0.29
+Shipping Cost: $7.02
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Celebrity-style Sleeveless Printed Waist-cinching Maxi Dress
+CJ Product ID / VID: 2606050759551624100
+Original Price: $0.01
+Shipping Cost: $9.56
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Wide Leg Straight Leg Casual All Matching Long Pants With Pockets
+CJ Product ID / VID: 2606050718361615200
+Original Price: $0.29
+Shipping Cost: $9.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: The Nourishing Hair Oil
+CJ Product ID / VID: 2606050605451617100
+Original Price: $0.38
+Shipping Cost: $7.54
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Moisturizing And Refreshing Ball
+CJ Product ID / VID: 2606050604051612700
+Original Price: $0.38
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Low-heeled Open-toe Square-toe Breathable Beach Sandals
+CJ Product ID / VID: 2606050706451602700
+Original Price: $0.01
+Shipping Cost: $9.84
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Elegant Womens V-neck Blouse With Petal Sleeves And A Slit
+CJ Product ID / VID: 2606050629001609100
+Original Price: $0.22
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Panties Yellow Stain Remover
+CJ Product ID / VID: 2606050755091604800
+Original Price: $0.38
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plaid Patchwork Figure-flattering Top And Skirt Set
+CJ Product ID / VID: 2606050513041623000
+Original Price: $0.01
+Shipping Cost: $7.62
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: 18k Gold Stainless Steel Necklace
+CJ Product ID / VID: 2606051001331627400
+Original Price: $0.01
+Shipping Cost: $5.89
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Hair Removal Cream
+CJ Product ID / VID: 2606050609451617500
+Original Price: $0.46
+Shipping Cost: $7.67
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Figure-flattering,Slimming And Elegant One-piece Dress Formal Gown For Banquets Annual Events And Performances
+CJ Product ID / VID: 2606050519181621200
+Original Price: $0.49
+Shipping Cost: $14.20
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Lace Ladies Long Dress Sleeveless
+CJ Product ID / VID: 2606050900301624200
+Original Price: $0.09
+Shipping Cost: $8.03
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Solid-color Minimalist Sleeveless Figure-flattering Tank Top
+CJ Product ID / VID: 2606050803071619500
+Original Price: $0.30
+Shipping Cost: $7.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Professional Interview Business Attire Suit Set
+CJ Product ID / VID: 2606050625001600700
+Original Price: $0.01
+Shipping Cost: $8.73
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Letter Charm BeadsCreative And Personalized DIY Jewelry For Bracelets
+CJ Product ID / VID: 2606050832011637600
+Original Price: $0.35
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Electroplated Silver Cartoon Charm Beads For DIY Bracelets And Necklaces
+CJ Product ID / VID: 2606050839011639500
+Original Price: $0.01
+Shipping Cost: $2.06
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Purple DiamondOlive Green DiamondVintage Ring For Women
+CJ Product ID / VID: 2606050808461630400
+Original Price: $0.01
+Shipping Cost: $4.56
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Loose And Comfortable Crepe Cotton Long-sleeve Nightgown And Pants
+CJ Product ID / VID: 2606050851011634300
+Original Price: $0.06
+Shipping Cost: $10.06
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Waffle-Texture Henley-Neck Long-Sleeve Polo Shirt
+CJ Product ID / VID: 2606060600281633400
+Original Price: $0.26
+Shipping Cost: $8.49
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Fireplace Cleaner
+CJ Product ID / VID: 2606051107181601400
+Original Price: $0.38
+Shipping Cost: $7.08
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Solid-color High-waisted Loose-fit Casual Wide-leg Pants Trousers
+CJ Product ID / VID: 2606050043221609600
+Original Price: $0.18
+Shipping Cost: $8.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Western-style Retro Sleeveless Chiffon Blouse For Women
+CJ Product ID / VID: 2606050313341623900
+Original Price: $0.49
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Wooden Dog Agility Seesaw For Training And Exercise, Yellow
+CJ Product ID / VID: 2062822445851643906
+Original Price: $0.22
+Shipping Cost: $82.98
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Relaxed-fit Casual Short-sleeve V-neck Backless Jumpsuit With Shorts
+CJ Product ID / VID: 2606050215041624400
+Original Price: $0.04
+Shipping Cost: $8.45
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Niche-design Sea Turtle Jewelry Earrings As A Birthday Gift
+CJ Product ID / VID: 2606050134381603200
+Original Price: $0.29
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Gradient-colored Womens Bob Wig Full Headpiece
+CJ Product ID / VID: 2606050133151616100
+Original Price: $0.38
+Shipping Cost: $5.90
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Scottish Highland Cow Breathing Glow-in-the-dark Plush Toy
+CJ Product ID / VID: 2606050123571634600
+Original Price: $0.06
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Sequin Mens Slimming Figure-flattering Casual Trousers
+CJ Product ID / VID: 2606050102471622800
+Original Price: $0.42
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Floral Embroidery Wrap Belted Bishop Sleeve Blouse
+CJ Product ID / VID: 2062719858361204737
+Original Price: $0.12
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Personalized LOVE Wooden Sign With Rose Engraving,English&German Heart Table Decor,Valentine Anniversary Gift For Couple
+CJ Product ID / VID: 2062801106695397377
+Original Price: $0.17
+Shipping Cost: $6.13
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Women's V-Neck Printed Elegant Sweet Spaghetti Strap Waist-Cinched Dress
+CJ Product ID / VID: 2062784107041226753
+Original Price: $0.29
+Shipping Cost: $7.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: S925 Sterling Silver Moissanite Crawler Earrings  Pear Cut Drop Earrings With GRA Certificate Platinum Plated Jewelry Gift Box Set For Women
+CJ Product ID / VID: 2062747568450281473
+Original Price: $0.20
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Women's Sleeveless Wide Leg Pants Set, Summer Fashion Casual 2-Piece Outfit
+CJ Product ID / VID: 2062746417389010946
+Original Price: $0.39
+Shipping Cost: $7.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Contrast Lapel Puff Sleeve Floral Print Midi Dress
+CJ Product ID / VID: 2062820605258612737
+Original Price: $0.14
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: New Springautumn Long-sleeve Fashionable Printed High-waisted Casual Womens Jumpsuit
+CJ Product ID / VID: 2606041610571600700
+Original Price: $0.21
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Casual Long Denim Jeans With Rips
+CJ Product ID / VID: 2606041552271612200
+Original Price: $0.48
+Shipping Cost: $10.86
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Korean-style Versatile Thick-soled Flyknit Sporty Casual Trendy Dad Shoes
+CJ Product ID / VID: 2606041135051629800
+Original Price: $0.08
+Shipping Cost: $14.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: New Womens Summer Striped Short T-shirt And High-waisted Wide-leg Pants Two-piece Set
+CJ Product ID / VID: 2606041543571635100
+Original Price: $0.04
+Shipping Cost: $10.95
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Mens Casual Sporty Printed T-Shirt And Pants Two-Piece Set
+CJ Product ID / VID: 2606041536241609400
+Original Price: $0.45
+Shipping Cost: $9.01
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Casual Summer Solid-Color Short-Sleeve T-Shirt And Shorts Set
+CJ Product ID / VID: 2606041520541607300
+Original Price: $0.39
+Shipping Cost: $10.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Summer New Stylish Slimming Short-sleeve Wide-leg Pants Two-piece Set
+CJ Product ID / VID: 2606041452591602900
+Original Price: $0.17
+Shipping Cost: $6.78
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Plus-Size Elegant Sleeveless Printed Jumpsuit
+CJ Product ID / VID: 2606041447141637400
+Original Price: $0.42
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Fashion Trendy Solid-color Striped Casual Trousers
+CJ Product ID / VID: 2606041352381609400
+Original Price: $0.22
+Shipping Cost: $8.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Personalized Zircon Womens Ring
+CJ Product ID / VID: 2606041040061634900
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Plus-size Casual Striped Tank Top And Shorts Set For Summer
+CJ Product ID / VID: 2606041037431618300
+Original Price: $0.41
+Shipping Cost: $6.64
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Off-shoulder Faux Two-piece Boat Neck Long Sleeves
+CJ Product ID / VID: 2606041353231629600
+Original Price: $0.20
+Shipping Cost: $8.73
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Quick-drying Breathable Casual Top And Pants Set For Men
+CJ Product ID / VID: 2606041307471606500
+Original Price: $0.06
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Fashionable Casual Shirt And Shorts Set
+CJ Product ID / VID: 2606041343111629400
+Original Price: $0.01
+Shipping Cost: $7.89
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Womens Copper Ring With Zircon Inlay Heart Design
+CJ Product ID / VID: 2606041251531604500
+Original Price: $0.46
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Fashionable Versatile Thick-soled Slippers
+CJ Product ID / VID: 2606041245151634000
+Original Price: $0.18
+Shipping Cost: $10.68
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Elderberry Moisturizing Oil
+CJ Product ID / VID: 2606041239121616500
+Original Price: $0.46
+Shipping Cost: $6.36
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Sleek Minimalist Gold Ring With A Premium Feel
+CJ Product ID / VID: 2606041247221615600
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Womens Sophisticated Gold Ring
+CJ Product ID / VID: 2606041155161611400
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Foam Cleaner
+CJ Product ID / VID: 2606041150191634300
+Original Price: $0.46
+Shipping Cost: $8.00
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Threepiece Office Lady Set Luxurious European And American Style Rings
+CJ Product ID / VID: 2606041149261631400
+Original Price: $0.35
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Light-luxury Silver Open-ring In European And American Style
+CJ Product ID / VID: 2606041148201609400
+Original Price: $0.36
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Cylinder Head Gasket Test Fluid
+CJ Product ID / VID: 2606041141221622100
+Original Price: $0.46
+Shipping Cost: $7.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Fashionable Open-toe Round-toe Thick-soled High-heeled Slides For Outdoor Wear
+CJ Product ID / VID: 2606041140481614400
+Original Price: $0.36
+Shipping Cost: $9.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Spring And Summer Model, Suitable For Both Men And Women. Pure Color, Full Mesh, Breathable Net Fabric Baseball Cap. Great For Daily Wear And Casual Style. Perfect For Outdoor Outings.
+CJ Product ID / VID: 2062743273981837314
+Original Price: $0.17
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Accessory Large Water-drop-shaped Sparkling Zircon Ring
+CJ Product ID / VID: 2606041111261601700
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Minimalist Stylish And Subtly Luxurious Ring
+CJ Product ID / VID: 2606041102501611900
+Original Price: $0.38
+Shipping Cost: $2.06
+Source Inference: CJ API
+---
+Name: Striped Halter Ribbed Knit Bodycon Midi Dress
+CJ Product ID / VID: 2062772550458908673
+Original Price: $0.29
+Shipping Cost: $7.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Cute Strap Ballet Puffy Dress By Malteshishi
+CJ Product ID / VID: 2606041033481602400
+Original Price: $0.17
+Shipping Cost: $6.13
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Summer Sleeveless Wave-Hemmed Slim-Fit Tank Dress
+CJ Product ID / VID: 2606041023441639200
+Original Price: $0.26
+Shipping Cost: $6.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens V-neck Long-sleeve Top And Pants Two-piece Set
+CJ Product ID / VID: 2606041422311618300
+Original Price: $0.39
+Shipping Cost: $9.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Modern Minimalist Linen Throw Pillow Customizable With Cartoon Designs
+CJ Product ID / VID: 2606040921071632300
+Original Price: $0.17
+Shipping Cost: $6.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Versatile Solid-Color Casual Short-Sleeve Top And Shorts Set
+CJ Product ID / VID: 2606041311411616300
+Original Price: $0.14
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer Sweet Resort-Style Short Dress With Heart Print
+CJ Product ID / VID: 2606041306441631400
+Original Price: $0.39
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Anti-wrinkle And Firming Eye Cream
+CJ Product ID / VID: 2606041252241638700
+Original Price: $0.46
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: New Springsummer Lightweight Breathable Tank Top
+CJ Product ID / VID: 2606040827501603000
+Original Price: $0.17
+Shipping Cost: $6.36
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Round-neck Cartoon-print Short Sleeves
+CJ Product ID / VID: 2606040813471609800
+Original Price: $0.04
+Shipping Cost: $6.78
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Pet Dog Clothing Vest Springsummer Thin Style
+CJ Product ID / VID: 2606040750261612400
+Original Price: $0.17
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Aromatherapy Gift Box Luxury Holiday Gift
+CJ Product ID / VID: 2606040726581607500
+Original Price: $0.12
+Shipping Cost: $26.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Fashionable Casual Loose-fitting Straight-leg Pants
+CJ Product ID / VID: 2606040734041634300
+Original Price: $0.49
+Shipping Cost: $8.45
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: European And American Sexy Womens Solid-Color Set
+CJ Product ID / VID: 2606040621171609500
+Original Price: $0.33
+Shipping Cost: $7.05
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer Outdoor Ice-Silk Sun-Protective Neck Gaiter
+CJ Product ID / VID: 2606040532291630100
+Original Price: $0.17
+Shipping Cost: $5.53
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Oral Cleansing Mouthwash
+CJ Product ID / VID: 2606040441241624300
+Original Price: $0.35
+Shipping Cost: $7.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Niche Vintage S925 Sterling Silver Plain Band Ring, Anti-fade Light Luxury Adjustable Open Finger Ring For Women
+CJ Product ID / VID: 2062550715971854337
+Original Price: $0.17
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dietary Supplement
+CJ Product ID / VID: 2606040420111631000
+Original Price: $0.03
+Shipping Cost: $8.92
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Lightweight Cycling Cap With Inner Lining For Outdoor Sports
+CJ Product ID / VID: 2606040259131609200
+Original Price: $0.14
+Shipping Cost: $5.37
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Hooded Solid-Color Cardigan With Buttons, Long-Sleeve Casual Jacket
+CJ Product ID / VID: 2606060744101631000
+Original Price: $0.49
+Shipping Cost: $9.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Retro Floral-print Two-piece Plus-size Swimsuit
+CJ Product ID / VID: 2606060538331625200
+Original Price: $0.20
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Skin Hydrating Oral Preparation
+CJ Product ID / VID: 2606060405281632500
+Original Price: $0.14
+Shipping Cost: $8.84
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Gold Plated Tiny Heart Stud Earrings For Women, Ins Stylish Niche Minimal Earrings, Wearable All Day Daily Jewelry
+CJ Product ID / VID: 2062428994969718786
+Original Price: $0.12
+Shipping Cost: $5.18
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer Cool Ball Liquid
+CJ Product ID / VID: 2606060224221604900
+Original Price: $0.38
+Shipping Cost: $6.24
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Moisturizing And Firming Cream
+CJ Product ID / VID: 2606060220171605000
+Original Price: $0.35
+Shipping Cost: $6.24
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Collagen Sunscreen
+CJ Product ID / VID: 2606060210101607900
+Original Price: $0.38
+Shipping Cost: $6.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Ankle-cuffed Solid-color Versatile Chic Casual Trousers
+CJ Product ID / VID: 2606060201531604200
+Original Price: $0.04
+Shipping Cost: $7.78
+Source Inference: Data Error / Legacy Import Data (Zeroed/Corrupted Price)
+---
+Name: Beeswax Smoothing Body Lotion
+CJ Product ID / VID: 2606060157441613800
+Original Price: $0.35
+Shipping Cost: $7.43
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Biological Enzyme Bubble Powder
+CJ Product ID / VID: 2606060144451627200
+Original Price: $0.35
+Shipping Cost: $11.83
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plastic Crystal Coating Agent
+CJ Product ID / VID: 2606051234401631300
+Original Price: $0.38
+Shipping Cost: $6.32
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Yoga Mat Foam Cleaner
+CJ Product ID / VID: 2606051132551628800
+Original Price: $0.35
+Shipping Cost: $8.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Foaming Toilet Cleaner
+CJ Product ID / VID: 2606051105291607700
+Original Price: $0.38
+Shipping Cost: $5.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Heavy Duty Oven Cleaner
+CJ Product ID / VID: 2606051101111618000
+Original Price: $0.38
+Shipping Cost: $7.13
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plus-size Versatile Soft-soled Slippers
+CJ Product ID / VID: 2606050942561616500
+Original Price: $0.36
+Shipping Cost: $10.26
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Halter-Neck Patchwork Dress
+CJ Product ID / VID: 2606050936541602800
+Original Price: $0.20
+Shipping Cost: $6.99
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Outdoor Multi-Functional Thermal Neck Gaiter
+CJ Product ID / VID: 2606050931521639700
+Original Price: $0.17
+Shipping Cost: $6.24
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Fashionable Chic Lace-trimmed Satin Casual Shorts
+CJ Product ID / VID: 2606050915271605800
+Original Price: $0.45
+Shipping Cost: $6.32
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Printed Fashionable Oversized European-style Patchwork V-neck Dress With Pockets
+CJ Product ID / VID: 2606050912511637600
+Original Price: $0.18
+Shipping Cost: $9.01
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Buckle Americanstyle Sandal Strap
+CJ Product ID / VID: 2606050306201616400
+Original Price: $0.22
+Shipping Cost: $10.54
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Women's Hollowed-out Embroidered Daisy Baseball Cap In Retro And Artistic Style, Suitable For Outdoor Travel, Photography, Daily Use, For Sisters To Go Shopping And Have Fun Together.
+CJ Product ID / VID: 2062704138537066498
+Original Price: $0.17
+Shipping Cost: $5.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Home Wall Mounted Office Anti Theft
+CJ Product ID / VID: 2606050526151634400
+Original Price: $2.03
+Shipping Cost: $104.10
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dog Pet Single Leash All In
+CJ Product ID / VID: 2606050554191629700
+Original Price: $0.65
+Shipping Cost: $8.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Accessories Specifically For Ventilator Masks
+CJ Product ID / VID: 2606050410341607900
+Original Price: $0.58
+Shipping Cost: $6.36
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Montessori Brain Blocks Set With Board
+CJ Product ID / VID: 2606050355491628100
+Original Price: $0.51
+Shipping Cost: $19.83
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Baby Flannel Swaddle Blanket With Print
+CJ Product ID / VID: 2606050324221627500
+Original Price: $0.83
+Shipping Cost: $8.80
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Long Lasting Fragrance Cologne
+CJ Product ID / VID: 2606050218151605300
+Original Price: $0.68
+Shipping Cost: $13.47
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Space Spray Bubble Gun
+CJ Product ID / VID: 2606050207281621800
+Original Price: $0.61
+Shipping Cost: $12.64
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Nicotinamide Bright White Toothpaste
+CJ Product ID / VID: 2606050247461617000
+Original Price: $0.51
+Shipping Cost: $8.03
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Villa Garden Courtyard Light Landscape Lighting
+CJ Product ID / VID: 2606041002391636000
+Original Price: $0.77
+Shipping Cost: $31.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer Outdoor Beach Thick Soled Wedge
+CJ Product ID / VID: 2606040938281600100
+Original Price: $0.61
+Shipping Cost: $11.37
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Solar Mosquito Killer With Outdoor Water
+CJ Product ID / VID: 2606050129211626000
+Original Price: $1.38
+Shipping Cost: $64.22
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Shirt And Shorts Set
+CJ Product ID / VID: 2606041232421624300
+Original Price: $0.58
+Shipping Cost: $8.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Off Shoulder Top And Pants Womens
+CJ Product ID / VID: 2606041221561602800
+Original Price: $0.69
+Shipping Cost: $8.45
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: After Sun Body Mousse
+CJ Product ID / VID: 2606041236541621000
+Original Price: $0.51
+Shipping Cost: $8.03
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: New-style High-top British-style Casual Boots
+CJ Product ID / VID: 2606050759391633700
+Original Price: $0.83
+Shipping Cost: $14.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Wool Business-Casual Suit Jacket
+CJ Product ID / VID: 2606050529171626300
+Original Price: $1.08
+Shipping Cost: $15.59
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Agricultural Car Wash High-pressure Water Hose
+CJ Product ID / VID: 2606050923581621100
+Original Price: $0.84
+Shipping Cost: $20.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Thickened Mock-neck Base-layer Reversible Sweater
+CJ Product ID / VID: 2606050909061628600
+Original Price: $0.51
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Coffee Electric Milk Frother Milk Foamer
+CJ Product ID / VID: 2606050838261637300
+Original Price: $0.83
+Shipping Cost: $23.40
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer Casual Textured Knit Cardigan With Short Sleeves And ButtonsPaired With Shorts
+CJ Product ID / VID: 2606050728421602700
+Original Price: $0.78
+Shipping Cost: $11.65
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Soft-soled Practice PU Leather Cat-claw Gold And Silver Dance Shoes
+CJ Product ID / VID: 2606050727371638700
+Original Price: $0.68
+Shipping Cost: $8.69
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Breathable Casual Cardigan Polo Shirt For Men
+CJ Product ID / VID: 2606050830561607600
+Original Price: $0.68
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Ultra Smoothing Hair Mask
+CJ Product ID / VID: 2606050607481623500
+Original Price: $0.65
+Shipping Cost: $11.11
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Polo Shirt With Lapel Collar High-End Business Commuter Style Long Sleeve
+CJ Product ID / VID: 2606050722211600700
+Original Price: $0.84
+Shipping Cost: $11.50
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Sweet And Cute Short-sleeved Square-neck T-shirt And Skirt Set For The Evening Gala
+CJ Product ID / VID: 2606050859231606200
+Original Price: $0.85
+Shipping Cost: $11.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Large-capacity Portable Cat Carrier For Travel
+CJ Product ID / VID: 2606060227161614200
+Original Price: $0.69
+Shipping Cost: $18.09
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Denim Off-Shoulder Chiffon Long-Sleeve Top
+CJ Product ID / VID: 2606050353131616500
+Original Price: $0.65
+Shipping Cost: $6.78
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Casual Lapel T-shirt And Skirt Set
+CJ Product ID / VID: 2606050342591607300
+Original Price: $0.51
+Shipping Cost: $9.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Henley Half Button Waffle Knit Raglan Long Sleeve Loose Top
+CJ Product ID / VID: 2062787019434524673
+Original Price: $0.66
+Shipping Cost: $8.58
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Floral Embroidered Ruffle Strap Wide Leg Jumpsuit
+CJ Product ID / VID: 2062790897668358145
+Original Price: $0.89
+Shipping Cost: $11.23
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Retro Lace-trimmed Off-white Sleeveless Mini Dress With Lacing
+CJ Product ID / VID: 2606041630481631300
+Original Price: $0.95
+Shipping Cost: $10.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Casual Loose-fitting Breathable Top And Pants
+CJ Product ID / VID: 2606041512421617200
+Original Price: $0.84
+Shipping Cost: $9.98
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Formal Solid-color Single-breasted Loose-fit Straight-leg Twill Suit Pants
+CJ Product ID / VID: 2606041508131600400
+Original Price: $0.55
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer New Arrival Womens Casual Fashionable And Elegant Linen Set With Flared Sleeves
+CJ Product ID / VID: 2606041422241624500
+Original Price: $0.61
+Shipping Cost: $10.95
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Lifting Cream
+CJ Product ID / VID: 2606041254021639500
+Original Price: $0.65
+Shipping Cost: $7.54
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens FallWinter Plus-Size Fashionable Slimming Sportswear Set
+CJ Product ID / VID: 2606041236051638200
+Original Price: $0.65
+Shipping Cost: $15.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Plus-size Womens Casual And Comfortable Top And Flared Pants Two-piece Set
+CJ Product ID / VID: 2606041200021613700
+Original Price: $0.55
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Urban Casual Loose-fit Washed Distressed Womens Denim Capri Pants
+CJ Product ID / VID: 2606041143181633900
+Original Price: $0.52
+Shipping Cost: $10.40
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Fashionable Casual Top And Pants Two-Piece Set
+CJ Product ID / VID: 2606041134521628900
+Original Price: $0.75
+Shipping Cost: $9.29
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Car Leather Seat Interior Gentle Care Agent
+CJ Product ID / VID: 2606041121491612000
+Original Price: $0.51
+Shipping Cost: $8.71
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: AutumnWinter Double-Faced Fleece Vest Warm Pet Clothes
+CJ Product ID / VID: 2606041029551621200
+Original Price: $0.51
+Shipping Cost: $6.17
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Spring New Womens Outfit Retro Striped Color-Block Half-Placket Top And Tight Shorts Two-Piece Set
+CJ Product ID / VID: 2606040956491608100
+Original Price: $0.58
+Shipping Cost: $7.19
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Chic And Stylish Round-neck Bubble-knit Cardigan Jacket
+CJ Product ID / VID: 2606040921111603500
+Original Price: $0.66
+Shipping Cost: $9.56
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Summer New Casual Resort Camisole Vest And Sports Pants Set
+CJ Product ID / VID: 2606040915161617200
+Original Price: $0.72
+Shipping Cost: $9.89
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Casual Sneakers With Rubber Soles
+CJ Product ID / VID: 2606040818271637600
+Original Price: $1.32
+Shipping Cost: $15.73
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: All-in-one Pet Shampoo With Foaming Action
+CJ Product ID / VID: 2606040743181601900
+Original Price: $0.69
+Shipping Cost: $15.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Hollow-out Chic And Elegant Casual Dress
+CJ Product ID / VID: 2606040914151605600
+Original Price: $0.51
+Shipping Cost: $8.87
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Striped Jacquard Short-sleeve Knit Top
+CJ Product ID / VID: 2606040540301633401
+Original Price: $0.69
+Shipping Cost: $7.48
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Creative Portable 10-Piece Keychain Set
+CJ Product ID / VID: 2606040339551604700
+Original Price: $1.01
+Shipping Cost: $10.27
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Garden Trail Stone Outdoor Decorative Stone
+CJ Product ID / VID: 2606060801081627200
+Original Price: $0.66
+Shipping Cost: $6.62
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Creative Portable Home Indoor Exercise Spin Bike
+CJ Product ID / VID: 2606060634571609500
+Original Price: $4.72
+Shipping Cost: $81.47
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Double-hooded Cardigan Fleece Thermal Sweatshirt
+CJ Product ID / VID: 2606060624241631800
+Original Price: $1.24
+Shipping Cost: $13.32
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dietary Supplement
+CJ Product ID / VID: 2606060522061608100
+Original Price: $0.65
+Shipping Cost: $9.92
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Dietary Supplement
+CJ Product ID / VID: 2606060430031630100
+Original Price: $0.65
+Shipping Cost: $6.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Adult Body And Mind Care Fudge
+CJ Product ID / VID: 2606060425391609400
+Original Price: $0.84
+Shipping Cost: $9.31
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Digestive Enzyme Supplement Capsule
+CJ Product ID / VID: 2606060411381626600
+Original Price: $0.65
+Shipping Cost: $6.57
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Mens Pure Cotton Casual Pants, Durable, Slim-fit, Multiple
+CJ Product ID / VID: 2606060204171600700
+Original Price: $0.85
+Shipping Cost: $12.34
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Womens Loose-fitting Plus-size Sleeveless Solid-color Dress
+CJ Product ID / VID: 2606060135561601000
+Original Price: $0.61
+Shipping Cost: $9.15
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Air Con Heat Pump Cleaner
+CJ Product ID / VID: 2606051129441622700
+Original Price: $0.51
+Shipping Cost: $16.12
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Nordic-style Fashionable All-copper Wall Lamp Outdoor Waterproof Wall Light
+CJ Product ID / VID: 2606051022281602200
+Original Price: $4.50
+Shipping Cost: $82.98
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---
+Name: Pearl Neck Sleeveless Self-Tie Belt A-Line Midi Dress
+CJ Product ID / VID: 2062817570662891521
+Original Price: $0.61
+Shipping Cost: $9.01
+Source Inference: Variant Mapping / CJ API Extraneous Shipping Mismatch
+---

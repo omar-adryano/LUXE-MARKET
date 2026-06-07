@@ -5,6 +5,7 @@
 
 export interface Product {
   id: string;
+  _id?: string;
   name: string;
   category: string;
   price: number;
@@ -18,10 +19,14 @@ export interface Product {
   description?: string;
   features?: string[];
   altDescription?: string;
-  source?: 'aliexpress' | 'manual';
+  source?: 'aliexpress' | 'manual' | 'cj';
   isArchived?: boolean;
   isPublished?: boolean;
   aliexpressRemovedFromSync?: boolean;
+  cjRemovedFromSync?: boolean;
+  vid?: string;
+  isManualPrice?: boolean;
+  stock?: number;
 }
 
 export interface User {

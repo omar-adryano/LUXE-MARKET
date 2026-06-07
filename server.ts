@@ -10,11 +10,13 @@ import apiRouter from './server/routes/api';
 import aliexpressRoutes from './server/routes/aliexpressRoutes';
 import { errorHandler } from './server/middleware/errorHandler';
 import { startTrackingCron } from './server/cron/trackingSync';
+import { startShippingSyncJob } from './server/jobs/shippingSyncJob';
 
 // Load ecosystem variables
 dotenv.config();
 
 async function startServer() {
+  console.log('--- SERVER STARTING REFRESHED CODE ---');
   const app = express();
   const PORT = 3000;
 
@@ -133,10 +135,12 @@ async function startServer() {
     }
   });
 
+
   app.use('/api', apiRouter);
 
   // Start Background Cron
   startTrackingCron();
+  startShippingSyncJob();
 
   // Health endpoint checks
   app.get('/api/health', async (req, res) => {
@@ -179,7 +183,10 @@ async function startServer() {
   });
 
   // Dual Environment Routing: Dev (Vite middleware) vs. Prod (Static Build serving)
-  const distPath = path.join(process.cwd(), 'dist');
+  let distPath = path.join(process.cwd(), 'dist');
+  if (!fs.existsSync(distPath) && fs.existsSync('/dist')) {
+    distPath = '/dist';
+  }
   const isProductionBuild = process.env.NODE_ENV === 'production' || fs.existsSync(path.join(distPath, 'index.html'));
 
 
