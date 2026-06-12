@@ -1,0 +1,13 @@
+==================================================
+Demo Product Backup Report
+==================================================
+Mongo ID: 6a235e4d475646429accded6
+Name: Aural MORVEX Wireless Headphones
+Category: Electronics
+createdAt: Fri Jun 05 2026 23:39:57 GMT+0000 (Coordinated Universal Time)
+--------------------------------------------------
+Mongo ID: 6a235e4d475646429accded7
+Name: Urban Minimalist Sneakers
+Category: Electronics
+createdAt: Fri Jun 05 2026 23:39:57 GMT+0000 (Coordinated Universal Time)
+--------------------------------------------------

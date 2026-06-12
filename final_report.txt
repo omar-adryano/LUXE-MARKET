@@ -1,0 +1,429 @@
+TOTAL PRODUCTS: 510
+
+IMAGE_A count: 412
+IMAGE_B count: 88
+IMAGE_C count: 0
+IMAGE_D count: 10
+
+SHIP_A count: 420
+SHIP_B count: 0
+SHIP_C count: 90
+
+==================================================
+SHOW LISTS
+==================================================
+
+No products in IMAGE_C.
+
+Product Name: Nexus Mini Portable 4K Projector
+Product ID: 6a22a161d015440ccfd3adc1
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Aria Smart Wireless Charging Pad 15W
+Product ID: 6a22a161d015440ccfd3adc0
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Lumina Smart LED Desk Lamp with USB
+Product ID: 6a22a161d015440ccfd3adc2
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Aero Smart Air Purifier & Humidifier
+Product ID: 6a22a162d015440ccfd3adc4
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Cortex Smart Desk Organizer
+Product ID: 6a22a164d015440ccfd3adcd
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Echo 3-in-1 Charging Stand
+Product ID: 6a22a164d015440ccfd3adcb
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Titan Smart Fitness Tracker Ring
+Product ID: 6a22a163d015440ccfd3adca
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Pulse Smart Posture Corrector
+Product ID: 6a22a165d015440ccfd3adcf
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Nova Portable Espresso Machine Gadget
+Product ID: 6a22a164d015440ccfd3adce
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Zenith Magnetic Floating Bluetooth Speaker
+Product ID: 6a22a165d015440ccfd3add0
+Reason: Main image broken (HTTP non-200)
+
+Product Name: Stain Removing Germ Killing And Odor
+Product ID: 6a22745a0872bd6bbd6c4112
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Diy Space Magic Balloon Craft Kit
+Product ID: 6a227af486ba96ddd518cb76
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Universal Tactical Vehicle Back Seat Organizer
+Product ID: 6a227af786ba96ddd518cb77
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Color Changing Foundation Color Changing Liquid
+Product ID: 6a227b1286ba96ddd518cb7f
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 3pcs Dual Ended Contour Stick 2
+Product ID: 6a227b1486ba96ddd518cb80
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Aria Smart Wireless Charging Pad 15W
+Product ID: 6a22a161d015440ccfd3adc0
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Nexus Mini Portable 4K Projector
+Product ID: 6a22a161d015440ccfd3adc1
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Lumina Smart LED Desk Lamp with USB
+Product ID: 6a22a161d015440ccfd3adc2
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Omni Bluetooth 5.2 Surround Speaker
+Product ID: 6a22a162d015440ccfd3adc3
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Aero Smart Air Purifier & Humidifier
+Product ID: 6a22a162d015440ccfd3adc4
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Zenith High-Fidelity Wireless Earphones
+Product ID: 6a22a162d015440ccfd3adc5
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Orbit Smart Home Hub & Sensor Kit
+Product ID: 6a22a162d015440ccfd3adc6
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Polaris Digital Smart Alarm Clock with Weather
+Product ID: 6a22a163d015440ccfd3adc7
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Glow RGB Ambient Light Bars
+Product ID: 6a22a163d015440ccfd3adc8
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Volt 20000mAh Ultra-Slim Power Bank
+Product ID: 6a22a163d015440ccfd3adc9
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Titan Smart Fitness Tracker Ring
+Product ID: 6a22a163d015440ccfd3adca
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Echo 3-in-1 Charging Stand
+Product ID: 6a22a164d015440ccfd3adcb
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Halo Smart Video Doorbell Camera
+Product ID: 6a22a164d015440ccfd3adcc
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Cortex Smart Desk Organizer
+Product ID: 6a22a164d015440ccfd3adcd
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Nova Portable Espresso Machine Gadget
+Product ID: 6a22a164d015440ccfd3adce
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Pulse Smart Posture Corrector
+Product ID: 6a22a165d015440ccfd3adcf
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Zenith Magnetic Floating Bluetooth Speaker
+Product ID: 6a22a165d015440ccfd3add0
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Apex Smart Notebook with AI Sync
+Product ID: 6a22a165d015440ccfd3add1
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Flux Smart Temperature Control Mug
+Product ID: 6a22a165d015440ccfd3add2
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Vortex Micro PC Stick
+Product ID: 6a22a166d015440ccfd3add3
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Surveillance Cameras Window Monitoring
+Product ID: 6a23dce546727c4a59d62148
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Electric Dog Cat Ball Toy,Indoor Large And Small Cat Dog Interactive Intelligent Rolling Pet Ball
+Product ID: 6a23dcfd46727c4a59d62176
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Pine Dining Bench, 62.9  L Solid Wood Seating, 350lbs Weight Capacity, Fits 3 People For Kitchen, Dining Room & Living Space
+Product ID: 6a23dd0b46727c4a59d6218e
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Monitoring Level High-speed SD Card
+Product ID: 6a23dd1795ebe239e365f709
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: For 1969-1972 C25  C2500 Pickup Base 10-pc Paint Divider Cab Molding Clip Set
+Product ID: 6a23dd1895ebe239e365f70d
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: GM Body Side Fender Door Quarter Trunk Hood Molding Trim Clips 10pcs NQ
+Product ID: 6a23dd1c95ebe239e365f719
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Upper Tailgate Molding Clip Set For Chevrolet 1969-1972 C10 Pickup Base Trucks
+Product ID: 6a23dd1d95ebe239e365f71c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Soft Top Rear Right & Left Window Retaining Clips
+Product ID: 6a23dd1e95ebe239e365f720
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Korean Version Of Loose-fitting Denim Jacket
+Product ID: 6a23dd2195ebe239e365f72a
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Outdoor Courtyard Table And Bench
+Product ID: 6a23dd2895ebe239e365f73a
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Black PU Storage Ottoman With Rubber Wood Legs, 30.25   Square Tufted Indoor Ottoman With Lift-Top Storage For Living Room, Bedroom & Entryway,300lbs Weight Capacity
+Product ID: 6a23dd2a95ebe239e365f740
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: HAMPTON WOOD AND WICKER DINING CHAIR  SET OF 2
+Product ID: 6a23dd2b95ebe239e365f744
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 2 - Pack Dining Room Chairs, Sturdy Rubber Wood, Comfortable PU Foam Seat, Ideal For Home & Kitchen
+Product ID: 6a23dd2c95ebe239e365f748
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Travel Chess Set, 9.8in Magnetic Chess Board With 2 Extra Queen Portable Folding Board Chess Games
+Product ID: 6a23dd3195ebe239e365f758
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: For Ford Lincoln Insulator Retainer Clip W709688-
+Product ID: 6a23dd3395ebe239e365f75c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Upholstered Dining Chairs Set Of 2, Natural Rubber Wood Frame And White Boucle Fabric, Modern Armchairs For Dining And Living Room, 225lbs Capacity
+Product ID: 6a23dd3d95ebe239e365f776
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Mid-Century Modern Dining Chairs Set Of 2 - Green Fabric Upholstered Armchairs With Walnut Color Rubber Wood Frame, 250lbs Capacity For Kitchen & Dining Room
+Product ID: 6a23dd4095ebe239e365f780
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Dark Blue Storage Ottoman Bench - 51.25  L Upholstered Entryway Bench With Hidden Storage, 300lbs Weight Capacity For Living Room, Bedroom & Hallway
+Product ID: 6a23dd4195ebe239e365f784
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Ford 5 8-3 4 Body Fender Door Quarter Trim Moulding Molding Clips Nuts 10pcs G
+Product ID: 6a23dd4895ebe239e365f795
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Piece Of 10 0 6mm Hole Dia Plastic Push In Clips Rivet Retainer Fastener Pin Auto
+Product ID: 6a23dd4a95ebe239e365f79b
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: ZORA DINING TABLE
+Product ID: 6a23dd4ceb6f86b8d2f5254e
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Dining Bench, Brown PU Fabric Bench With Rubber Wood Legs , 250lbs, Comfortable Seating For Dining Room Living Area
+Product ID: 6a23dd4e95ebe239e365f7a5
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 69  Acacia Wood Outdoor Dining Table With Slatted Top, 300 Lbs Weight Capacity, Ideal For Patio & Garden Gatherings, Natural Color
+Product ID: 6a23dd5195ebe239e365f7ae
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Woodgrain Aesthetic & Metal Strength  8x4x2FT Galvanized Raised Garden Bed Kit - Large Outdoor Planter Box For Veggies, Fruits, Herbs
+Product ID: 6a23dd53eb6f86b8d2f52566
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: For 80-20 Ford Car Super Duty Tailgate Hatch Rod Retainer Clip LH RH
+Product ID: 6a23dd54eb6f86b8d2f52569
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Hood Prop Hold Down Stay Clip Retainer For N Issan Frontier Pathfinder Xterra SUV
+Product ID: 6a23dd5795ebe239e365f7bd
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: BAR CART
+Product ID: 6a23dd5aeb6f86b8d2f5257a
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 1.8L Electric Kettle 1500W Stainless Steel Cordless Jug Overheat Protection UK
+Product ID: 6a23dd5b95ebe239e365f7c8
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Electric Dog Cat Ball Toy,Indoor Large And Small Cat Dog Interactive Intelligent Rolling Pet Ball
+Product ID: 6a23dd5f95ebe239e365f7d1
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Form-fitting Denim Jacket For Men
+Product ID: 6a23dd6095ebe239e365f7d4
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Body Belt Fender Door Side Molding Rivet Trim Clips For 82 Eagle SX4 10pcs G
+Product ID: 6a23dd6195ebe239e365f7d7
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: ACCENT CHAIR
+Product ID: 6a23dd6595ebe239e365f7e1
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Outdoor Dining Chair Set Of 2, All-Weather Grey Aluminum Frame Patio Chairs With Grey Fabric Cushions, 300lbs
+Product ID: 6a23dd6aeb6f86b8d2f525a7
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 93.7  X 31.5  X 32.3  Raised Garden Bed Kit, 32  Ergonomic Height No Bending Metal Planter Box, Open-Ended Base For Drainage, 8 Reinforcing Rods, Rustproof Steel  Easy Assembly
+Product ID: 6a23dd96952d5fe87ef1b678
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 2-Pack Dining Chairs With Pillow Back, White Boucle Fabric, Natural Color Solid Wood Frame
+Product ID: 6a23dd98952d5fe87ef1b67c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Surveillance Camera Binocular Dome Camera
+Product ID: 6a23dd9c952d5fe87ef1b68c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For M Ercedes E350 E550 E63 E320 E300 E280
+Product ID: 6a23de4346727c4a59d62426
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For  Beetle
+Product ID: 6a23de4646727c4a59d6242c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For Lexus
+Product ID: 6a23de4946727c4a59d62431
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Y159-3SEAT-RIGHT-BLACK
+Product ID: 6a23de9046727c4a59d624b7
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Vintage Gothic Thorn Skull Rotatable Double Circle Pendant Necklace For Men, Copper Plated Silver Interlocking Ring With Black Zircon, Punk Biker Jewelry Gift
+Product ID: 6a23de9e46727c4a59d624d0
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For Chevrolet Trax
+Product ID: 6a23deb546727c4a59d624fc
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Front License Plate For N Issan 2016 Titan XD Crew Cab Pickup
+Product ID: 6a23dec746727c4a59d62515
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For J Eep Cherokee
+Product ID: 6a23ded046727c4a59d62525
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Ford Windshield & Rear Window Trim Molding Clips- 1965-1993- 20 Clips- 026
+Product ID: 6a23ded346727c4a59d6252c
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Fuel Gas Pump & Sending For Ford Ranger Mazda B2300 B3000 B4000 B Series
+Product ID: 6a23dede46727c4a59d6253e
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: DUSCHSCHLAUCH 1.5M 59inch FLEXIBEL EDELSTAHL CHROM Duschkopf DUSCHE BAD ROHR Handbrause Regendusche Kopfbrause
+Product ID: 6a23dee546727c4a59d62549
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 95  Cloud Sectional Sofa With 1 Ottoman,Modern Minimalist Upholstered Couches, Comfort U Shaped Sofa For Living Room,Deep Seat Corner Couch,No Assembly Required,Black  Plush Corduroy Fabric
+Product ID: 6a23def046727c4a59d6255b
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 102  Cloud Sofa,Corduroy Fabric,Deep Seat Couches,Double-layer Design,Removable  Cushion,No Assembly, DIY Combination For Living Room, Bedroom,Conference Room ,Apartment,Dark Grey
+Product ID: 6a23def346727c4a59d62561
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 134  Cloud Sofa,Corduroy Fabric,Deep Seat Couches,Double-layer Design,Removable  Cushion,No Assembly, DIY Combination For Living Room, Bedroom,Conference Room ,Apartment,Grey
+Product ID: 6a23def846727c4a59d6256b
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Surveillance Camera Three-leaf Fan Bulb
+Product ID: 6a23defddaee0a576c829d1b
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Light Bulb Monitoring
+Product ID: 6a23df00daee0a576c829d24
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: DINING CHAIRS  SET OF 2
+Product ID: 6a23df02daee0a576c829d28
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Beige Fabric Dining Bench With Walnut Color Legs, 60.04 L Upholstered Seating For Kitchen, Dining Room And Living Space,250lbs Capacity
+Product ID: 6a23df06daee0a576c829d35
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Pine Dining Bench, 62.9  L Solid Wood Seating, 350lbs Weight Capacity, Fits 3 People For Kitchen, Dining Room & Living Space
+Product ID: 6a23df07daee0a576c829d39
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Indoor Green Fabric Dining Bench With Walnut Color Legs, 60.04 L Upholstered Seating For Kitchen, Dining Room And Living Space,250lbs Capacity
+Product ID: 6a23df0adaee0a576c829d3d
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 10 Piece Weatherstrip Retainer Clip Set For 1967-1992 Firebird Camaro Nova
+Product ID: 6a23df10daee0a576c829d4e
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Fuel Sending Unit For Chevrolet Driver Side
+Product ID: 6a23df1346727c4a59d6259d
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Double-layer Sisal Mattress
+Product ID: 6a23df1d46727c4a59d625b1
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: L Rattan Cat Scratching Post With Ball Attachment
+Product ID: 6a23df2046727c4a59d625b6
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: C Sofa Bearded Cat 56
+Product ID: 6a23df2246727c4a59d625bb
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For Hyundai Sonata
+Product ID: 6a23df2646727c4a59d625c4
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: License Plate Bracket Front For J Eep Grand Cherokee
+Product ID: 6a23df2d46727c4a59d625cd
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: 95  Cloud Sectional Sofa With 2 Ottoman,Modern Minimalist Upholstered Couches, Comfort U Shaped Sofa For Living Room,Deep Seat Corner Couch,No Assembly Required,Black  Plush Corduroy Fabric
+Product ID: 6a23df3846727c4a59d625df
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+Product Name: Off-shoulder Loose-fit Pleated Boatneck Dress
+Product ID: 6a2b17b7f1e8d7e2a35e1b8b
+Reason: No CJ shipping route available for US (API returned no valid freight)
+
+==================================================
+FINAL REPORT
+==================================================
+
+Safe To Keep:
+420 products
+
+Repairable:
+0 products
+
+Safe To Delete:
+90 products

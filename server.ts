@@ -187,8 +187,7 @@ async function startServer() {
   if (!fs.existsSync(distPath) && fs.existsSync('/dist')) {
     distPath = '/dist';
   }
-  const isProductionBuild = process.env.NODE_ENV === 'production' || fs.existsSync(path.join(distPath, 'index.html'));
-
+  const isProductionBuild = process.env.NODE_ENV === 'production' || process.argv[1]?.endsWith('server.cjs');
 
   const httpServer = http.createServer(app);
 
@@ -205,8 +204,13 @@ async function startServer() {
     console.log('💻 [Server] Mounted Vite Middleware in development.');
   } else {
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.get('*', (req, res, next) => {
+      res.sendFile(path.join(distPath, 'index.html'), (err) => {
+         if (err) {
+             // If the file is temporarily missing during a build, just send a 503 instead of crashing to logs
+             res.status(503).send('Site is rebuilding, please refresh in a moment...');
+         }
+      });
     });
     console.log('📦 [Server] Serving Compiled Front-End Assets in production.');
   }

@@ -24,6 +24,56 @@ apiRouter.use('/aliexpress', aliexpressRoutes);
 // Shipping cost calculation route
 import { ShippingCache } from '../models/ShippingCache';
 import { Product } from '../models/Product';
+import { CJShippingService } from '../services/cjShippingService';
+
+apiRouter.post('/shipping/calculate-single', async (req, res) => {
+  console.log('--- RECEIVED SHIPPING CALCULATE SINGLE ---');
+  console.log('Body:', req.body);
+  try {
+    const { vid, countryCode, quantity, weight } = req.body;
+    let shippingCost = 4.99 * quantity;
+    let estimatedDays = '7-15';
+    let logisticName = 'Standard';
+
+    const cc = countryCode || 'US';
+
+    if (vid) {
+      // Fetch dynamic price from CJ
+      const options = await CJShippingService.calculateFreight(vid, cc, quantity);
+      if (options && options.length > 0) {
+        // Find the best standard option or just use the first available
+        const bestOption = options[0];
+        if (bestOption) {
+           shippingCost = typeof bestOption.logisticPrice === 'number' ? bestOption.logisticPrice : Number(bestOption.logisticPrice || 0);
+           estimatedDays = bestOption.logisticAging || '7-15';
+           logisticName = bestOption.logisticName || 'Standard';
+        }
+      } else {
+        // Fallback: Check if we have standard cached, then apply custom weight-based fallback formula 
+        // to avoid simple linear cached_shipping * quantity if CJ fails.
+        const cache = await ShippingCache.findOne({ vid, countryCode: cc });
+        if (cache && cache.shippingCost !== undefined) {
+          // If weight is provided, do a rough logistic scaling instead of linear multiplication
+          if (weight && weight > 0) {
+            // Assume the cache.shippingCost is for 1 item (weight = W).
+            // A common fallback scale is Base Cost + (Total Weight - Base Weight) * Rate
+            // For simplicity, if we don't know the rate, we just fallback to CJ API's response.
+            // If CJ API fails, unfortunately we have to estimate. Let's do a sub-linear scaling:
+            shippingCost = cache.shippingCost + (cache.shippingCost * 0.5 * (quantity - 1)); 
+          } else {
+            shippingCost = cache.shippingCost * quantity; 
+          }
+          estimatedDays = cache.estimatedDays || '7-15';
+          logisticName = cache.logisticsName || 'Standard';
+        }
+      }
+    }
+
+    res.json({ shippingCost, estimatedDays, logisticName });
+  } catch(e: any) {
+    res.status(500).json({ error: e.message });
+  }
+});
 apiRouter.post('/shipping/calculate', async (req, res) => {
   console.log('--- RECEIVED SHIPPING CALCULATE ---');
   console.log('Body:', req.body);

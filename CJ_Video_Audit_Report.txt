@@ -1,0 +1,11 @@
+==================================================
+CJ Product Video Integration Audit
+==================================================
+
+Products with video: 1
+
+Products without video: 507
+
+Products requiring backfill: 0
+
+==================================================

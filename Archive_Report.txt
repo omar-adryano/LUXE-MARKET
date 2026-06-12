@@ -1,0 +1,27 @@
+==================================================
+
+Generate Report
+
+Products Archived
+89
+
+Products Remaining Active
+420
+
+Products Skipped
+421
+
+==================================================
+
+Final Summary
+
+Total Products Before
+510
+
+Total Active Products After
+420
+
+Total Archived Products
+90
+
+==================================================

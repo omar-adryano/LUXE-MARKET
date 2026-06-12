@@ -82,7 +82,7 @@ export const Home: React.FC = () => {
     return (
       <div 
         onClick={() => handleProductClick(product)}
-        className="group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+        className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
       >
         {/* Product Image */}
         <div className="relative aspect-square w-full overflow-hidden bg-slate-100 dark:bg-zinc-950">
@@ -160,9 +160,9 @@ export const Home: React.FC = () => {
 
   const HorizontalScroller: React.FC<{ products: Product[] }> = ({ products }) => {
     return (
-      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none snap-x">
+      <div className="flex items-stretch gap-4 overflow-x-auto pb-4 scrollbar-none snap-x">
         {products.map((p) => (
-          <div key={p.id} className="min-w-[200px] max-w-[240px] sm:min-w-[240px] flex-none snap-start">
+          <div key={p.id} className="w-[200px] sm:w-[240px] flex-none snap-start flex flex-col">
             <ProductCard product={p} />
           </div>
         ))}
@@ -290,9 +290,7 @@ export const Home: React.FC = () => {
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Smart Gadgets</h2>
                   <button onClick={() => handleCategoryClick('Smart Gadgets')} className="text-sm font-medium text-blue-600 hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {smartGadgets.map(p => <ProductCard key={p.id} product={p} />)}
-                </div>
+                <HorizontalScroller products={smartGadgets} />
               </section>
             )}
 
@@ -330,9 +328,7 @@ export const Home: React.FC = () => {
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Beauty & Skincare</h2>
                   <button onClick={() => handleCategoryClick('Beauty & Skincare')} className="text-sm font-medium text-blue-600 hover:underline">See all</button>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {beautyTrends.map(p => <ProductCard key={p.id} product={p} />)}
-                </div>
+                <HorizontalScroller products={beautyTrends} />
               </section>
             )}
 

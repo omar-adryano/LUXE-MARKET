@@ -1,0 +1,6 @@
+Fetching CJ product list...
+
+Exact CJ API endpoint used: https://developers.cjdropshipping.com/api2.0/v1/product/query
+
+
+--- Raw CJ API response for a real product ---

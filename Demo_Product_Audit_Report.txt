@@ -1,0 +1,197 @@
+==================================================
+Demo Product Audit Report
+==================================================
+
+Product Name: Minimalist Lounge Chair
+File Path: server/controllers/orderController.ts
+Line Number: 18
+Source Type: Hardcoded
+
+Product Name: Minimalist Lounge Chair
+File Path: server/models/fallback.ts
+Line Number: 27
+Source Type: Mock
+
+Product Name: Minimalist Lounge Chair
+File Path: server/models/fallback.ts
+Line Number: 41
+Source Type: Mock
+
+Product Name: Minimalist Lounge Chair
+File Path: server/config/seed.ts
+Line Number: 18
+Source Type: Seed
+
+Product Name: Minimalist Lounge Chair
+File Path: server/config/seed.ts
+Line Number: 32
+Source Type: Seed
+
+Product Name: Aural MORVEX Wireless Headphones
+File Path: server/controllers/orderController.ts
+Line Number: 19
+Source Type: Hardcoded
+
+Product Name: Aural MORVEX Wireless Headphones
+File Path: server/models/fallback.ts
+Line Number: 51
+Source Type: Mock
+
+Product Name: Aural MORVEX Wireless Headphones
+File Path: server/config/seed.ts
+Line Number: 42
+Source Type: Seed
+
+Product Name: Chrono Minimalist Smartwatch
+File Path: server/controllers/orderController.ts
+Line Number: 20
+Source Type: Hardcoded
+
+Product Name: Chrono Minimalist Smartwatch
+File Path: server/models/fallback.ts
+Line Number: 61
+Source Type: Mock
+
+Product Name: Chrono Minimalist Smartwatch
+File Path: server/config/seed.ts
+Line Number: 52
+Source Type: Seed
+
+Product Name: Lumina Architect Desk Lamp
+File Path: server/controllers/orderController.ts
+Line Number: 21
+Source Type: Hardcoded
+
+Product Name: Lumina Architect Desk Lamp
+File Path: server/models/fallback.ts
+Line Number: 69
+Source Type: Mock
+
+Product Name: Lumina Architect Desk Lamp
+File Path: server/config/seed.ts
+Line Number: 60
+Source Type: Seed
+
+Product Name: Artisan Cognac Leather Tote
+File Path: server/controllers/orderController.ts
+Line Number: 22
+Source Type: Hardcoded
+
+Product Name: Artisan Cognac Leather Tote
+File Path: server/models/fallback.ts
+Line Number: 77
+Source Type: Mock
+
+Product Name: Artisan Cognac Leather Tote
+File Path: server/config/seed.ts
+Line Number: 68
+Source Type: Seed
+
+Product Name: The Cloud Modular Sofa
+File Path: server/controllers/orderController.ts
+Line Number: 23
+Source Type: Hardcoded
+
+Product Name: The Cloud Modular Sofa
+File Path: server/models/fallback.ts
+Line Number: 85
+Source Type: Mock
+
+Product Name: The Cloud Modular Sofa
+File Path: server/config/seed.ts
+Line Number: 76
+Source Type: Seed
+
+Product Name: Performance Footwear Classic
+File Path: server/controllers/orderController.ts
+Line Number: 24
+Source Type: Hardcoded
+
+Product Name: Performance Footwear Classic
+File Path: server/models/fallback.ts
+Line Number: 93
+Source Type: Mock
+
+Product Name: Performance Footwear Classic
+File Path: server/config/seed.ts
+Line Number: 84
+Source Type: Seed
+
+Product Name: Organic Skincare Serum
+File Path: server/controllers/orderController.ts
+Line Number: 25
+Source Type: Hardcoded
+
+Product Name: Organic Skincare Serum
+File Path: server/models/fallback.ts
+Line Number: 101
+Source Type: Mock
+
+Product Name: Organic Skincare Serum
+File Path: server/config/seed.ts
+Line Number: 92
+Source Type: Seed
+
+Product Name: Brass Arch Floor Lamp
+File Path: server/controllers/orderController.ts
+Line Number: 26
+Source Type: Hardcoded
+
+Product Name: Brass Arch Floor Lamp
+File Path: server/config/seed.ts
+Line Number: 100
+Source Type: Seed
+
+Product Name: Walnut Side Table
+File Path: server/controllers/orderController.ts
+Line Number: 27
+Source Type: Hardcoded
+
+Product Name: Walnut Side Table
+File Path: server/config/seed.ts
+Line Number: 108
+Source Type: Seed
+
+Product Name: Geo Wool Throw
+File Path: server/controllers/orderController.ts
+Line Number: 28
+Source Type: Hardcoded
+
+Product Name: Geo Wool Throw
+File Path: server/config/seed.ts
+Line Number: 116
+Source Type: Seed
+
+Product Name: Abstract Canvas Print
+File Path: server/controllers/orderController.ts
+Line Number: 29
+Source Type: Hardcoded
+
+Product Name: Abstract Canvas Print
+File Path: server/config/seed.ts
+Line Number: 124
+Source Type: Seed
+
+Product Name: Urban Minimalist Sneakers
+File Path: server/controllers/orderController.ts
+Line Number: 30
+Source Type: Hardcoded
+
+Product Name: Urban Minimalist Sneakers
+File Path: server/config/seed.ts
+Line Number: 132
+Source Type: Seed
+
+Product Name: Titanium Brushed Smart Chrono Case
+File Path: src/components/pages/AdminDashboard.tsx
+Line Number: 432
+Source Type: Hardcoded
+
+==================================================
+Final Report
+
+Total Demo Products Found: 14
+Products Existing Only In Code: 12
+Products Existing In Database: 2
+Safe To Remove: 12
+==================================================

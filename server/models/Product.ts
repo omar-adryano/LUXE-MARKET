@@ -114,6 +114,10 @@ const productSchema = new Schema(
       type: String,
       trim: true,
     },
+    videoUrl: {
+      type: String,
+      trim: true,
+    },
     weight: {
       type: Number,
     },
@@ -135,6 +139,10 @@ const productSchema = new Schema(
     isManualPrice: {
       type: Boolean,
       default: false
+    },
+    cjVariants: {
+      type: [Schema.Types.Mixed],
+      default: []
     }
   },
   {

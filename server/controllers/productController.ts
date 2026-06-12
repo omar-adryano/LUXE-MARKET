@@ -220,6 +220,10 @@ export async function syncProduct(req: Request, res: Response, next: NextFunctio
        product.originalPrice = price; 
        // recalculate logic will handle selling price later
     }
+    
+    if (cjData.variants) {
+      product.cjVariants = cjData.variants;
+    }
 
     await product.save();
     

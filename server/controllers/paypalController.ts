@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
+import { ShippingCache } from '../models/ShippingCache.js';
 import { APIError } from '../middleware/errorHandler.js';
 import { AuthRequest } from '../middleware/auth.js';
 import { CJDropshippingService } from '../services/aliexpressService.js';
@@ -266,37 +267,127 @@ export async function capturePayPalOrder(
 
     order.status = 'Processing';
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('CJ fulfillment skipped in development mode');
-      // @ts-ignore
-      order.fulfillmentStatus = 'sandbox-skipped';
-    } else {
-      try {
-        const cjOrderData = {
+    let cjOrderData: any = null;
+    let payloadProducts: any[] = [];
+    let validationFailed: boolean = false;
+    let validationErrorMsg: string | null = null;
+    let fallbackFromCountryCode = 'CN';
+    let chosenLogisticName = 'CJPacket Sea'; // Proved default/cached option
+
+    try {
+      for (const item of order.items) {
+        const productIdStr = item.product.toString();
+        const dbProduct = await findProductByAnyId(productIdStr);
+        
+        if (!dbProduct) {
+          validationErrorMsg = `Fulfillment Rejected: Database lookup failed for product "${item.name}" (Mongo ID: ${productIdStr}).`;
+          validationFailed = true;
+          break;
+        }
+
+        const resolvedVid = dbProduct.vid ? dbProduct.vid.trim() : '';
+
+        if (!resolvedVid) {
+          validationErrorMsg = `Fulfillment Rejected: Product "${dbProduct.name}" (Mongo ID: ${productIdStr}) lacks a CJ Variant ID (vid).`;
+          validationFailed = true;
+          break;
+        }
+
+        const rawFromCountry = (dbProduct as any).sourceCountry || 'CN';
+        const fromCountry = rawFromCountry.trim().length > 0 ? rawFromCountry.trim() : 'CN';
+        fallbackFromCountryCode = fromCountry;
+
+        // Try to fetch optimal logisticName from ShippingCache
+        try {
+          const cachedOption = await ShippingCache.findOne({
+            vid: resolvedVid,
+            countryCode: order.shippingAddress.country
+          });
+          if (cachedOption && cachedOption.logisticsName) {
+            chosenLogisticName = cachedOption.logisticsName;
+          }
+        } catch (cacheErr: any) {
+          console.warn('[CJ Fulfillment] ShippingCache lookup failed/warn:', cacheErr.message);
+        }
+
+        // Diagnostic log as requested:
+        console.log(`[CJ Fulfillment Diagnostic Log]
+  - Product Name:      ${dbProduct.name}
+  - Mongo Product ID:  ${productIdStr}
+  - CJ Variant ID:     ${resolvedVid}
+  - Quantity:          ${item.quantity}
+  - From Country Code: ${fromCountry}
+  - Logistic Chosen:   ${chosenLogisticName}
+  - Source:            ${dbProduct.source}`);
+
+        payloadProducts.push({
+          vid: resolvedVid,
+          quantity: item.quantity,
+          fromCountryCode: fromCountry
+        });
+      }
+
+      if (validationFailed) {
+        console.error(`[CJ Fulfillment Error] ${validationErrorMsg}`);
+        order.fulfillmentStatus = 'failed';
+      } else {
+        cjOrderData = {
           orderNumber: order._id.toString(),
+          fromCountryCode: fallbackFromCountryCode,
+          logisticName: chosenLogisticName,
           shippingZip: order.shippingAddress.zipCode,
           shippingCountry: order.shippingAddress.country,
+          shippingCountryCode: order.shippingAddress.country,
           shippingProvince: order.shippingAddress.state,
           shippingCity: order.shippingAddress.city,
           shippingAddress: order.shippingAddress.street,
           customerName: order.shippingAddress.fullName,
+          shippingCustomerName: order.shippingAddress.fullName,
           customerFirstName: (order.shippingAddress as any).firstName || '',
           customerLastName: (order.shippingAddress as any).lastName || '',
           apartmentUnit: (order.shippingAddress as any).apartmentUnit || '',
           customerPhone: (order.shippingAddress as any).phone || '0000000000',
           shippingPhone: (order.shippingAddress as any).phone || '0000000000',
           customerEmail: (order.shippingAddress as any).email || '',
-          products: order.items.map((item: any) => ({
-            vid: item.product.toString(),
-            quantity: item.quantity
-          }))
+          products: payloadProducts
         };
-        const cjRes = await CJDropshippingService.createOrder(cjOrderData) as any;
-        if (cjRes && cjRes.data) {
-          order.cjOrderId = cjRes.data;
+
+        // Verification of payload correctness
+        console.log('[CJ Fulfillment Payload Verification] Payload mapped correctly:', JSON.stringify(cjOrderData, null, 2));
+      }
+    } catch (err: any) {
+      console.error('[CJ Fulfillment Exception during Validation]:', err.message);
+      order.fulfillmentStatus = 'failed';
+    }
+
+    if (!order.fulfillmentStatus) {
+      order.fulfillmentStatus = 'pending';
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('CJ fulfillment order API call simulated/skipped in development mode');
+      if (order.fulfillmentStatus !== 'failed') {
+        order.fulfillmentStatus = 'sandbox-skipped';
+      }
+    } else {
+      if (validationFailed) {
+        console.warn('CJ order auto-fulfillment aborted due to previous validation errors.');
+      } else if (cjOrderData) {
+        try {
+          const cjRes = await CJDropshippingService.createOrder(cjOrderData) as any;
+          if (cjRes && cjRes.success && cjRes.data) {
+            order.cjOrderId = cjRes.data;
+            order.fulfillmentStatus = 'fulfilled';
+            console.log(`[CJ Fulfillment Success] CJ Dropshipping Order Created successfully. CJ Order ID: ${cjRes.data}`);
+          } else {
+            const apiError = cjRes?.message || 'Unknown API rejection';
+            console.error(`[CJ Fulfillment API Failure]: ${apiError}`);
+            order.fulfillmentStatus = 'failed';
+          }
+        } catch (err: any) {
+          console.error('[CJ Fulfillment Network/API Error]:', err.message);
+          order.fulfillmentStatus = 'failed';
         }
-      } catch (err: any) {
-        console.error('CJ Order Creation background error:', err.message);
       }
     }
     

@@ -25,8 +25,11 @@ export interface Product {
   aliexpressRemovedFromSync?: boolean;
   cjRemovedFromSync?: boolean;
   vid?: string;
+  videoUrl?: string;
   isManualPrice?: boolean;
   stock?: number;
+  weight?: number;
+  cjVariants?: any[];
 }
 
 export interface User {

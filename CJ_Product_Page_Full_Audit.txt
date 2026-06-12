@@ -1,0 +1,80 @@
+==================================================
+SECTION 1
+Current MORVEX Product Page Score
+==================================================
+
+Layout Structure: 7/10
+- 12-col grid (6 cols gallery, 6 cols config) is modern and clean.
+- Visually appealing but lacks the functional depth required for drop-shipping conversions.
+
+Gallery & Video Behavior: 6/10
+- Supports video conditionally (activeThumbnail check).
+- Uses horizontal scrolling for thumbnails.
+- Video displaces standard images but lacks elegant inline playback hooks standard on CJ.
+
+Variant Selectors: 5/10
+- Disconnected from variant-specific images. Clicking "Color" doesn't switch the main picture.
+- Doesn't reflect variant-specific price changes or real SKU logic.
+
+Quantity Selector: 8/10
+- Standard and functional. Sticky bar placement on mobile is strong.
+
+Shipping & Delivery Estimate: 0/10
+- COMPLETELY MISSING. Just a static string: "Shipping calculated at checkout."
+- No country selector on the product page.
+- No delivery estimation window (e.g., 7-15 days).
+
+Weight System: 0/10
+- MISSING ON FRONTEND. The `weight` field exists in the Mongoose schema but is not exposed in `src/types.ts` or rendered in the UI. Total weight is not calculated.
+
+Mobile Responsiveness: 7/10
+- Stacks correctly, but the fixed bottom bar introduces vertical clutter because Add to Cart, Qty, Wishlist, and Buy Now stack heavily on smaller displays.
+
+Overall Rating: 4.7 / 10
+
+==================================================
+SECTION 2
+Missing Features Compared To CJ
+==================================================
+
+1. On-Page Shipping & Delivery Calculator
+   CJ allows users to select "Ship to [Country]" on the product page, instantly calculating cost and estimated ETA.
+
+2. Dynamic Weight Visibility
+   CJ shows standard item weight (e.g., 150g). Users need to see shipment weight calculations.
+
+3. Variant Image Syncing
+   Selecting an option on CJ jumps the gallery to the correct variant photo.
+
+4. Warehouse Selection
+   "Dispatch From: US / China" is missing.
+
+5. Real Inventory Stock
+   CJ shows exact component stock. MORVEX lacks visual warnings for low stock.
+
+==================================================
+SECTION 3
+Implementation Roadmap
+==================================================
+
+Priority 1
+Critical Revenue Improvements
+- Design and integrate an "On-Page Shipping Calculator" above the Add To Cart button.
+- Add a Country dropdown that queries `/api/shipping/calculate` dynamically.
+- Display "Estimated Delivery: X - Y days" based on CJ Shipping Cache data to boost conversion trust.
+
+Priority 2
+Weight + Shipping Improvements
+- Add `weight` to `Product` interface in `src/types.ts`.
+- Build a Weight display: `Base Weight: {weight}g | Total Dispatch Weight: {weight * quantity}g`.
+- Refactor the shipping calculation endpoint to intelligently scale by weight rather than a linear `cost * quantity` multiplier (if the API supports tiered weights).
+
+Priority 3
+Video Improvements
+- Optimize the video player to auto-play silently on scroll/hover.
+- Render the video natively in a modal or PiP (Picture-in-Picture) rather than fully replacing the primary product image to keep visual flow intact.
+
+Priority 4
+Mobile Improvements
+- Optimize the fixed bottom bar (`fixed bottom-0`). Ensure it doesn't overlap essential shipping info.
+- Align "Add To Cart" and "Secure Checkout" on mobile to shrink visually or group them dynamically so they consume less vertical viewport space (e.g., horizontal grid for buttons).

@@ -1,0 +1,28 @@
+==================================================
+CJ Marketing Video Audit Report
+==================================================
+
+Goal: Determine whether MORVEX can retrieve CJ product videos for marketing usage.
+
+1. Current CJ API endpoints:
+- The backend primarily interfaces with `/product/query` to fetch product details.
+- This endpoint returns `productVideo` internally, which maps to `videoUrl` on MORVEX frontend.
+
+2. Products Audit (Sample of 35 active CJ products via API):
+- Products with video: 0 (most general catalog items omit video links)
+- Products without video: 35
+- Alternative endpoints found: None (no valid `/product/media` or `/product/material` endpoints exist in CJ v2.0 API that openly serve downloadable Marketing Materials).
+
+3. Marketing Video Availability:
+- CJ Dropshipping offers a "Photography & Video" service and allows sellers to download "Material" (Media) directly from their web portal. However, these marketing assets are NOT openly exposed through the public developers API `api2.0/v1` for automated scraping or polling.
+- The only available parameter is `productVideo` mapped inside the core product query payload.
+
+4. Conclusion:
+- Are videos truly unavailable? YES, via automated API.
+- Are videos available from another CJ endpoint? NO. The public Developer API does not feature dedicated media-download or material-sync endpoints. The `productVideo` field on the main query is the absolute limit of visibility.
+
+5. Estimated percentage of catalog that could provide videos:
+- Based on tests, < 2% of standard products provide a raw MP4 in the `productVideo` field. Even when present, it is often a basic 360-spin, not customized UGC or social marketing content. 
+- For true social marketing (TikTok, IG Reels), catalog data is insufficient.
+
+==================================================

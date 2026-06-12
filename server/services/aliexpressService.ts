@@ -164,9 +164,11 @@ export class CJDropshippingService {
         source: 'cj',
         aliexpressProductId: productId,
         aliexpressUrl: `https://cjdropshipping.com/product/${productId}.html`, 
+        videoUrl: info.productVideo || '',
         vid: info.variants?.[0]?.vid || '',
         weight: Number(info.productWeight) || 0,
         sourceCountry: 'CN', // Defaulting to CN since mostly dropshipped from China
+        cjVariants: info.variants || [],
       };
 
       const product = await Product.create(importedProductData);

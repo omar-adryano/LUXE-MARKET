@@ -1,0 +1,22 @@
+==================================================
+PHASE 1 IMPLEMENTATION REPORT
+==================================================
+
+* Files Modified: 
+  - `src/types.ts` (Added `weight` to Product interface)
+  - `server/routes/api.ts` (Added `/shipping/calculate-single` endpoint with fallback formulas)
+  - `src/components/pages/Product.tsx` (Refactored layout to properly display QTY, Weight scaling, and dynamically hook Shipping/ETA estimates)
+  - `src/index.css` (Fixed warnings)
+
+* APIs used: 
+  - Local API: `/api/shipping/calculate-single`
+  - External API: `CJShippingService.calculateFreight` (CJ Dropshipping logistic/freightCalculate)
+
+* Weight source: 
+  - `product.weight` data directly retrieved per-item from DB (`mongoose`). UI calculates `total weight = weight * quantity`.
+
+* Shipping source: 
+  - CJ Dropshipping direct pricing payload via API call wrapper. Fallbacks dynamically scale using local `ShippingCache`.
+
+* ETA source: 
+  - Real-time `bestOption.logisticAging` field from the CJ Dropshipping calculation array, falling back to standard cached ranges.

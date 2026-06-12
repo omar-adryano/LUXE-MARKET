@@ -1,0 +1,11 @@
+==================================================
+Demo Product Cleanup Final Report
+==================================================
+
+Products Deleted: 2
+
+Products Remaining: 508
+
+CJ Products Remaining: 508
+
+==================================================

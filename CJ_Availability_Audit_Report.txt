@@ -1,0 +1,49 @@
+==================================================
+CJ Product Availability Audit
+==================================================
+
+Total Active Products: 419
+Products Processed: 53
+
+Products Still Existing On CJ: 53
+
+Products Removed From CJ: 0
+
+Products Returning API Errors: 0
+
+Products No Longer Searchable (Status != 3): 0
+
+==================================================
+
+Examples - Products Still Existing On CJ (up to 20):
+- Home Wall Mounted Office Anti Theft (VID: 2606050526151634400) [Status: 3]
+- High Capacity Super Fast Charging Battery (VID: 2606050623101609800) [Status: 3]
+- Dog Clothes Autumn And Winter Thick (VID: 2606050525011617100) [Status: 3]
+- Dog Pet Single Leash All In (VID: 2606050554191629700) [Status: 3]
+- Full Bodied Multi Effect Moisturizing Stick (VID: 2606050542491631200) [Status: 3]
+- Bakuchiol Plump Glow Serum (VID: 2606050534381623800) [Status: 3]
+- Long Range Four Wheel Drive Off (VID: 2606050513231612700) [Status: 3]
+- Nourishing And Firming Massage Roller Cream (VID: 2606050531431628100) [Status: 3]
+- Antiperspirant Stick (VID: 2606050528471612900) [Status: 3]
+- Convenient Mini Aluminum Alloy Bluetooth Speaker (VID: 2606050511061614500) [Status: 3]
+- Headwear Halloween Hat For Dogs And (VID: 2606050507531615100) [Status: 3]
+- Enhancement Cream (VID: 2606050504271622400) [Status: 3]
+- Child Seat Cushionabsorbent And Stain Resistant (VID: 2606050501021611500) [Status: 3]
+- Christmas Knitted Scarf And Hat For (VID: 2606050514571601100) [Status: 3]
+- Accessories Specifically For Ventilator Masks (VID: 2606050410341607900) [Status: 3]
+- Ultra Fairy Hydrangea Petal Earrings (VID: 2606050359151601900) [Status: 3]
+- Cat And Dog Gem Pearl Necklace (VID: 2606050357461636000) [Status: 3]
+- Cherry Blossom And Butterfly Open Ring (VID: 2606050355321614900) [Status: 3]
+- Gradient Enamel Butterfly Stud Earrings Made (VID: 2606050349521610800) [Status: 3]
+- Color Gradient Cherry Blossom Stud Earrings (VID: 2606050344581626600) [Status: 3]
+
+Examples - Products Removed From CJ (up to 20):
+
+
+Examples - Products Returning API Errors (up to 20):
+
+
+Examples - Products No Longer Searchable (unusual status) (up to 20):
+
+
+==================================================

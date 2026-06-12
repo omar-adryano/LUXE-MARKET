@@ -1,0 +1,16 @@
+==================================================
+Weight Integrity Audit Report
+==================================================
+
+Total Products: 419
+Products With Weight: 418
+Products Missing Weight: 0
+Products With Invalid Weight: 1
+
+==================================================
+Examples of Missing/Invalid Weight (Up to 20):
+==================================================
+
+- Name: Off-shoulder Loose-fit Pleated Boatneck Dress
+  VID: 2606110933421618400
+  Weight: 0
